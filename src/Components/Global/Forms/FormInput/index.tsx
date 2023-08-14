@@ -1,0 +1,62 @@
+import React from "react";
+
+import { TextInputProps } from "react-native";
+import { Control, Controller } from "react-hook-form";
+
+import { BaseInput } from "../BaseInput";
+import { Password } from "../Password";
+
+import { Container } from "./styles";
+import { removeSpace } from "../../../../utils/textInputFormat";
+import { maskCep, maskCpfCnpj, maskPhone } from "../../../../utils/masks";
+
+interface Props extends TextInputProps {
+  control: Control;
+  name: string;
+}
+
+export function InputForm({ control, name, value, ...rest }: Props) {
+  return (
+    <Container>
+      <Controller
+        control={control}
+        render={({ field: { onChange, value } }) =>
+          name === "password" || name === "password2" ? (
+            <Password
+              onChangeText={onChange}
+              value={removeSpace(value)}
+              {...rest}
+            />
+          ) : name === "cpfCnpj" ? (
+            <BaseInput
+              maxLength={18}
+              {...rest}
+              onChangeText={onChange}
+              keyboardType="numeric"
+              value={maskCpfCnpj(value)}
+            />
+          ) : name === "mobilePhone" ? (
+            <BaseInput
+              maxLength={14}
+              {...rest}
+              onChangeText={onChange}
+              keyboardType="numeric"
+              value={maskPhone(value)}
+            />
+          ) : name === "postalCode" ? (
+            <BaseInput
+              maxLength={9}
+              {...rest}
+              onChangeText={onChange}
+              keyboardType="numeric"
+              value={maskCep(value)}
+            />
+          ) : (
+            <BaseInput onChangeText={onChange} value={value} {...rest} />
+          )
+        }
+        name={name}
+      />
+    </Container>
+  );
+}
