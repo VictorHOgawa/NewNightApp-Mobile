@@ -1,10 +1,10 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { RFValue } from "react-native-responsive-fontsize";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { Image } from "./styles";
-import Theme from "../styles/themes";
 import { Home } from "../pages/Home";
+import Theme from "../styles/themes";
+import { Image } from "./styles";
 
 // import { Feed } from "../pages/Home/Feed";
 // import { MoonButton } from "../Components/Pages/Home/MoonButton";
@@ -41,7 +41,7 @@ export function AppRoutes() {
           tabBarIcon: ({ focused }) => (
             <Image
               style={{ opacity: focused == true ? 1 : 0.5 }}
-              source={require("../../assets/Global/homeIcon.png")}
+              source={require("../../assets/Global/Icons/homeIcon.png")}
             />
           ),
         }}
@@ -54,7 +54,7 @@ export function AppRoutes() {
           tabBarIcon: ({ focused }) => (
             <Image
               style={{ opacity: focused == true ? 1 : 0.5 }}
-              source={require("../../assets/Global/shopIcon.png")}
+              source={require("../../assets/Global/Icons/shopIcon.png")}
             />
           ),
         }}
@@ -71,7 +71,7 @@ export function AppRoutes() {
                 width: 60,
                 height: 60,
               }}
-              source={require("../../assets/Global/moonIcon.png")}
+              source={require("../../assets/Global/Icons/moonIcon.png")}
             />
           ),
         }}
@@ -84,7 +84,7 @@ export function AppRoutes() {
           tabBarIcon: ({ focused }) => (
             <Image
               style={{ opacity: focused == true ? 1 : 0.5 }}
-              source={require("../../assets/Global/ticketIcon.png")}
+              source={require("../../assets/Global/Icons/ticketIcon.png")}
             />
           ),
         }}
@@ -97,7 +97,7 @@ export function AppRoutes() {
           tabBarIcon: ({ focused }) => (
             <Image
               style={{ opacity: focused == true ? 1 : 0.5 }}
-              source={require("../../assets/Global/profileIcon.png")}
+              source={require("../../assets/Global/Icons/profileIcon.png")}
             />
           ),
         }}

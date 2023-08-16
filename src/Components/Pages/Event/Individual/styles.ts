@@ -1,0 +1,31 @@
+import { RFValue } from "react-native-responsive-fontsize";
+import { styled } from "styled-components/native";
+import Theme from "../../../../styles/themes";
+
+export const Container = styled.View`
+  width: 90%;
+  align-self: center;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5%;
+  padding-bottom: 2%;
+  border-bottom-width: 1px;
+  border-bottom-color: ${Theme.color.gray_10};
+  border-bottom-style: solid;
+`;
+
+export const Left = styled.View``;
+
+export const Info = styled.View`
+  flex-direction: row;
+`;
+
+export const Icon = styled.Image`
+  width: ${RFValue(12)}px;
+  height: ${RFValue(12)}px;
+`;
+
+export const Text = styled.Text`
+  color: ${Theme.color.gray_10};
+`;

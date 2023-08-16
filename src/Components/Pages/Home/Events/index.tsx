@@ -1,14 +1,13 @@
 import { TouchableOpacityProps, View } from "react-native";
+import { Calendar } from "../../../Global/Calendar";
 import {
   City,
-  Image,
-  Title,
   Container,
   DetailsContainer,
+  Image,
   TextContainer,
+  Title,
 } from "./styles";
-import { Calendar } from "../../../Global/Calendar";
-import { Text } from "react-native";
 
 interface Props extends TouchableOpacityProps {
   photo_location?: string;
@@ -27,9 +26,10 @@ export function EventCard({
   id,
   city,
   state,
+  ...rest
 }: Props) {
   return (
-    <Container>
+    <Container {...rest}>
       <View>
         <Image source={{ uri: photo_location }} />
       </View>
