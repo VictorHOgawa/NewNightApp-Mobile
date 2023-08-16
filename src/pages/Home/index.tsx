@@ -25,8 +25,6 @@ export function Home() {
     }
   }
 
-  console.log("event:", event);
-
   useEffect(() => {
     getEvents();
   }, []);
@@ -77,11 +75,11 @@ export function Home() {
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
                   <PlaceCard
-                    // location={item.location}
-                    // name={item.name}
-                    // place={item.place}
-                    // current={item.current}
-                    // id={item.id}
+                    location={item.location}
+                    name={item.name}
+                    place={item.place}
+                    current={item.current}
+                    id={item.id}
                     onPress={() =>
                       navigation.navigate("Restaurant", { id: item._id })
                     }

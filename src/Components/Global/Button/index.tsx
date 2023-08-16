@@ -11,6 +11,7 @@ interface ButtonProps extends TouchableOpacityProps {
   loading?: boolean;
   disabled?: boolean;
   fontSize?: number;
+  children?: React.ReactNode;
 }
 export function Button({
   background,
@@ -22,6 +23,7 @@ export function Button({
   loading,
   disabled,
   fontSize,
+  children,
   ...rest
 }: ButtonProps) {
   return (
@@ -31,7 +33,9 @@ export function Button({
       height={height}
       marginTop={marginTop}
       background={background}
+      {...rest}
     >
+      {children}
       <Title fontSize={fontSize} color={color}>
         {title}
       </Title>

@@ -15,10 +15,10 @@ export function Individual({ date, local, city, state }: IndividualProps) {
     <Container>
       <Left>
         <Info>
+          <Icon
+            source={require("../../../../../assets/Global/Icons/clockIcon.png")}
+          />
           <Text>
-            <Icon
-              source={require("../../../../../assets/Global/Icons/clockIcon.png")}
-            />
             {""}
             <Text style={{ fontWeight: "bold" }}>
               {""}
@@ -29,10 +29,10 @@ export function Individual({ date, local, city, state }: IndividualProps) {
           </Text>
         </Info>
         <Info>
+          <Icon
+            source={require("../../../../../assets/Global/Icons/pinIcon.png")}
+          />
           <Text>
-            <Icon
-              source={require("../../../../../assets/Global/Icons/pinIcon.png")}
-            />
             {""}
             <Text style={{ fontWeight: "bold" }}>{local}</Text>
             {""}

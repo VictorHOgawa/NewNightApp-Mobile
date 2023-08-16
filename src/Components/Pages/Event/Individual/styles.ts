@@ -19,11 +19,13 @@ export const Left = styled.View``;
 
 export const Info = styled.View`
   flex-direction: row;
+  align-items: center;
 `;
 
 export const Icon = styled.Image`
   width: ${RFValue(12)}px;
   height: ${RFValue(12)}px;
+  margin-right: 10px;
 `;
 
 export const Text = styled.Text`

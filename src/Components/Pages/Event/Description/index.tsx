@@ -1,3 +1,4 @@
+import { LineBreak } from "../../../Global/LineBreak";
 import { GlobalTitle } from "../../../Global/Title";
 import { Container, Text } from "./styles";
 
@@ -11,7 +12,7 @@ export function Description({ description }: DescriptionProps) {
   return (
     <Container>
       <GlobalTitle title={description.name} />
-      <Text>{"\n"}</Text>
+      <LineBreak />
       <Text>{description.description}</Text>
     </Container>
   );

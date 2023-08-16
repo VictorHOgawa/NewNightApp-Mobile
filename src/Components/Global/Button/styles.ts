@@ -26,6 +26,7 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
   align-items: center;
   justify-content: center;
   align-self: center;
+  flex-direction: row;
 `;
 
 export const Title = styled.Text<TitleProps>`

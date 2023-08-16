@@ -1,6 +1,7 @@
 import { Image } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { styled } from "styled-components/native";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const Container = styled.View`
   flex-direction: row;
@@ -9,6 +10,7 @@ export const Container = styled.View`
   align-items: center;
   justify-content: center;
   align-self: center;
+  margin-top: ${getStatusBarHeight() + 20}px;
 `;
 
 export const Logo = styled(Image)`
