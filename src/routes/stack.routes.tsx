@@ -1,10 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Home } from "../pages/Home";
-import { AppRoutes } from "./NavBar.routes";
-import { Register } from "../pages/Register";
-import { Login } from "../pages/Login";
 import { Event } from "../pages/Event";
+import { Login } from "../pages/Login";
+import { Register } from "../pages/Register";
+import { Checkout } from "../pages/checkout";
+import { Purchased } from "../pages/purchased";
+import { AppRoutes } from "./NavBar.routes";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -20,9 +21,11 @@ export function StackRoutes() {
       }}
     >
       <Screen name="Home" component={AppRoutes} />
-      <Screen name="Event" component={Event} />
+      <Screen name="Checkout" component={Checkout} />
       <Screen name="Login" component={Login} />
+      <Screen name="Event" component={Event} />
       <Screen name="Register" component={Register} />
+      <Screen name="Purchased" component={Purchased} />
     </Navigator>
   );
 }

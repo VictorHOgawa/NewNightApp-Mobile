@@ -1,26 +1,32 @@
-import { Text, View } from "react-native";
-import { Header } from "../../Components/Global/Header";
-import { Container, EventList } from "./styles";
+import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
 import { Ad } from "../../Components/Global/Ad";
+import { Header } from "../../Components/Global/Header";
 import { GlobalTitle } from "../../Components/Global/Title";
 import { EventLoading } from "../../Components/Loading/Home/EventLoading";
 import { EventCard } from "../../Components/Pages/Home/Events";
-import { useState, useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { getAPI } from "../../utils/api";
-import { PlaceCard } from "../../Components/Pages/Home/Places";
+import { Container, EventList } from "./styles";
 
 export function Home() {
   const navigation = useNavigation<any>();
 
   const [event, setEvent] = useState<any>([]);
   const [eventLoading, setEventLoading] = useState(true);
-  const [restaurant, setRestaurant] = useState<any>([1, 2, 3]);
+  const [place, setPlace] = useState<any>([]);
 
   async function getEvents() {
-    const connect = await getAPI("/event");
-    if (connect.status === 200) {
-      setEvent(connect.body.events);
+    const [event, place] = await Promise.all([
+      getAPI("/event"),
+      getAPI("/place"),
+    ]);
+    if (event.status === 200) {
+      setEvent(event.body.events);
+      return setEventLoading(false);
+    }
+    if (place.status === 200) {
+      setPlace(place.body.places);
       return setEventLoading(false);
     }
   }
@@ -65,13 +71,13 @@ export function Home() {
       {/* <GlobalTitle title="Lugares para Curtir" />
       <EventLoading loading={eventLoading}>
         <>
-          {restaurant.length === 0 ? (
+          {place.length === 0 ? (
             <></>
           ) : (
             <View>
               <EventList
                 horizontal
-                data={restaurant}
+                data={place}
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => (
                   <PlaceCard

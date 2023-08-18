@@ -2,7 +2,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { styled } from "styled-components/native";
 import Theme from "../../../styles/themes";
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   width: 80%;
   background-color: ${Theme.color.secondary_100};
   border-radius: ${RFValue(15)}px;
