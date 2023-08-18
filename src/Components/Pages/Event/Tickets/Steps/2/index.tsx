@@ -6,6 +6,7 @@ import {
   CounterArea,
   CounterText,
   Icon,
+  IconButton,
   Item,
   ItemButton,
   Items,
@@ -35,7 +36,6 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
   const [filteredProduct, setFilteredProduct] = useState<any>([]);
   const { cart, add } = useCart();
   const [moreProducts, setMoreProducts] = useState(true);
-  console.log("type: ", type);
   function handleSelectType(type: string) {
     setFilteredProduct(product.filter((item) => item.type === type));
     setType(type);
@@ -134,15 +134,23 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
                       </TicketTitle>
                     </VerticalView>
                     <CounterArea>
-                      <Icon
-                        source={require("../../../../../../../assets/Event/Minus.png")}
-                      />
+                      <IconButton
+                        onPress={() => handleChange("decrease", item)}
+                      >
+                        <Icon
+                          source={require("../../../../../../../assets/Event/Minus.png")}
+                        />
+                      </IconButton>
                       <Counter>
                         <CounterText>{ticketQuantity(item.id)}</CounterText>
                       </Counter>
-                      <Icon
-                        source={require("../../../../../../../assets/Event/Plus.png")}
-                      />
+                      <IconButton
+                        onPress={() => handleChange("increase", item)}
+                      >
+                        <Icon
+                          source={require("../../../../../../../assets/Event/Plus.png")}
+                        />
+                      </IconButton>
                     </CounterArea>
                   </TicketType>
                 </VerticalView>

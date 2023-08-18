@@ -21,7 +21,11 @@ export function Video({ video }: VideoProps) {
       <>
         <GlobalTitle title="Música" />
         <LineBreak />
-        <YoutubeIframe height={400} videoId={cleanUrl} />
+        <YoutubeIframe
+          height={400}
+          videoId={cleanUrl}
+          webViewStyle={{ opacity: 0.99 }}
+        />
       </>
     </Container>
   );

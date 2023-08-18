@@ -18,7 +18,6 @@ export const Container = styled.View`
   font-weight: 600;
   font-size: ${RFValue(18)}px;
 
-  border-color: ${Theme.color.primary_100};
   color: ${Theme.color.gray_10};
   background-color: ${Theme.color.secondary_100};
 `;

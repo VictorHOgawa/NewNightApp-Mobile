@@ -8,14 +8,28 @@ import { Password } from "../Password";
 
 import { Container } from "./styles";
 import { removeSpace } from "../../../../utils/textInputFormat";
-import { maskCep, maskCpfCnpj, maskPhone } from "../../../../utils/masks";
+import {
+  maskCard,
+  maskCep,
+  maskCpfCnpj,
+  maskPhone,
+  maskDate,
+  textOnly,
+} from "../../../../utils/masks";
 
 interface Props extends TextInputProps {
   control: Control;
   name: string;
+  passwordContainerStyle?: any;
 }
 
-export function InputForm({ control, name, value, ...rest }: Props) {
+export function InputForm({
+  control,
+  name,
+  value,
+  passwordContainerStyle,
+  ...rest
+}: Props) {
   return (
     <Container>
       <Controller
@@ -25,11 +39,12 @@ export function InputForm({ control, name, value, ...rest }: Props) {
             <Password
               onChangeText={onChange}
               value={removeSpace(value)}
+              containerStyle={passwordContainerStyle}
               {...rest}
             />
           ) : name === "cpfCnpj" ? (
             <BaseInput
-              maxLength={18}
+              maxLength={14}
               {...rest}
               onChangeText={onChange}
               keyboardType="numeric"
@@ -51,8 +66,50 @@ export function InputForm({ control, name, value, ...rest }: Props) {
               keyboardType="numeric"
               value={maskCep(value)}
             />
+          ) : name === "holderName" ? (
+            <BaseInput
+              onChangeText={onChange}
+              {...rest}
+              value={textOnly(value)}
+            />
+          ) : name === "number" ? (
+            <BaseInput
+              maxLength={19}
+              onChangeText={onChange}
+              keyboardType="numeric"
+              value={maskCard(value)}
+              {...rest}
+            />
+          ) : name === "expiryDate" ? (
+            <BaseInput
+              maxLength={5}
+              onChangeText={onChange}
+              keyboardType="numeric"
+              value={maskDate(value)}
+              {...rest}
+            />
+          ) : name === "name" ? (
+            <BaseInput
+              onChangeText={onChange}
+              {...rest}
+              value={textOnly(value)}
+            />
+          ) : name === "ccv" ? (
+            <BaseInput
+              maxLength={3}
+              onChangeText={onChange}
+              {...rest}
+              value={value}
+            />
+          ) : name === "addressNumber" ? (
+            <BaseInput
+              onChange={onChange}
+              {...rest}
+              value={value}
+              keyboardType="numeric"
+            />
           ) : (
-            <BaseInput onChangeText={onChange} value={value} {...rest} />
+            <BaseInput onChange={onChange} {...rest} value={value} />
           )
         }
         name={name}

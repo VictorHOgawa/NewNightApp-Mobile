@@ -1,7 +1,9 @@
 import { styled } from "styled-components/native";
 import Theme from "../../../../styles/themes";
 
-export const Container = styled.View``;
+export const Container = styled.View`
+  flex: 1;
+`;
 
 export const Form = styled.TextInput`
   background-color: ${Theme.color.secondary_100};

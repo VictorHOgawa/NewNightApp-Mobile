@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { TextInputProps, TouchableOpacityProps } from "react-native";
+import { TextInputProps, ViewProps } from "react-native";
 
 import { Container, Input, Icon, HideButton } from "./styles";
 import Theme from "../../../../styles/themes";
-type Props = TextInputProps;
 
-interface ButtonProps extends TouchableOpacityProps {
-  pressed: boolean;
+interface Props extends TextInputProps {
+  containerStyle?: any;
 }
 
-export function Password({ ...rest }: Props, { pressed }: ButtonProps) {
+export function Password({ containerStyle, ...rest }: Props) {
   const [hidePass, setHidePass] = useState(true);
 
   return (
-    <Container>
+    <Container style={containerStyle}>
       <Input
         {...rest}
         placeholderTextColor={Theme.color.gray_70}

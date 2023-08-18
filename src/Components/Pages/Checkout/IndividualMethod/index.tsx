@@ -1,3 +1,4 @@
+import { CardMethod } from "./Cards";
 import { PixMethod } from "./Pix";
 import { Container } from "./styles";
 
@@ -6,8 +7,6 @@ interface IndividualMethodProps {
 }
 export function IndividualMethod({ selected }: IndividualMethodProps) {
   return (
-    <Container>
-      {selected === "Pix" ? <PixMethod></PixMethod> : <></>}
-    </Container>
+    <Container>{selected === "Pix" ? <PixMethod /> : <CardMethod />}</Container>
   );
 }

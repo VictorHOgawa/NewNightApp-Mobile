@@ -11,7 +11,7 @@ import {
   TicketTitle,
   TicketType,
 } from "../../styles";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 interface StepOneProps {
   ticketSlots: {
@@ -71,6 +71,7 @@ export function StepOne({ ticketSlots }: StepOneProps) {
     const ticketExists = cart.ticket.ticket.find(
       (ticket: { id: string }) => ticket.id === id
     );
+    // console.log("ticketExists: ", ticketExists);
     return ticketExists ? ticketExists.quantity : 0;
   }
   return (

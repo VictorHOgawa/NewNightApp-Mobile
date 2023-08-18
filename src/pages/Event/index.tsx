@@ -14,8 +14,9 @@ import { LineBreak } from "../../Components/Global/LineBreak";
 import { Tabs } from "../../Components/Global/Tabs";
 import { StepOne } from "../../Components/Pages/Event/Tickets/Steps/1";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { StepTwo } from "../../Components/Pages/Event/Tickets/Steps/2";
+import { Alert } from "react-native";
+import { useCart } from "../../context/cart";
 
 export function Event() {
   const navigation = useNavigation<any>();
@@ -24,6 +25,8 @@ export function Event() {
   const { id } = useRoute().params as any;
   const [step, setStep] = useState(1);
   const [type, setType] = useState("");
+  const { cart } = useCart();
+
   async function getEventInfo() {
     const connect = await getAPI(`/event/${id}`);
     if (connect.status === 200) {
@@ -37,9 +40,30 @@ export function Event() {
       getEventInfo();
     }
   }, [id]);
-  console.log("step", step);
-  console.log("type", type);
-  console.log("eventDetails: ", eventDetails);
+
+  const handleNext = () => {
+    if (type !== "") {
+      return setType("");
+    }
+    if (step === 1) {
+      return setStep(step + 1);
+    }
+    if (
+      step === 2 &&
+      type === "" &&
+      cart.ticket.ticket.length === 0 &&
+      cart.product.length === 0
+    ) {
+      return Alert.alert("Selecione um (ou mais) Produto(s)");
+    }
+    if (
+      (step === 2 && type === "" && cart.ticket.ticket.length !== 0) ||
+      cart.product.length !== 0
+    ) {
+      return navigation.navigate("Checkout");
+    }
+  };
+
   return (
     <Container contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
       <Header />
@@ -108,20 +132,12 @@ export function Event() {
               width={150}
               height={40}
               fontSize={18}
-              onPress={
-                type !== ""
-                  ? () => setType("")
-                  : step === 2 && type === ""
-                  ? () => navigation.navigate("/checkout")
-                  : () => setStep(step + 1)
-              }
+              onPress={handleNext}
             />
           </HorizontalView>
         </>
       )}
-
       <Banner />
-
       {loading ? (
         <></>
       ) : (

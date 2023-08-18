@@ -20,9 +20,6 @@ export function Form() {
     return navigation.navigate("Home");
   }
 
-  function Test(form: any) {
-    console.log(form);
-  }
   return (
     <Container>
       <InputForm
@@ -31,6 +28,7 @@ export function Form() {
         placeholder="CPF/CNPJ"
         autoCapitalize="none"
         autoCorrect={false}
+        style={{ borderBottomColor: Theme.color.gray_70, borderBottomWidth: 1 }}
       />
       <InputForm
         control={control}
@@ -38,6 +36,10 @@ export function Form() {
         placeholder="Senha"
         autoCapitalize="none"
         autoCorrect={false}
+        passwordContainerStyle={{
+          borderBottomColor: Theme.color.gray_70,
+          borderBottomWidth: 1,
+        }}
       />
       <Remember>
         <Title>Esqueci a Senha</Title>
