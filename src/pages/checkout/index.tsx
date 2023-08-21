@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Header } from "../../Components/Global/Header";
+import { LineBreak } from "../../Components/Global/LineBreak";
 import { IndividualMethod } from "../../Components/Pages/Checkout/IndividualMethod";
 import { Method } from "../../Components/Pages/Checkout/Method";
 import { Title } from "../../Components/Pages/Checkout/Title";
-import { Container, Safe } from "./styles";
 import { Total } from "../../Components/Pages/Checkout/Total";
-import { LineBreak } from "../../Components/Global/LineBreak";
+import { Container, Safe } from "./styles";
 
 export function Checkout() {
   const [selected, setSelected] = useState("Pix");

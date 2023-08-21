@@ -3,6 +3,9 @@ import React from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import { Home } from "../pages/Home";
+import { Profile } from "../pages/Profile";
+import { Purchased } from "../pages/Purchased";
+import { Shop } from "../pages/Shop";
 import Theme from "../styles/themes";
 import { Image } from "./styles";
 
@@ -34,7 +37,7 @@ export function AppRoutes() {
       }}
     >
       <Screen
-        name="Feed"
+        name="Home"
         component={Home}
         options={{
           tabBarLabel: "",
@@ -47,8 +50,8 @@ export function AppRoutes() {
         }}
       />
       <Screen
-        name="Marketplace"
-        component={Home}
+        name="Shop"
+        component={Shop}
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
@@ -77,8 +80,8 @@ export function AppRoutes() {
         }}
       />
       <Screen
-        name="Itens"
-        component={Home}
+        name="Purchased"
+        component={Purchased}
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
@@ -90,8 +93,8 @@ export function AppRoutes() {
         }}
       />
       <Screen
-        name="Perfil"
-        component={Home}
+        name="Profile"
+        component={Profile}
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ focused }) => (
