@@ -1,21 +1,9 @@
-import { FlatList, FlatListProps } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { styled } from "styled-components/native";
-import Theme from "../../styles/themes";
+import Theme from "../../../../styles/themes";
 
 export const Container = styled.View`
-  flex: 1;
-  background-color: ${Theme.color.background};
-`;
-
-export const Map = styled(
-  FlatList as new (props: FlatListProps<any>) => FlatList<any>
-).attrs({
-  showsHorizontalScrollIndicator: false,
-})`
-  width: 98%;
-  margin-top: 15px;
-  margin-left: 2%;
+  flex-direction: row;
 `;
 
 export const Btn = styled.TouchableOpacity`
