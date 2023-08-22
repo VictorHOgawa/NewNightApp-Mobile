@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useCart } from "../../../../context/cart";
+import Theme from "../../../../styles/themes";
 import { HorizontalView } from "../../../Global/View/HorizontalView";
 import { VerticalView } from "../../../Global/View/VerticalView";
-import { TicketType } from "../../Event/Tickets/styles";
 import { Container, FullTotal, IndividualTotal, Map, Text } from "./styles";
-import { useState } from "react";
-import Theme from "../../../../styles/themes";
 
 export function Total() {
+  const { cart } = useCart();
   const Items = [
     {
       product: "Produto 1",
@@ -33,6 +34,8 @@ export function Total() {
       cost: 5010,
     },
   ];
+
+  console.log("cart: ", cart);
 
   const [seeAll, setSeeAll] = useState(false);
   return (
