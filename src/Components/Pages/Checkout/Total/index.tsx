@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useCart } from "../../../../context/cart";
 import Theme from "../../../../styles/themes";
@@ -8,32 +8,22 @@ import { Container, FullTotal, IndividualTotal, Map, Text } from "./styles";
 
 export function Total() {
   const { cart } = useCart();
-  const Items = [
-    {
-      product: "Produto 1",
-      cost: 20,
-    },
-    {
-      product: "Produto 2",
-      cost: 500,
-    },
-    {
-      product: "Produto 1",
-      cost: 220,
-    },
-    {
-      product: "Produto 2",
-      cost: 50240,
-    },
-    {
-      product: "Produto 1",
-      cost: 205,
-    },
-    {
-      product: "Produto 2",
-      cost: 5010,
-    },
-  ];
+
+  const [ticketTotal, setTicketTotal] = useState(0);
+  const [productTotal, setProductTotal] = useState(0);
+  const [fullTotal, setFullTotal] = useState(0);
+
+  async function GetPrices() {}
+
+  useEffect(() => {
+    setTicketTotal(
+      cart.ticket.ticket.reduce((acc: any, item: any) => acc + item.value, 0)
+    );
+    setProductTotal(
+      cart.product.reduce((acc: any, item: any) => acc + item.value, 0)
+    );
+    setFullTotal(ticketTotal + productTotal);
+  }, []);
 
   console.log("cart: ", cart);
 
@@ -45,7 +35,7 @@ export function Total() {
       ) : (
         <>
           <Map
-            data={Items}
+            data={cart.product}
             renderItem={({ item }) => (
               <>
                 {item.length === 0 ? (
@@ -61,11 +51,51 @@ export function Total() {
                         }}
                       >
                         <VerticalView>
-                          <Text>{item.product}</Text>
+                          <Text>{item.name}</Text>
+                        </VerticalView>
+                        <VerticalView>
+                          <Text>x {item.quantity}</Text>
                         </VerticalView>
                         <VerticalView>
                           <Text>
-                            {item.cost.toLocaleString("pt-br", {
+                            {item.value.toLocaleString("pt-br", {
+                              style: "currency",
+                              currency: "BRL",
+                            })}
+                          </Text>
+                        </VerticalView>
+                      </HorizontalView>
+                    </IndividualTotal>
+                  </>
+                )}
+              </>
+            )}
+          />
+          <Map
+            data={cart.ticket.ticket}
+            renderItem={({ item }) => (
+              <>
+                {item.length === 0 ? (
+                  <></>
+                ) : (
+                  <>
+                    <IndividualTotal>
+                      <HorizontalView
+                        style={{
+                          width: "100%",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <VerticalView>
+                          <Text>{item.name}</Text>
+                        </VerticalView>
+                        <VerticalView>
+                          <Text>x {item.quantity}</Text>
+                        </VerticalView>
+                        <VerticalView>
+                          <Text>
+                            {item.value.toLocaleString("pt-br", {
                               style: "currency",
                               currency: "BRL",
                             })}
@@ -93,10 +123,10 @@ export function Total() {
           </VerticalView>
           <VerticalView style={{ justifyContent: " flex-end" }}>
             <Text>
-              {Items.reduce((sum, item) => sum + item.cost, 0).toLocaleString(
-                "pt-br",
-                { style: "currency", currency: "BRL" }
-              )}
+              {fullTotal.toLocaleString("pt-br", {
+                style: "currency",
+                currency: "BRL",
+              })}
             </Text>
           </VerticalView>
         </HorizontalView>
