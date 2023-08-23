@@ -3,9 +3,8 @@ import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
 import Theme from "../../styles/themes";
-import { Container } from "./styles";
+import { Container, Logo } from "./styles";
 import { LineBreak } from "../../Components/Global/LineBreak";
-import { Purchased } from "../../Components/Pages/Profile/Purchased";
 import { GlobalTitle } from "../../Components/Global/Title";
 import { Info } from "../../Components/Pages/Profile/Info";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -16,7 +15,8 @@ export function Profile() {
     <Container
       contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
     >
-      <Header />
+      <Logo source={require("../../../assets/Global/Logo2.png")} />
+
       <HorizontalView style={{ justifyContent: "space-around" }}>
         <Button
           title="Entrar"
@@ -38,11 +38,6 @@ export function Profile() {
         />
       </HorizontalView>
       <LineBreak />
-      <GlobalTitle title="Suas Compras Digitais" />
-      <HorizontalView style={{ justifyContent: "space-between" }}>
-        <LineBreak />
-        <Purchased />
-      </HorizontalView>
       <Info />
     </Container>
   );

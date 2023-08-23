@@ -40,8 +40,11 @@ export const Area = styled.View`
   border-color: ${Theme.color.primary_60};
   border-width: 1px;
   border-radius: 5px;
-  padding: 0 2px;
+  padding: 2px 5px;
   height: ${RFValue(22)}px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
 
 export const Match = styled.Image`

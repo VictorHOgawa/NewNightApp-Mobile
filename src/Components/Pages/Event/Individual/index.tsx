@@ -2,6 +2,7 @@ import moment from "moment";
 import "moment/locale/pt-br";
 import { Calendar } from "../../../Global/Calendar";
 import { Container, Icon, Info, Left, Text } from "./styles";
+import { LineBreak } from "../../../Global/LineBreak";
 
 interface IndividualProps {
   date: Date;
@@ -34,7 +35,11 @@ export function Individual({ date, local, city, state }: IndividualProps) {
           />
           <Text>
             {""}
-            <Text style={{ fontWeight: "bold" }}>{local}</Text>
+            <Text style={{ fontWeight: "bold" }}>
+              {local} {""}
+              <LineBreak />
+            </Text>
+            {"\n"}
             {""}
             {city} - {state}
           </Text>

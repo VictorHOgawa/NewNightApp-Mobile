@@ -14,7 +14,7 @@ const Theme = {
     primaryFadePlus: "rgba(211, 86, 243, 0.1)",
 
     secondary_20: "#",
-    secondary_40: "#",
+    secondary_40: "#541198",
     secondary_60: "#5d1a92",
     secondary_80: "#565DCF",
     secondary_100: "#420A89",

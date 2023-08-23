@@ -1,11 +1,11 @@
 import { Ad } from "../../Components/Global/Ad";
 import { Header } from "../../Components/Global/Header";
-import { Container } from "./styles";
+import { Container, Logo } from "./styles";
 
 export function Shop() {
   return (
     <Container>
-      <Header />
+      <Logo source={require("../../../assets/Global/Logo2.png")} />
       <Ad />
     </Container>
   );

@@ -17,11 +17,5 @@ export const FormContainer = styled.View`
 
 export const Label = styled.Text`
   color: ${Theme.color.gray_10};
-`;
-
-export const Input = styled.TextInput`
-  width: 100%;
-  background-color: transparent;
-  color: ${Theme.color.gray_10};
-  padding: ${RFValue(5)}px;
+  margin-top: ${RFValue(10)}px;
 `;

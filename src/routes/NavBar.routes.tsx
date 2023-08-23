@@ -8,6 +8,7 @@ import { Purchased } from "../pages/Purchased";
 import { Shop } from "../pages/Shop";
 import Theme from "../styles/themes";
 import { Image } from "./styles";
+import { MyMatches } from "../pages/MyMatches";
 
 // import { Feed } from "../pages/Home/Feed";
 // import { MoonButton } from "../Components/Pages/Home/MoonButton";
@@ -63,8 +64,8 @@ export function AppRoutes() {
         }}
       />
       <Screen
-        name="Match"
-        component={Home}
+        name="MyMatches"
+        component={MyMatches}
         options={{
           tabBarLabel: "",
           tabBarIcon: ({ focused }) => (

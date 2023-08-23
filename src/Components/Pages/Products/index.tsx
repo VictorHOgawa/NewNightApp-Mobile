@@ -53,7 +53,9 @@ export function ProductCards() {
                       <Icons
                         source={require("../../../../assets/Global/Icons/clockIcon.png")}
                       />
+                      {""}
                       <Text style={{ fontWeight: "bold" }}>
+                        {""}
                         {moment().format("LL")} {""}
                       </Text>
                       às {moment().format("LT")}
@@ -62,25 +64,13 @@ export function ProductCards() {
                       <Icons
                         source={require("../../../../assets/Global/Icons/pinIcon.png")}
                       />
+                      {""}
                       <Text style={{ fontWeight: "bold" }}>
-                        Cerveja de Garrafa{" "}
+                        {""}Cerveja de Garrafa{" "}
                       </Text>
                       {""}Sinop/MT
                     </Text>
                   </VerticalView>
-                  <Area>
-                    <Text>
-                      Área: {""}
-                      <Text
-                        style={{
-                          fontWeight: "bold",
-                          color: `${Theme.color.primary_60}`,
-                        }}
-                      >
-                        Pista
-                      </Text>
-                    </Text>
-                  </Area>
                 </Details>
                 <HorizontalView
                   style={{

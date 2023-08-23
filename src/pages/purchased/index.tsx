@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Ad } from "../../Components/Global/Ad";
 import { Header } from "../../Components/Global/Header";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
-import { Btn, Container, Img } from "./styles";
+import { Btn, Container, Img, Logo } from "./styles";
 
 export function Purchased() {
   const navigation = useNavigation<any>();
@@ -26,7 +26,7 @@ export function Purchased() {
   ];
   return (
     <Container>
-      <Header />
+      <Logo source={require("../../../assets/Global/Logo2.png")} />
       <Ad />
       <HorizontalView
         style={{

@@ -31,6 +31,10 @@ export function Form() {
           placeholder="Nome"
           autoCapitalize="words"
           autoCorrect={false}
+          style={{
+            borderBottomColor: Theme.color.gray_70,
+            borderBottomWidth: 1,
+          }}
         />
         <Label>CPF</Label>
         <InputForm
@@ -39,6 +43,10 @@ export function Form() {
           placeholder="CPF ou CNPJ"
           autoCapitalize="none"
           autoCorrect={false}
+          style={{
+            borderBottomColor: Theme.color.gray_70,
+            borderBottomWidth: 1,
+          }}
         />
         <Label>Número Aqui</Label>
         <InputForm
@@ -47,6 +55,10 @@ export function Form() {
           placeholder="Telefone"
           autoCapitalize="none"
           autoCorrect={false}
+          style={{
+            borderBottomColor: Theme.color.gray_70,
+            borderBottomWidth: 1,
+          }}
         />
         <Label>Senha</Label>
         <InputForm
@@ -55,6 +67,10 @@ export function Form() {
           placeholder="Senha"
           autoCapitalize="none"
           autoCorrect={false}
+          passwordContainerStyle={{
+            borderBottomColor: Theme.color.gray_70,
+            borderBottomWidth: 1,
+          }}
         />
         <Label>Repita a Senha</Label>
         <InputForm
@@ -63,6 +79,10 @@ export function Form() {
           placeholder="Repita a senha"
           autoCapitalize="none"
           autoCorrect={false}
+          passwordContainerStyle={{
+            borderBottomColor: Theme.color.gray_70,
+            borderBottomWidth: 1,
+          }}
         />
         <Button
           title="Cadastrar"

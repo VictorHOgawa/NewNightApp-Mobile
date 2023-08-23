@@ -1,9 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import Theme from "../../../../styles/themes";
 import { Button } from "../../../Global/Button";
 import { GlobalTitle } from "../../../Global/Title";
 import { Container, NightPremium } from "./styles";
 
 export function Info() {
+  const navigation = useNavigation<any>();
   return (
     <Container>
       <GlobalTitle title="Informações" />
@@ -30,6 +32,7 @@ export function Info() {
         color={`${Theme.color.gray_10}`}
         width={310}
         height={30}
+        onPress={() => navigation.navigate("Jobs")}
       />
       <Button
         title="Sair"

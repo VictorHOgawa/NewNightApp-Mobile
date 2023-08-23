@@ -8,7 +8,7 @@ export const Container = styled.View`
   border-radius: ${RFValue(15)}px;
   align-self: center;
   padding: ${RFValue(15)}px;
-  margin-top: ${RFPercentage(30)}px;
+  margin-top: ${RFValue(10)}px;
 `;
 
 export const FormContainer = styled.View`

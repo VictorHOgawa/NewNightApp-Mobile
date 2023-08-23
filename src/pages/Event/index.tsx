@@ -80,9 +80,11 @@ export function Event() {
         <></>
       ) : (
         <>
-          {eventDetails?.ticketSlots.length === 0 ? (
-            <Text>Nenhum ingresso disponível</Text>
-          ) : step === 1 ? (
+          {step === 1 && eventDetails?.ticketSlots.length === 0 ? (
+            <Text style={{ alignSelf: "center", textAlign: "center" }}>
+              Nenhum ingresso disponível
+            </Text>
+          ) : step === 1 && eventDetails?.ticketSlots.length !== 0 ? (
             <>
               <ButtonGroup style={{ marginTop: 10 }}>
                 <Tabs active={true} />
@@ -91,6 +93,10 @@ export function Event() {
               </ButtonGroup>
               <StepOne ticketSlots={eventDetails?.ticketSlots[0]} />
             </>
+          ) : step === 2 && eventDetails.products.length === 0 ? (
+            <Text style={{ alignSelf: "center", textAlign: "center" }}>
+              Nenhum Produto Disponível
+            </Text>
           ) : (
             <StepTwo
               product={eventDetails?.products}
@@ -133,6 +139,12 @@ export function Event() {
               height={40}
               fontSize={18}
               onPress={handleNext}
+              disabled={
+                eventDetails?.ticketSlots.length === 0 &&
+                eventDetails.products.length === 0
+                  ? true
+                  : false
+              }
             />
           </HorizontalView>
         </>

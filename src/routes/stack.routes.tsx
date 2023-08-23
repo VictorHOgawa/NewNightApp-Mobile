@@ -10,6 +10,10 @@ import { Profile } from "../pages/Profile";
 import { Tickets } from "../pages/Tickets";
 import { Products } from "../pages/Products";
 import { Place } from "../pages/Place";
+import { MyMatches } from "../pages/MyMatches";
+import { Chat } from "../pages/Chat";
+import { Jobs } from "../pages/Jobs";
+import { JobDetails } from "../pages/JobDetails";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -35,6 +39,10 @@ export function StackRoutes() {
       <Screen name="Purchased" component={Purchased} />
       <Screen name="Shop" component={Shop} />
       <Screen name="Products" component={Products} />
+      <Screen name="MyMatches" component={MyMatches} />
+      <Screen name="Chat" component={Chat} />
+      <Screen name="Jobs" component={Jobs} />
+      <Screen name="JobDetails" component={JobDetails} />
     </Navigator>
   );
 }

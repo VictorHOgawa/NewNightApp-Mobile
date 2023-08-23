@@ -49,8 +49,9 @@ export function TicketCards() {
                       <Icons
                         source={require("../../../../assets/Global/Icons/clockIcon.png")}
                       />
+                      {""}
                       <Text style={{ fontWeight: "bold" }}>
-                        {moment().format("LL")} {""}
+                        {""} {moment().format("LL")} {""}
                       </Text>
                       às {moment().format("LT")}
                     </Text>
@@ -58,8 +59,9 @@ export function TicketCards() {
                       <Icons
                         source={require("../../../../assets/Global/Icons/pinIcon.png")}
                       />
+                      {""}
                       <Text style={{ fontWeight: "bold" }}>
-                        Cerveja de Garrafa{" "}
+                        {""} Cerveja de Garrafa{" "}
                       </Text>
                       {""}Sinop/MT
                     </Text>

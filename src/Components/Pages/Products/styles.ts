@@ -17,6 +17,7 @@ export const Card = styled.View`
 
 export const Details = styled.View`
   flex-direction: row;
+  width: 80%;
   justify-content: space-between;
 `;
 
