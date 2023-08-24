@@ -5,7 +5,7 @@ import Theme from "../../../../styles/themes";
 export const Container = styled.TouchableOpacity`
   width: ${RFValue(210)}px;
   margin-left: ${RFValue(10)}px;
-  background-color: blue;
+  background-color: ${Theme.color.secondaryFadePlus};
   justify-content: space-between;
   border-radius: ${RFValue(10)}px;
 `;

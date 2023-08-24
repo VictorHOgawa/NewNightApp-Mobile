@@ -7,11 +7,14 @@ import {
 } from "./styles";
 
 interface PlaceProps {
-  photo_location: string;
-  name: string;
-  place: string;
+  photo_location?: string;
+  name?: string;
+  place?: string;
   current: boolean;
-  id: string;
+  id?: string;
+  onPress?: any;
+  city?: string;
+  state?: string;
 }
 export function PlaceCard({
   photo_location,
@@ -19,15 +22,21 @@ export function PlaceCard({
   place,
   current,
   id,
+  onPress,
+  city,
+  state,
+  ...rest
 }: PlaceProps) {
   return (
-    <Container>
+    <Container {...rest} onPress={onPress}>
       <SliderImg source={{ uri: photo_location }} />
       <PlaceCurrent current={current}>
         {current ? "Aberto" : "Fechado"}
       </PlaceCurrent>
       <PlaceTitle>{name}</PlaceTitle>
-      <PlacePlace>{place}</PlacePlace>
+      <PlacePlace>
+        {city} - {state}
+      </PlacePlace>
     </Container>
   );
 }

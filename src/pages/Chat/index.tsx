@@ -6,13 +6,50 @@ import {
   Header,
   Input,
   MainView,
+  Map,
   Message,
   MessageBubble,
+  MessageView,
   Name,
   Pic,
 } from "./styles";
 
 export function Chat() {
+  const Messages = [
+    {
+      text: "Test",
+      status: "sent",
+    },
+    {
+      text: "Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ",
+      status: "sent",
+    },
+    {
+      text: "Test",
+      status: "sent",
+    },
+    {
+      text: "Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ",
+      status: "received",
+    },
+    {
+      text: "Test",
+      status: "sent",
+    },
+    {
+      text: "Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ",
+      status: "received",
+    },
+    {
+      text: "Test",
+      status: "sent",
+    },
+    {
+      text: "Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test ",
+      status: "received",
+    },
+  ];
+
   return (
     <Container>
       <Header>
@@ -29,26 +66,17 @@ export function Chat() {
         </VerticalView>
       </Header>
       <MainView>
-        <MessageBubble status="sent">
-          <Message status="sent">Test</Message>
-        </MessageBubble>
-        <MessageBubble status="received">
-          <Message status="received">test</Message>
-        </MessageBubble>
-        <MessageBubble status="received">
-          <Message status="received">test</Message>
-        </MessageBubble>
-        <MessageBubble status="received">
-          <Message status="received">test</Message>
-        </MessageBubble>
-        <MessageBubble status="sent">
-          <Message status="sent">
-            Test Test Test Test Test Test Test Test Test Test Test Test Test
-            Test Test Test Test Test Test Test Test Test Test Test Test Test
-            Test Test Test Test Test Test Test Test Test Test Test Test Test
-            Test Test{" "}
-          </Message>
-        </MessageBubble>
+        <MessageView>
+          <Map
+            data={Messages}
+            renderItem={({ item }) => (
+              <MessageBubble status={item.status}>
+                <Message status={item.status}>{item.text}</Message>
+              </MessageBubble>
+            )}
+          />
+        </MessageView>
+
         <Input
           placeholder="Digite uma mensagem..."
           placeholderTextColor={`${Theme.color.gray_70}`}

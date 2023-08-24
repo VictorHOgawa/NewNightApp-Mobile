@@ -2,6 +2,7 @@ import { styled } from "styled-components/native";
 import Theme from "../../styles/themes";
 import { RFValue } from "react-native-responsive-fontsize";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
+import { FlatList, FlatListProps } from "react-native";
 
 interface MessageProps {
   status: string;
@@ -37,7 +38,6 @@ export const Name = styled.Text`
 
 export const MainView = styled.View`
   flex: 1;
-  padding: 0 10px;
 `;
 
 export const Input = styled.TextInput`
@@ -49,6 +49,14 @@ export const Input = styled.TextInput`
   bottom: 50px;
   align-self: center;
   padding: ${RFValue(10)}px;
+`;
+
+export const MessageView = styled.ScrollView`
+  background-color: ${Theme.color.primary_100};
+  height: 200px;
+  margin-bottom: 25%;
+  padding-bottom: 5%;
+  padding: 0 10px;
 `;
 
 export const MessageBubble = styled.View<MessageProps>`
@@ -64,9 +72,21 @@ export const MessageBubble = styled.View<MessageProps>`
   background-color: ${({ status }) =>
     status === "received" ? Theme.color.gray_10 : Theme.color.secondary_100};
   margin-top: ${RFValue(10)}px;
+  &:last-child {
+    margin-bottom: ${RFValue(50)}px;
+  }
 `;
 
 export const Message = styled.Text<MessageProps>`
   color: ${({ status }) =>
     status === "received" ? Theme.color.secondary_100 : Theme.color.gray_10};
+`;
+
+export const Map = styled(
+  FlatList as new (props: FlatListProps<any>) => FlatList<any>
+).attrs({
+  showsHorizontalScrollIndicator: false,
+})`
+  width: 100%;
+  margin-top: 15px;
 `;

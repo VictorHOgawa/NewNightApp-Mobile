@@ -17,3 +17,13 @@ export const EventList = styled(
   margin-top: 15px;
   margin-left: 2%;
 `;
+
+export const Map = styled(
+  FlatList as new (props: FlatListProps<any>) => FlatList<any>
+).attrs({
+  showsHorizontalScrollIndicator: false,
+})`
+  width: 98%;
+  margin-top: 15px;
+  margin-left: 2%;
+`;

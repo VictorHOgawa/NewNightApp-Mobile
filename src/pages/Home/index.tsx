@@ -7,9 +7,12 @@ import { GlobalTitle } from "../../Components/Global/Title";
 import { EventLoading } from "../../Components/Loading/Home/EventLoading";
 import { EventCard } from "../../Components/Pages/Home/Events";
 import { getAPI } from "../../utils/api";
-import { Container, EventList } from "./styles";
+import { Container, EventList, Map } from "./styles";
+import { PlaceCard } from "../../Components/Pages/Home/Places";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export function Home() {
+  const places = [1, 2, 3, 4, 5, 6];
   const navigation = useNavigation<any>();
 
   const [event, setEvent] = useState<any>([]);
@@ -36,7 +39,9 @@ export function Home() {
   }, []);
 
   return (
-    <Container>
+    <Container
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
+    >
       <Header page="main" />
       <Ad />
       <GlobalTitle title="Eventos e Festas" />
@@ -68,26 +73,28 @@ export function Home() {
           )}
         </>
       </EventLoading>
-      {/* <GlobalTitle title="Lugares para Curtir" />
+      <GlobalTitle title="Lugares para Curtir" />
       <EventLoading loading={eventLoading}>
         <>
-          {place.length === 0 ? (
+          {event.length === 0 ? (
             <></>
           ) : (
             <View>
               <EventList
                 horizontal
-                data={place}
-                keyExtractor={(item) => item._id}
-                renderItem={({ item }) => (
+                data={event}
+                keyExtractor={(item: any) => item._id}
+                renderItem={({ item }: any) => (
                   <PlaceCard
-                    location={item.location}
+                    photo_location={item.photo_location}
                     name={item.name}
-                    place={item.place}
-                    current={item.current}
-                    id={item.id}
+                    place={item.local}
+                    current={item.sell}
+                    city={item.city.name}
+                    state={item.city.state}
+                    id={item._id}
                     onPress={() =>
-                      navigation.navigate("Restaurant", { id: item._id })
+                      navigation.navigate("Place", { id: item.id })
                     }
                   />
                 )}
@@ -95,7 +102,7 @@ export function Home() {
             </View>
           )}
         </>
-      </EventLoading> */}
+      </EventLoading>
     </Container>
   );
 }

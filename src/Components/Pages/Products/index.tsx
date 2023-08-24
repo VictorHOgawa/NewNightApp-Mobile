@@ -102,18 +102,8 @@ export function ProductCards() {
         />
         <Text> {""}Dúvidas? Veja esse Rápido Vídeo</Text>
       </Help>
-      <More onPress={() => setOpen(true)} />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={open}
-        onRequestClose={() => setOpen(false)}
-      >
-        <ModalBody>
-          <Test />
-          <Close onPress={() => setOpen(false)} />
-        </ModalBody>
-      </Modal>
+      <More type="product" />
+
       <Modal
         animationType="slide"
         transparent={true}
