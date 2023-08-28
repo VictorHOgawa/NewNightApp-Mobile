@@ -3,6 +3,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { TouchableOpacity } from "react-native";
 import { Entypo, Feather } from "@expo/vector-icons";
 import Theme from "../../../../styles/themes";
+import { FlatList, FlatListProps } from "react-native";
 
 // export const Container = styled(LinearGradient)`
 // margin-top: 10px;
@@ -55,4 +56,29 @@ export const LocationIcon = styled(Entypo)`
 export const Icon = styled(Feather)`
   font-size: 25px;
   color: ${Theme.color.gray_10};
+`;
+
+export const ModalBody = styled.View`
+  width: 100%;
+  height: 200px;
+  background-color: red;
+`;
+
+export const CityRow = styled.View`
+  flex-direction: row;
+  background-color: ${Theme.color.gray_10};
+`;
+
+export const CityText = styled.Text`
+  color: ${Theme.color.secondary_100};
+`;
+
+export const Map = styled(
+  FlatList as new (props: FlatListProps<any>) => FlatList<any>
+).attrs({
+  showsHorizontalScrollIndicator: false,
+})`
+  width: 98%;
+  margin-top: 15px;
+  margin-left: 1%;
 `;

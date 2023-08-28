@@ -1,23 +1,50 @@
 import moment from "moment";
+import "moment/locale/pt-br";
 import { Calendar } from "../../../Global/Calendar";
 import Theme from "../../../../styles/themes";
 import { Container, Icon, Info, Left, Text } from "./styles";
+import { useState, useEffect } from "react";
 
 interface IndividualProps {
-  open: boolean;
   date: Date;
-  local: string;
-  city: string;
-  state: string;
+  address: string;
+  city: any;
+  openTime: any;
 }
 
-export function Individual({
-  open,
-  date,
-  local,
-  city,
-  state,
-}: IndividualProps) {
+export function Individual({ date, address, city, openTime }: IndividualProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [test, setTest] = useState<any>();
+  const [loading, setLoading] = useState(true);
+  console.log("city: ", city);
+
+  useEffect(() => {
+    function formatTime() {
+      const currentDay = parseInt(moment().format("d")) - 1;
+      const currentTime = moment().format("HH:mm");
+
+      const currentOpenTime = openTime.find((day: any) => {
+        return day.day === currentDay;
+      });
+
+      if (currentOpenTime) {
+        if (
+          moment(currentTime, "HH:mm").isSameOrAfter(
+            moment(currentOpenTime.open_time, "HH:mm")
+          ) &&
+          moment(currentTime, "HH:mm").isSameOrBefore(
+            moment(currentOpenTime.close_time, "HH:mm")
+          )
+        ) {
+          setTest(currentOpenTime);
+          setIsOpen(true);
+          setLoading(false);
+        }
+      }
+    }
+
+    formatTime();
+  }, []);
   return (
     <Container>
       <Left>
@@ -30,15 +57,14 @@ export function Individual({
             <Text
               style={{
                 fontWeight: "bold",
-                color: open ? `${Theme.color.next}` : `${Theme.color.red_60}`,
+                color: isOpen ? `${Theme.color.next}` : `${Theme.color.red_60}`,
               }}
             >
               {""}
-              {open ? "Aberto" : "Fechado"}
+              {isOpen ? "Aberto" : "Fechado"}
             </Text>{" "}
             Das {""}
-            {moment(date).format("LT")} {""} até {""}{" "}
-            {moment(date).format("LT")}
+            {test?.open_time} {""} até {""} {test?.close_time}
           </Text>
         </Info>
         <Info>
@@ -48,10 +74,10 @@ export function Individual({
           <Text>
             {""}
             <Text style={{ fontWeight: "bold" }}>
-              {local} {""}
+              {address} {""}
             </Text>
             {""}
-            {city} - {state}
+            {city.name} - {city.state}
           </Text>
         </Info>
       </Left>

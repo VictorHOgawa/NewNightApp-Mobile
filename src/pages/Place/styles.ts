@@ -45,7 +45,5 @@ export const Map = styled(
 ).attrs({
   showsHorizontalScrollIndicator: false,
 })`
-  width: 98%;
-  margin-top: 15px;
-  margin-left: 2%;
+  width: 100%;
 `;

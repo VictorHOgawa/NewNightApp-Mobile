@@ -18,5 +18,5 @@ export const Container = styled.Image`
   border-radius: 10px;
   border-width: 1px;
   border-color: ${Theme.color.gray_10};
-  margin: ${RFValue(-50)}px ${RFValue(30)}px;
+  margin: ${RFValue(-50)}px ${RFValue(20)}px;
 `;

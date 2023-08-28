@@ -14,7 +14,6 @@ export function Form() {
 
   async function handleRegister(formData: any) {
     const connect = await PostAPI("/user/register", formData);
-    console.log(connect);
     if (connect.status !== 200) {
       return Alert.alert(connect.body);
     }

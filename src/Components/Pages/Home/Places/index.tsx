@@ -5,37 +5,63 @@ import {
   PlaceTitle,
   SliderImg,
 } from "./styles";
+import moment from "moment";
+import "moment/locale/pt-br";
+import { useState, useEffect } from "react";
 
 interface PlaceProps {
-  photo_location?: string;
+  photo?: string;
   name?: string;
-  place?: string;
-  current: boolean;
   id?: string;
   onPress?: any;
-  city?: string;
-  state?: string;
+  city?: any;
+  openTime?: any;
 }
 export function PlaceCard({
-  photo_location,
+  photo,
   name,
-  place,
-  current,
   id,
   onPress,
   city,
-  state,
+  openTime,
   ...rest
 }: PlaceProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    function formatTime() {
+      const currentDay = parseInt(moment().format("d")) - 1;
+      const currentTime = moment().format("HH:mm");
+
+      const currentOpenTime = openTime.find((day: any) => {
+        return day.day === currentDay;
+      });
+
+      if (currentOpenTime) {
+        if (
+          moment(currentTime, "HH:mm").isSameOrAfter(
+            moment(currentOpenTime.open_time, "HH:mm")
+          ) &&
+          moment(currentTime, "HH:mm").isSameOrBefore(
+            moment(currentOpenTime.close_time, "HH:mm")
+          )
+        ) {
+          setIsOpen(true);
+        }
+      }
+    }
+
+    formatTime();
+  }, []);
+
   return (
     <Container {...rest} onPress={onPress}>
-      <SliderImg source={{ uri: photo_location }} />
-      <PlaceCurrent current={current}>
-        {current ? "Aberto" : "Fechado"}
+      <SliderImg source={{ uri: photo }} />
+      <PlaceCurrent current={isOpen}>
+        {isOpen ? "Aberto" : "Fechado"}
       </PlaceCurrent>
       <PlaceTitle>{name}</PlaceTitle>
       <PlacePlace>
-        {city} - {state}
+        {city.name} - {city.state}
       </PlacePlace>
     </Container>
   );

@@ -2,11 +2,11 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { configRefresh, configToken } from "./tokenManagement";
 
-export const api_url = "http://192.168.10.38:3333";
-export const url = "https://night-server.onrender.com";
+export const amazonik = "http://192.168.10.47:3333";
+export const deployed = "https://night-server.onrender.com";
 
 export const api = axios.create({
-  baseURL: url,
+  baseURL: amazonik,
 });
 
 export const promoterApi = axios.create({

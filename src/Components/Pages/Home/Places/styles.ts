@@ -24,7 +24,7 @@ export const SliderImg = styled.Image`
 `;
 
 export const PlaceCurrent = styled.Text<CurrentProps>`
-  color: ${(current) =>
+  color: ${({ current }) =>
     current ? Theme.color.confirmation : Theme.color.red_70};
 `;
 

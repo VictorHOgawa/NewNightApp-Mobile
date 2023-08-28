@@ -12,30 +12,35 @@ import { PlaceCard } from "../../Components/Pages/Home/Places";
 import { RFValue } from "react-native-responsive-fontsize";
 
 export function Home() {
-  const places = [1, 2, 3, 4, 5, 6];
   const navigation = useNavigation<any>();
 
   const [event, setEvent] = useState<any>([]);
   const [eventLoading, setEventLoading] = useState(true);
-  const [place, setPlace] = useState<any>([]);
+  const [placesLoading, setPlacesLoading] = useState(true);
+  const [places, setPlaces] = useState<any>([]);
 
   async function getEvents() {
-    const [event, place] = await Promise.all([
-      getAPI("/event"),
-      getAPI("/place"),
-    ]);
-    if (event.status === 200) {
-      setEvent(event.body.events);
-      return setEventLoading(false);
-    }
-    if (place.status === 200) {
-      setPlace(place.body.places);
+    const connect = await getAPI("/event");
+    if (connect.status === 200) {
+      setEvent(connect.body.events);
       return setEventLoading(false);
     }
   }
 
   useEffect(() => {
     getEvents();
+  }, []);
+
+  async function getPlaces() {
+    const connect = await getAPI("/places");
+    if (connect.status === 200) {
+      setPlaces(connect.body.places);
+      return setPlacesLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getPlaces();
   }, []);
 
   return (
@@ -82,17 +87,15 @@ export function Home() {
             <View>
               <EventList
                 horizontal
-                data={event}
+                data={places}
                 keyExtractor={(item: any) => item._id}
                 renderItem={({ item }: any) => (
                   <PlaceCard
-                    photo_location={item.photo_location}
+                    photo={item.photo[0].photo_location}
                     name={item.name}
-                    place={item.local}
-                    current={item.sell}
-                    city={item.city.name}
-                    state={item.city.state}
+                    city={item.city}
                     id={item._id}
+                    openTime={item.openTime}
                     onPress={() =>
                       navigation.navigate("Place", { id: item.id })
                     }

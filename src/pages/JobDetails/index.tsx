@@ -11,7 +11,6 @@ import { More } from "../../Components/Global/More";
 
 export function JobDetails() {
   const { type } = useRoute().params as any;
-  console.log("type: ", type);
   return (
     <>
       <Container>

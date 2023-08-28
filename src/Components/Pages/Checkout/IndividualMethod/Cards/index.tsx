@@ -28,12 +28,6 @@ export function CardMethod() {
     addressNumber: "",
   });
 
-  console.log("formData :", formData);
-  console.log("selected :", selected);
-  console.log("newCard :", newCard);
-  console.log("stepTwo :", stepTwo);
-  console.log("installments :", installments);
-
   function handleBack() {
     if (installments && !newCard && !stepTwo) {
       return setInstallments(false);

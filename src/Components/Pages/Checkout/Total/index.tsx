@@ -25,8 +25,6 @@ export function Total() {
     setFullTotal(ticketTotal + productTotal);
   }, []);
 
-  console.log("cart: ", cart);
-
   const [seeAll, setSeeAll] = useState(false);
   return (
     <Container>

@@ -39,7 +39,7 @@ export const Map = styled(
 })`
   width: 98%;
   margin-top: 15px;
-  margin-left: 2%;
+  margin-left: 1%;
 `;
 
 export const Text = styled.Text`
