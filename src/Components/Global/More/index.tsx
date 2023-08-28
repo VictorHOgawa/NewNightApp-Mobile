@@ -1,10 +1,10 @@
-import { Container, Icon, Input, ModalBody } from "./styles";
 import { useState } from "react";
 import { Modal } from "react-native";
-import { BackButton } from "../Back";
-import { LineBreak } from "../LineBreak";
-import { GlobalTitle } from "../Title";
 import Theme from "../../../styles/themes";
+import { BackButton } from "../Back";
+import { Button } from "../Button";
+import { GlobalTitle } from "../Title";
+import { Container, Icon, Input, ModalBody } from "./styles";
 
 interface MoreProps {
   type?: string;
@@ -29,6 +29,13 @@ export function More({ type, ...rest }: MoreProps) {
           <Input
             placeholder="EX: Carol20"
             placeholderTextColor={Theme.color.gray_10}
+          />
+          <Button
+            title="Confirmar"
+            background={`${Theme.color.confirmation}`}
+            color={`${Theme.color.secondary_100}`}
+            onPress={() => setOpen(false)}
+            height={30}
           />
         </ModalBody>
       </Modal>
