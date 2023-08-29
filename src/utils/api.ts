@@ -1,12 +1,11 @@
 import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { configRefresh, configToken } from "./tokenManagement";
+import { configRefresh, configToken, storageToken } from "./tokenManagement";
 
 export const amazonik = "http://192.168.10.47:3333";
 export const deployed = "https://night-server.onrender.com";
 
 export const api = axios.create({
-  baseURL: amazonik,
+  baseURL: deployed,
 });
 
 export const promoterApi = axios.create({
@@ -194,27 +193,12 @@ export const authDeleteAPI = async (url: string) => {
 export const loginVerifyAPI = async () => {
   const token = await configToken();
   const refreshToken = await configRefresh();
-
   if (token == 400 || refreshToken == 400) {
     return 400;
   }
 
-  const requisition = await api
-    .get("/verifytoken", token)
-    .then(async ({ data }) => {
-      return { status: 200, body: "" };
-    })
-    .catch((err) => {
-      const message = err.response.data;
-      const status = err.response.status;
-      return { status: status, body: message };
-    });
-
-  if (requisition.status === 200) {
-    return 200;
-  }
   const newToken = await api
-    .get("/token", refreshToken)
+    .patch("/user/refresh", {}, refreshToken)
     .then(async ({ data }) => {
       return { status: 200, body: "" };
     })
@@ -226,9 +210,10 @@ export const loginVerifyAPI = async () => {
   if (newToken.status != 200) {
     return 400;
   }
-  await AsyncStorage.setItem(
-    "@getapp:userToken",
-    JSON.stringify(newToken.body)
-  );
+  console.log("chegou");
+
+  await storageToken(newToken.body);
+  console.log("chegou aqui");
+
   return 200;
 };

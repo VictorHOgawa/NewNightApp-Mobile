@@ -1,11 +1,12 @@
+import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import { useEffect } from "react";
+import { LogBox } from "react-native";
 import "react-native-gesture-handler";
 import CartProvider from "./src/context/cart";
-import { useEffect } from "react";
-import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import { Routes } from "./src/routes";
-import { LogBox } from "react-native";
-LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+
 LogBox.ignoreAllLogs(); //Ignore all log notifications
+console.error = () => {};
 export default function App() {
   useEffect(() => {
     (async () => {

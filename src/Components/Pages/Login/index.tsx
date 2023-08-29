@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
 import Theme from "../../../styles/themes";
@@ -17,7 +17,8 @@ export function Form() {
       return Alert.alert(connect.body);
     }
     await storageToken(connect.body);
-    return navigation.navigate("Home");
+
+    return navigation.dispatch(StackActions.replace("Home"));
   }
 
   return (

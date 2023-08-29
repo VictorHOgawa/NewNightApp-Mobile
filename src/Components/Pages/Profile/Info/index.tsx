@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import Theme from "../../../../styles/themes";
 import { Button } from "../../../Global/Button";
@@ -6,6 +7,14 @@ import { Container, NightPremium } from "./styles";
 
 export function Info() {
   const navigation = useNavigation<any>();
+  async function logOut() {
+    await AsyncStorage.removeItem("@nightapp:userToken");
+    await AsyncStorage.removeItem("@nightapp:userRefreshToken");
+    const token = await AsyncStorage.getItem("@nightapp:userToken");
+    console.log("token: ", token);
+    navigation.navigate("Home");
+  }
+
   return (
     <Container>
       <GlobalTitle title="Informações" />
@@ -40,6 +49,7 @@ export function Info() {
         color={`${Theme.color.gray_10}`}
         width={310}
         height={30}
+        onPress={logOut}
       />
     </Container>
   );

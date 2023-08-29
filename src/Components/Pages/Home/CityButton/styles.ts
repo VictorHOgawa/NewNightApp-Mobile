@@ -1,9 +1,8 @@
-import styled from "styled-components/native";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { TouchableOpacity } from "react-native";
 import { Entypo, Feather } from "@expo/vector-icons";
-import Theme from "../../../../styles/themes";
 import { FlatList, FlatListProps } from "react-native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import styled from "styled-components/native";
+import Theme from "../../../../styles/themes";
 
 // export const Container = styled(LinearGradient)`
 // margin-top: 10px;
@@ -60,17 +59,22 @@ export const Icon = styled(Feather)`
 
 export const ModalBody = styled.View`
   width: 100%;
-  height: 200px;
+  height: ${RFPercentage(60)}px;
   background-color: red;
+  margin-top: 60%;
 `;
 
 export const CityRow = styled.View`
   flex-direction: row;
   background-color: ${Theme.color.gray_10};
+  align-items: center;
+  justify-content: center;
+  margin-top: ${RFPercentage(5)}px;
 `;
 
 export const CityText = styled.Text`
   color: ${Theme.color.secondary_100};
+  font-size: ${RFValue(25)}px;
 `;
 
 export const Map = styled(

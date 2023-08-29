@@ -1,44 +1,40 @@
-import { useNavigation } from "@react-navigation/native";
-import { Button } from "../../Components/Global/Button";
-import { Header } from "../../Components/Global/Header";
-import { HorizontalView } from "../../Components/Global/View/HorizontalView";
-import Theme from "../../styles/themes";
-import { Container, Logo } from "./styles";
-import { LineBreak } from "../../Components/Global/LineBreak";
-import { GlobalTitle } from "../../Components/Global/Title";
-import { Info } from "../../Components/Pages/Profile/Info";
+import { useEffect, useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
+import { LineBreak } from "../../Components/Global/LineBreak";
+import { LoginValidation } from "../../Components/Global/Login";
+import { Info } from "../../Components/Pages/Profile/Info";
+import { loginVerifyAPI } from "../../utils/api";
+import { Container, Logo } from "./styles";
 
 export function Profile() {
-  const navigation = useNavigation<any>();
+  const [logged, setLogged] = useState(false);
+
+  async function handleVerify() {
+    const verify = await loginVerifyAPI();
+    console.log("verify: ", verify);
+    if (verify === 200) {
+      return setLogged(true);
+    }
+    setLogged(false);
+  }
+
+  useEffect(() => {
+    handleVerify();
+  }, []);
+
   return (
     <Container
       contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
     >
       <Logo source={require("../../../assets/Global/Logo2.png")} />
-
-      <HorizontalView style={{ justifyContent: "space-around" }}>
-        <Button
-          title="Entrar"
-          background={`${Theme.color.primary_80}`}
-          color={`${Theme.color.gray_10}`}
-          width={150}
-          height={50}
-          fontSize={18}
-          onPress={() => navigation.navigate("Login")}
-        />
-        <Button
-          title="Se Cadastrar"
-          background={`${Theme.color.primary_80}`}
-          color={`${Theme.color.gray_10}`}
-          width={150}
-          height={50}
-          fontSize={18}
-          onPress={() => navigation.navigate("Register")}
-        />
-      </HorizontalView>
-      <LineBreak />
-      <Info />
+      {logged ? (
+        <>
+          <LineBreak />
+          <Info />
+        </>
+      ) : (
+        <LoginValidation />
+      )}
     </Container>
   );
 }

@@ -1,7 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { Ad } from "../../Components/Global/Ad";
-import { Header } from "../../Components/Global/Header";
+import { LoginValidation } from "../../Components/Global/Login";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
+import { loginVerifyAPI } from "../../utils/api";
 import { Btn, Container, Img, Logo } from "./styles";
 
 export function Purchased() {
@@ -24,30 +26,53 @@ export function Purchased() {
       onPress: () => navigation.navigate("vip"),
     },
   ];
+  const [logged, setLogged] = useState(false);
+
+  async function handleVerify() {
+    const verify = await loginVerifyAPI();
+    console.log("verify: ", verify);
+    if (verify === 200) {
+      return setLogged(true);
+    }
+    setLogged(false);
+  }
+
+  useEffect(() => {
+    handleVerify();
+  }, []);
+
   return (
     <Container>
       <Logo source={require("../../../assets/Global/Logo2.png")} />
-      <Ad />
-      <HorizontalView
-        style={{
-          flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Btn onPress={() => navigation.navigate("Tickets")}>
-          <Img source={require("../../../assets/Purchased/Tickets.png")} />
-        </Btn>
-        <Btn onPress={() => navigation.navigate("Products")}>
-          <Img source={require("../../../assets/Purchased/Products.png")} />
-        </Btn>
-        <Btn onPress={() => navigation.navigate("Suggestions")}>
-          <Img source={require("../../../assets/Purchased/Suggestions.png")} />
-        </Btn>
-        <Btn onPress={() => navigation.navigate("vip")}>
-          <Img source={require("../../../assets/Purchased/VIP.png")} />
-        </Btn>
-      </HorizontalView>
+      {logged ? (
+        <>
+          <Ad />
+          <HorizontalView
+            style={{
+              flexWrap: "wrap",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Btn onPress={() => navigation.navigate("Tickets")}>
+              <Img source={require("../../../assets/Purchased/Tickets.png")} />
+            </Btn>
+            <Btn onPress={() => navigation.navigate("Products")}>
+              <Img source={require("../../../assets/Purchased/Products.png")} />
+            </Btn>
+            <Btn onPress={() => navigation.navigate("Suggestions")}>
+              <Img
+                source={require("../../../assets/Purchased/Suggestions.png")}
+              />
+            </Btn>
+            <Btn onPress={() => navigation.navigate("vip")}>
+              <Img source={require("../../../assets/Purchased/VIP.png")} />
+            </Btn>
+          </HorizontalView>
+        </>
+      ) : (
+        <LoginValidation />
+      )}
     </Container>
   );
 }
