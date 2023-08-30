@@ -1,6 +1,6 @@
 import { Container } from "./styles";
 
-interface TabProps {
+interface TabProps extends React.ComponentProps<typeof Container> {
   active: boolean;
 }
 

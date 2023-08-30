@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { Animated } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
-import { Container, EventCard, EventImage, Title } from "./styles";
 import Theme from "../../../../styles/themes";
+import { Container, EventCard, EventImage, Title } from "./styles";
 
 export function EventLoading({ loading, children }: any): any {
   const opacity = useRef(new Animated.Value(0.3));

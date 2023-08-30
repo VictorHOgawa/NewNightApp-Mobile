@@ -1,4 +1,8 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
 import Theme from "../../../styles/themes";
@@ -11,6 +15,8 @@ import { Container, Remember, Title } from "./styles";
 export function Form() {
   const navigation = useNavigation<any>();
   const { control, handleSubmit } = useForm();
+  const { page } = useRoute().params as any;
+
   async function handleLogin(formData: any) {
     const connect = await PostAPI("/user/login", formData);
     if (connect.status !== 200) {
@@ -18,7 +24,9 @@ export function Form() {
     }
     await storageToken(connect.body);
 
-    return navigation.dispatch(StackActions.replace("Home"));
+    return page
+      ? navigation.dispatch(StackActions.replace(page))
+      : navigation.dispatch(StackActions.replace("Home"));
   }
 
   return (

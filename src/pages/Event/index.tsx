@@ -1,22 +1,22 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
+import { LineBreak } from "../../Components/Global/LineBreak";
+import { Tabs } from "../../Components/Global/Tabs";
 import { GlobalTitle } from "../../Components/Global/Title";
+import { HorizontalView } from "../../Components/Global/View/HorizontalView";
 import { Buttons } from "../../Components/Pages/Event/Buttons";
 import { Description } from "../../Components/Pages/Event/Description";
 import { Individual } from "../../Components/Pages/Event/Individual";
-import { getAPI } from "../../utils/api";
-import { Banner, ButtonGroup, Container, Icon, Image, Text } from "./styles";
-import { Video } from "../../Components/Pages/Event/Video";
-import { Button } from "../../Components/Global/Button";
-import Theme from "../../styles/themes";
-import { LineBreak } from "../../Components/Global/LineBreak";
-import { Tabs } from "../../Components/Global/Tabs";
 import { StepOne } from "../../Components/Pages/Event/Tickets/Steps/1";
-import { HorizontalView } from "../../Components/Global/View/HorizontalView";
 import { StepTwo } from "../../Components/Pages/Event/Tickets/Steps/2";
-import { Alert } from "react-native";
+import { Video } from "../../Components/Pages/Event/Video";
 import { useCart } from "../../context/cart";
+import Theme from "../../styles/themes";
+import { getAPI, loginVerifyAPI } from "../../utils/api";
+import { Banner, ButtonGroup, Container, Icon, Image, Text } from "./styles";
 
 export function Event() {
   const navigation = useNavigation<any>();
@@ -25,6 +25,7 @@ export function Event() {
   const { id } = useRoute().params as any;
   const [step, setStep] = useState(1);
   const [type, setType] = useState("");
+  const [logged, setLogged] = useState(false);
   const { cart } = useCart();
 
   async function getEventInfo() {
@@ -40,6 +41,17 @@ export function Event() {
       getEventInfo();
     }
   }, [id]);
+
+  async function handleVerify() {
+    const verify = await loginVerifyAPI();
+    if (verify === 200) {
+      setLogged(true);
+    }
+  }
+
+  useEffect(() => {
+    handleVerify();
+  }, []);
 
   const handleNext = () => {
     if (type !== "") {
@@ -60,7 +72,9 @@ export function Event() {
       (step === 2 && type === "" && cart.ticket.ticket.length !== 0) ||
       cart.product.length !== 0
     ) {
-      return navigation.navigate("Checkout");
+      logged
+        ? navigation.navigate("Checkout")
+        : navigation.navigate("Login", { page: "Checkout" });
     }
   };
 

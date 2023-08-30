@@ -1,19 +1,20 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { AppRoutes } from "./NavBar.routes";
-import { Checkout } from "../pages/Checkout";
-import { Login } from "../pages/Login";
-import { Event } from "../pages/Event";
-import { Register } from "../pages/Register";
-import { Purchased } from "../pages/Purchased";
-import { Shop } from "../pages/Shop";
-import { Profile } from "../pages/Profile";
-import { Tickets } from "../pages/Tickets";
-import { Products } from "../pages/Products";
-import { Place } from "../pages/Place";
-import { MyMatches } from "../pages/MyMatches";
 import { Chat } from "../pages/Chat";
-import { Jobs } from "../pages/Jobs";
+import { Checkout } from "../pages/Checkout";
+import { Event } from "../pages/Event";
 import { JobDetails } from "../pages/JobDetails";
+import { Jobs } from "../pages/Jobs";
+import { Login } from "../pages/Login";
+import { MatchRegister } from "../pages/MatchRegister";
+import { MyMatches } from "../pages/MyMatches";
+import { Place } from "../pages/Place";
+import { Products } from "../pages/Products";
+import { Profile } from "../pages/Profile";
+import { Purchased } from "../pages/Purchased";
+import { Register } from "../pages/Register";
+import { Shop } from "../pages/Shop";
+import { Tickets } from "../pages/Tickets";
+import { AppRoutes } from "./NavBar.routes";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -28,6 +29,7 @@ export function StackRoutes() {
         },
       }}
     >
+      <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Home" component={AppRoutes} />
       <Screen name="Profile" component={Profile} />
       <Screen name="Place" component={Place} />
