@@ -5,6 +5,7 @@ import { Event } from "../pages/Event";
 import { JobDetails } from "../pages/JobDetails";
 import { Jobs } from "../pages/Jobs";
 import { Login } from "../pages/Login";
+import { Match } from "../pages/Match";
 import { MatchRegister } from "../pages/MatchRegister";
 import { MyMatches } from "../pages/MyMatches";
 import { Place } from "../pages/Place";
@@ -29,6 +30,7 @@ export function StackRoutes() {
         },
       }}
     >
+      <Screen name="Match" component={Match} />
       <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Home" component={AppRoutes} />
       <Screen name="Profile" component={Profile} />
