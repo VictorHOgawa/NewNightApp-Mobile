@@ -16,7 +16,6 @@ export function Individual({ date, address, city, openTime }: IndividualProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [test, setTest] = useState<any>();
   const [loading, setLoading] = useState(true);
-  console.log("city: ", city);
 
   useEffect(() => {
     function formatTime() {

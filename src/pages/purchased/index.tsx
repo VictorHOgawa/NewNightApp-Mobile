@@ -30,7 +30,6 @@ export function Purchased() {
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
-    console.log("verify: ", verify);
     if (verify === 200) {
       return setLogged(true);
     }

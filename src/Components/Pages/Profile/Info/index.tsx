@@ -11,7 +11,6 @@ export function Info() {
     await AsyncStorage.removeItem("@nightapp:userToken");
     await AsyncStorage.removeItem("@nightapp:userRefreshToken");
     const token = await AsyncStorage.getItem("@nightapp:userToken");
-    console.log("token: ", token);
     navigation.navigate("Home");
   }
 

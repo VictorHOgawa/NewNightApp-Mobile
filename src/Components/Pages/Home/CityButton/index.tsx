@@ -17,11 +17,12 @@ export function CityButton({ selected }: Props) {
   const [list, setList] = useState<any>();
 
   async function getCities() {
-    const connect = await getAPI("/city");
-    if (connect.status === 200) {
-      setList(connect.body.city.map((item: any) => item.city));
-      return setLoading(false);
-    }
+    // const connect = await getAPI("/city");
+    // console.log("list: ", list);
+    // if (connect.status === 200) {
+    //   setList(connect.body);
+    //   return setLoading(false);
+    // }
   }
 
   useEffect(() => {
@@ -39,9 +40,9 @@ export function CityButton({ selected }: Props) {
           <Button onPress={showActionSheetCity}>
             <LocationIcon name="location-pin" />
             <Title>
-              {/* {city.name != "Cidades"
-                  ? `${city.name} - ${city.state}`
-                  : city.name} */}
+              {/* {list.name != "Cidades"
+                ? `${list.name} - ${list.state}`
+                : list.name} */}
             </Title>
             <Icon name="chevron-down" />
           </Button>

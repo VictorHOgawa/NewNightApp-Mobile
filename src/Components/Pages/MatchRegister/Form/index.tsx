@@ -51,7 +51,6 @@ export function Form({
           "Selecione um Modelo de Descrição, ou Adicione uma Descrição própria"
         )
       : navigation.navigate("Match");
-    return console.log("entrou 1");
   };
 
   return (

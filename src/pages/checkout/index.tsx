@@ -9,30 +9,45 @@ import { IndividualMethod } from "../../Components/Pages/Checkout/IndividualMeth
 import { Method } from "../../Components/Pages/Checkout/Method";
 import { Title } from "../../Components/Pages/Checkout/Title";
 import { Total } from "../../Components/Pages/Checkout/Total";
-import { loginVerifyAPI } from "../../utils/api";
+import { AuthPostAPI, loginVerifyAPI } from "../../utils/api";
 import { Container, Safe } from "./styles";
+import { useCart } from "../../context/cart";
 
 export function Checkout() {
+  const { cart } = useCart();
   const navigation = useNavigation<any>();
   const [selected, setSelected] = useState("Pix");
-  const [logged, setLogged] = useState(false);
+  const [loading, setLoading] = useState(true);
   async function handleVerify() {
     const verify = await loginVerifyAPI();
     if (verify !== 200) {
       Alert.alert("Realize o Login antes de Prosseguir");
       return navigation.navigate("Login", { page: "Checkout" });
     }
-    setLogged(true);
     return;
+  }
+
+  async function handleCart() {
+    const connect = await AuthPostAPI("/purchase/cart", {
+      ...cart,
+      coupon: "",
+    });
+    setLoading(false);
   }
 
   useEffect(() => {
     handleVerify();
   }, []);
 
+  useEffect(() => {
+    handleCart();
+  }, []);
+
   return (
     <Container>
-      {logged ? (
+      {loading ? (
+        <LoadingIn />
+      ) : (
         <>
           <LoadingOut />
           <Header />
@@ -41,11 +56,9 @@ export function Checkout() {
           <Method selected={selected} setSelected={setSelected} />
           <IndividualMethod selected={selected} />
           <LineBreak />
-          <Total />
+          <Total selected={selected} />
           <Safe source={require("../../../assets/Checkout/Safe.png")} />
         </>
-      ) : (
-        <LoadingIn />
       )}
     </Container>
   );

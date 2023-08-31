@@ -30,9 +30,9 @@ export function StackRoutes() {
         },
       }}
     >
-      <Screen name="Match" component={Match} />
-      <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Home" component={AppRoutes} />
+      <Screen name="MatchRegister" component={MatchRegister} />
+      <Screen name="Match" component={Match} />
       <Screen name="Profile" component={Profile} />
       <Screen name="Place" component={Place} />
       <Screen name="Tickets" component={Tickets} />

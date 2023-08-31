@@ -5,7 +5,7 @@ export const amazonik = "http://192.168.10.47:3333";
 export const deployed = "https://night-server.onrender.com";
 
 export const api = axios.create({
-  baseURL: deployed,
+  baseURL: amazonik,
 });
 
 export const promoterApi = axios.create({
@@ -210,10 +210,8 @@ export const loginVerifyAPI = async () => {
   if (newToken.status != 200) {
     return 400;
   }
-  console.log("chegou");
 
   await storageToken(newToken.body);
-  console.log("chegou aqui");
 
   return 200;
 };

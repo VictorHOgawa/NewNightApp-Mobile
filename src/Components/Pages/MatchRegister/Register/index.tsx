@@ -62,12 +62,10 @@ export function Register() {
       Alert.alert("Adicione uma Descrição, ou selecione um Modelo já pronto");
     }
     if (step === 3 && description !== "") {
-      console.log("entrou 2");
       navigation.navigate("Match");
     }
   };
 
-  console.log("description: ", description);
   const handleBack = () => {
     step === 1
       ? navigation.goBack()
@@ -80,7 +78,6 @@ export function Register() {
       : null;
   };
 
-  console.log("formData: ", formData);
   return (
     <Container style={{ marginTop: "30%" }}>
       <Top>

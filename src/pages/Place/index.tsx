@@ -24,7 +24,6 @@ export function Place() {
   const { id } = useRoute().params as any;
   const [loading, setLoading] = useState(true);
   const [place, setPlace] = useState<any>();
-  console.log("place: ", place);
   async function getPlaceDetails() {
     const connect = await getAPI(`/places/${id}`);
     if (connect.status === 200) {
