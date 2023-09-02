@@ -7,6 +7,8 @@ import { LineBreak } from "../../Components/Global/LineBreak";
 import { Tabs } from "../../Components/Global/Tabs";
 import { GlobalTitle } from "../../Components/Global/Title";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
+import { LoadingIn } from "../../Components/Loading/LoadingIn";
+import { LoadingOut } from "../../Components/Loading/LoadingOut";
 import { Buttons } from "../../Components/Pages/Event/Buttons";
 import { Description } from "../../Components/Pages/Event/Description";
 import { Individual } from "../../Components/Pages/Event/Individual";
@@ -79,21 +81,23 @@ export function Event() {
   };
 
   return (
-    <Container contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
-      <Header />
-      <Image source={{ uri: eventDetails?.photo_location }} />
-      <GlobalTitle title={eventDetails?.name} />
-      <Buttons />
-      <Individual
-        date={eventDetails?.date}
-        local={eventDetails?.local}
-        city={eventDetails?.city.name}
-        state={eventDetails?.city.state}
-      />
+    <Container>
       {loading ? (
-        <></>
+        <LoadingIn />
       ) : (
         <>
+          <LoadingOut />
+          <Header />
+          <Image source={{ uri: eventDetails?.photo_location }} />
+          <GlobalTitle title={eventDetails?.name} />
+          <Buttons />
+          <Individual
+            date={eventDetails?.date}
+            local={eventDetails?.local}
+            city={eventDetails?.city.name}
+            state={eventDetails?.city.state}
+          />
+
           {step === 1 && eventDetails?.ticketSlots.length === 0 ? (
             <Text style={{ alignSelf: "center", textAlign: "center" }}>
               Nenhum ingresso disponível
@@ -118,12 +122,7 @@ export function Event() {
               setType={setType}
             />
           )}
-        </>
-      )}
-      {loading ? (
-        <></>
-      ) : (
-        <>
+
           <HorizontalView
             style={{
               alignSelf: "center",
@@ -161,51 +160,50 @@ export function Event() {
               }
             />
           </HorizontalView>
-        </>
-      )}
-      <Banner />
-      {loading ? (
-        <></>
-      ) : (
-        <>
+
+          <Banner />
+
           <Description description={eventDetails?.description[0]} />
           <Video video={eventDetails?.video} />
+
+          <ButtonGroup>
+            <Button
+              background={`${Theme.color.confirmation}`}
+              color={`${Theme.color.background}`}
+              title=" Escolher Meus Ingressos"
+              width={200}
+              height={30}
+              fontSize={12}
+            >
+              <Icon
+                source={require("../../../assets/Global/Icons/ticketIcon.png")}
+              />
+            </Button>
+            <Button
+              background={`${Theme.color.primary_80}`}
+              title=""
+              width={50}
+              height={30}
+            >
+              <Icon
+                source={require("../../../assets/Global/Icons/sendIcon.png")}
+              />
+            </Button>
+          </ButtonGroup>
+          <LineBreak />
+          {eventDetails?.description.length === 1 ? (
+            <></>
+          ) : (
+            eventDetails?.description
+              .slice(1)
+              .map((item: { name: string; description: string }) => (
+                <>
+                  <Description description={item} />
+                  <LineBreak />
+                </>
+              ))
+          )}
         </>
-      )}
-      <ButtonGroup>
-        <Button
-          background={`${Theme.color.confirmation}`}
-          color={`${Theme.color.background}`}
-          title=" Escolher Meus Ingressos"
-          width={200}
-          height={30}
-          fontSize={12}
-        >
-          <Icon
-            source={require("../../../assets/Global/Icons/ticketIcon.png")}
-          />
-        </Button>
-        <Button
-          background={`${Theme.color.primary_80}`}
-          title=""
-          width={50}
-          height={30}
-        >
-          <Icon source={require("../../../assets/Global/Icons/sendIcon.png")} />
-        </Button>
-      </ButtonGroup>
-      <LineBreak />
-      {eventDetails?.description.length === 1 ? (
-        <></>
-      ) : (
-        eventDetails?.description
-          .slice(1)
-          .map((item: { name: string; description: string }) => (
-            <>
-              <Description description={item} />
-              <LineBreak />
-            </>
-          ))
       )}
     </Container>
   );

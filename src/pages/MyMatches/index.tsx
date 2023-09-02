@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { LoginValidation } from "../../Components/Global/Login";
+import { LoadingIn } from "../../Components/Loading/LoadingIn";
+import { LoadingOut } from "../../Components/Loading/LoadingOut";
 import { Chat } from "../../Components/Pages/MyMatches/Chat";
 import { Crew } from "../../Components/Pages/MyMatches/Crew";
 import { Matched } from "../../Components/Pages/MyMatches/Matched";
@@ -8,13 +10,14 @@ import { Container, Logo, MainView } from "./styles";
 
 export function MyMatches() {
   const [logged, setLogged] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
     if (verify === 200) {
-      return setLogged(true);
+      setLogged(true);
     }
-    setLogged(false);
+    return setLoading(false);
   }
 
   useEffect(() => {
@@ -22,17 +25,24 @@ export function MyMatches() {
   }, []);
   return (
     <Container>
-      <Logo source={require("../../../assets/Global/Logo2.png")} />
-      {logged ? (
-        <>
-          <MainView>
-            <Matched />
-            <Crew />
-            <Chat />
-          </MainView>
-        </>
+      {loading ? (
+        <LoadingIn />
       ) : (
-        <LoginValidation />
+        <>
+          <LoadingOut />
+          <Logo source={require("../../../assets/Global/Logo2.png")} />
+          {logged ? (
+            <>
+              <MainView>
+                <Matched />
+                <Crew />
+                <Chat />
+              </MainView>
+            </>
+          ) : (
+            <LoginValidation />
+          )}
+        </>
       )}
     </Container>
   );

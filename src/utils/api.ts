@@ -5,7 +5,7 @@ export const amazonik = "http://192.168.10.47:3333";
 export const deployed = "https://night-server.onrender.com";
 
 export const api = axios.create({
-  baseURL: amazonik,
+  baseURL: deployed,
 });
 
 export const promoterApi = axios.create({

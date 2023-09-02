@@ -1,5 +1,6 @@
 import { BackButton } from "../../Components/Global/Back";
 import { VerticalView } from "../../Components/Global/View/VerticalView";
+import { LoadingFull } from "../../Components/Loading/LoadingFull";
 import Theme from "../../styles/themes";
 import {
   Container,
@@ -52,6 +53,7 @@ export function Chat() {
 
   return (
     <Container>
+      <LoadingFull />
       <Header>
         <BackButton style={{ position: "absolute", left: 0 }} />
         <VerticalView

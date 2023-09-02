@@ -6,7 +6,7 @@ import { Button } from "../Button";
 import { GlobalTitle } from "../Title";
 import { Container, Icon, Input, ModalBody } from "./styles";
 
-interface MoreProps {
+interface MoreProps extends React.ComponentProps<typeof Container> {
   type?: string;
 }
 

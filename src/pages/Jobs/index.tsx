@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "../../Components/Global/Header";
 import { GlobalTitle } from "../../Components/Global/Title";
+import { LoadingFull } from "../../Components/Loading/LoadingFull";
 import { Container, Map, NightPremium, PremiumButton } from "./styles";
 
 export function Jobs() {
@@ -27,6 +28,7 @@ export function Jobs() {
   ];
   return (
     <Container>
+      <LoadingFull />
       <Header />
       <Map
         data={Jobs}

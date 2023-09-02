@@ -1,19 +1,21 @@
 import { useRoute } from "@react-navigation/native";
-import { Container, Help, Icon, Image, JobCard, Text } from "./styles";
+import { Ad } from "../../Components/Global/Ad";
+import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
+import { More } from "../../Components/Global/More";
 import { GlobalTitle } from "../../Components/Global/Title";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
-import { Button } from "../../Components/Global/Button";
-import Theme from "../../styles/themes";
 import { VerticalView } from "../../Components/Global/View/VerticalView";
-import { Ad } from "../../Components/Global/Ad";
-import { More } from "../../Components/Global/More";
+import { LoadingFull } from "../../Components/Loading/LoadingFull";
+import Theme from "../../styles/themes";
+import { Container, Help, Icon, Image, JobCard, Text } from "./styles";
 
 export function JobDetails() {
   const { type } = useRoute().params as any;
   return (
     <>
       <Container>
+        <LoadingFull />
         <Header />
         <Ad />
         <GlobalTitle title={"Jobs - " + type} />

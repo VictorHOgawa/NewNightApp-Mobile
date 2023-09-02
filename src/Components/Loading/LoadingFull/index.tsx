@@ -4,83 +4,51 @@ import Theme from "../../../styles/themes";
 import { Logo } from "./styles";
 export function LoadingFull() {
   const mainOpacity = useRef(new Animated.Value(1));
-  const logoOpacity = useRef(new Animated.Value(1));
+  const logoOpacity = useRef(new Animated.Value(0.5));
   const scale = useRef(new Animated.Value(1.2));
   const zIndex = useRef(new Animated.Value(2));
+
   useEffect(() => {
-    // Animated.loop(
-    //   Animated.sequence([
-    //     Animated.timing(opacity.current, {
-    //       toValue: 1,
-    //       useNativeDriver: true,
-    //       duration: 500,
-    //     }),
-    //     Animated.timing(scale.current, {
-    //       toValue: 1.2,
-    //       useNativeDriver: true,
-    //       duration: 500,
-    //     }),
-    //     Animated.timing(opacity.current, {
-    //       toValue: 0.5,
-    //       useNativeDriver: true,
-    //       duration: 500,
-    //     }),
-    //     Animated.timing(scale.current, {
-    //       toValue: 1,
-    //       useNativeDriver: true,
-    //       duration: 500,
-    //     }),
-    //   ])
-    // ).start();
-    Animated.timing(logoOpacity.current, {
-      delay: 1000,
-      toValue: 0,
-      useNativeDriver: true,
-      duration: 1000,
-    }).start();
-    Animated.timing(scale.current, {
-      delay: 1000,
-      toValue: 1,
-      useNativeDriver: true,
-      duration: 1000,
-    }).start();
-    Animated.timing(logoOpacity.current, {
-      delay: 2000,
-      toValue: 1,
-      useNativeDriver: true,
-      duration: 1000,
-    }).start();
-    Animated.timing(scale.current, {
-      delay: 2000,
-      toValue: 1.2,
-      useNativeDriver: true,
-      duration: 1000,
-    }).start();
-    Animated.timing(logoOpacity.current, {
-      delay: 3000,
-      toValue: 0,
-      useNativeDriver: true,
-      duration: 1000,
-    }).start();
-    Animated.timing(scale.current, {
-      delay: 3000,
-      toValue: 1,
-      useNativeDriver: true,
-      duration: 1000,
-    }).start();
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(logoOpacity.current, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 500,
+        }),
+        Animated.timing(scale.current, {
+          toValue: 1.2,
+          useNativeDriver: true,
+          duration: 500,
+        }),
+        Animated.timing(logoOpacity.current, {
+          toValue: 0.5,
+          useNativeDriver: true,
+          duration: 500,
+        }),
+        Animated.timing(scale.current, {
+          toValue: 1,
+          useNativeDriver: true,
+          duration: 500,
+        }),
+      ])
+    ).start();
+  }, [logoOpacity]);
+
+  useEffect(() => {
     Animated.timing(mainOpacity.current, {
-      delay: 4000,
       toValue: 0,
       useNativeDriver: true,
       duration: 1000,
+      delay: 3000,
     }).start();
     Animated.timing(zIndex.current, {
-      delay: 4000,
       toValue: 0,
       useNativeDriver: true,
       duration: 1000,
+      delay: 3000,
     }).start();
-  }, []);
+  }, [mainOpacity]);
 
   return (
     <Animated.View
@@ -88,8 +56,8 @@ export function LoadingFull() {
         position: "absolute",
         width: "100%",
         height: "100%",
-        opacity: mainOpacity.current,
         zIndex: zIndex.current,
+        opacity: mainOpacity.current,
         backgroundColor: Theme.color.background,
       }}
     >

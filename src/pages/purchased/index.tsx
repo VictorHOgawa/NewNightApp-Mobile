@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Ad } from "../../Components/Global/Ad";
 import { LoginValidation } from "../../Components/Global/Login";
 import { HorizontalView } from "../../Components/Global/View/HorizontalView";
+import { LoadingIn } from "../../Components/Loading/LoadingIn";
+import { LoadingOut } from "../../Components/Loading/LoadingOut";
 import { loginVerifyAPI } from "../../utils/api";
 import { Btn, Container, Img, Logo } from "./styles";
 
@@ -27,13 +29,14 @@ export function Purchased() {
     },
   ];
   const [logged, setLogged] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
     if (verify === 200) {
-      return setLogged(true);
+      setLogged(true);
     }
-    setLogged(false);
+    return setLogged(false);
   }
 
   useEffect(() => {
@@ -42,35 +45,46 @@ export function Purchased() {
 
   return (
     <Container>
-      <Logo source={require("../../../assets/Global/Logo2.png")} />
-      {logged ? (
-        <>
-          <Ad />
-          <HorizontalView
-            style={{
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Btn onPress={() => navigation.navigate("Tickets")}>
-              <Img source={require("../../../assets/Purchased/Tickets.png")} />
-            </Btn>
-            <Btn onPress={() => navigation.navigate("Products")}>
-              <Img source={require("../../../assets/Purchased/Products.png")} />
-            </Btn>
-            <Btn onPress={() => navigation.navigate("Suggestions")}>
-              <Img
-                source={require("../../../assets/Purchased/Suggestions.png")}
-              />
-            </Btn>
-            <Btn onPress={() => navigation.navigate("vip")}>
-              <Img source={require("../../../assets/Purchased/VIP.png")} />
-            </Btn>
-          </HorizontalView>
-        </>
+      {loading ? (
+        <LoadingIn />
       ) : (
-        <LoginValidation />
+        <>
+          <Logo source={require("../../../assets/Global/Logo2.png")} />
+          {logged ? (
+            <>
+              <LoadingOut />
+              <Ad />
+              <HorizontalView
+                style={{
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Btn onPress={() => navigation.navigate("Tickets")}>
+                  <Img
+                    source={require("../../../assets/Purchased/Tickets.png")}
+                  />
+                </Btn>
+                <Btn onPress={() => navigation.navigate("Products")}>
+                  <Img
+                    source={require("../../../assets/Purchased/Products.png")}
+                  />
+                </Btn>
+                <Btn onPress={() => navigation.navigate("Suggestions")}>
+                  <Img
+                    source={require("../../../assets/Purchased/Suggestions.png")}
+                  />
+                </Btn>
+                <Btn onPress={() => navigation.navigate("vip")}>
+                  <Img source={require("../../../assets/Purchased/VIP.png")} />
+                </Btn>
+              </HorizontalView>
+            </>
+          ) : (
+            <LoginValidation />
+          )}
+        </>
       )}
     </Container>
   );

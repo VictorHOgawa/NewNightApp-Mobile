@@ -31,8 +31,8 @@ export function StackRoutes() {
       }}
     >
       <Screen name="Home" component={AppRoutes} />
-      <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Match" component={Match} />
+      <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Profile" component={Profile} />
       <Screen name="Place" component={Place} />
       <Screen name="Tickets" component={Tickets} />

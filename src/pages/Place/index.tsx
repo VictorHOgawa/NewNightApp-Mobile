@@ -1,23 +1,23 @@
-import moment from "moment";
-import "moment/locale/pt-br";
-import { Ad } from "../../Components/Global/Ad";
-import { Header } from "../../Components/Global/Header";
-import { GlobalTitle } from "../../Components/Global/Title";
-import { Buttons } from "../../Components/Pages/Place/Buttons";
-import { Individual } from "../../Components/Pages/Place/Individual";
-import { ButtonGroup, Container, Icon, Image, Map } from "./styles";
-import { useEffect, useState } from "react";
-import { HorizontalView } from "../../Components/Global/View/HorizontalView";
-import { Button } from "../../Components/Global/Button";
-import Theme from "../../styles/themes";
-import { Banner } from "../Event/styles";
-import { Description } from "../../Components/Pages/Place/Description";
-import { Video } from "../../Components/Pages/Place/Video";
-import { LineBreak } from "../../Components/Global/LineBreak";
-import { getAPI } from "../../utils/api";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import "moment/locale/pt-br";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
-import { RFValue } from "react-native-responsive-fontsize";
+import { Ad } from "../../Components/Global/Ad";
+import { Button } from "../../Components/Global/Button";
+import { Header } from "../../Components/Global/Header";
+import { LineBreak } from "../../Components/Global/LineBreak";
+import { GlobalTitle } from "../../Components/Global/Title";
+import { HorizontalView } from "../../Components/Global/View/HorizontalView";
+import { LoadingIn } from "../../Components/Loading/LoadingIn";
+import { LoadingOut } from "../../Components/Loading/LoadingOut";
+import { Buttons } from "../../Components/Pages/Place/Buttons";
+import { Description } from "../../Components/Pages/Place/Description";
+import { Individual } from "../../Components/Pages/Place/Individual";
+import { Video } from "../../Components/Pages/Place/Video";
+import Theme from "../../styles/themes";
+import { getAPI } from "../../utils/api";
+import { Banner } from "../Event/styles";
+import { ButtonGroup, Container, Icon, Image, Map } from "./styles";
 
 export function Place() {
   const navigation = useNavigation<any>();
@@ -40,9 +40,10 @@ export function Place() {
   return (
     <Container>
       {loading ? (
-        <></>
+        <LoadingIn />
       ) : (
         <>
+          <LoadingOut />
           <Header />
           <Ad />
           <View style={{ width: "100%" }}>
