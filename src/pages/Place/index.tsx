@@ -37,6 +37,8 @@ export function Place() {
       getPlaceDetails();
     }
   }, [id]);
+
+  console.log("place", place);
   return (
     <Container>
       {loading ? (
@@ -57,7 +59,11 @@ export function Place() {
             />
           </View>
           <GlobalTitle title={place?.name} />
-          <Buttons />
+          <Buttons
+            Geo={place?.googleLink}
+            Insta={place?.instagram}
+            Whats={place?.whatsapp}
+          />
           <Individual
             openTime={place?.openTime}
             date={new Date()}

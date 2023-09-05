@@ -1,5 +1,9 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import {
+  useNavigation,
+  useRoute,
+  useScrollToTop,
+} from "@react-navigation/native";
+import { useEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
@@ -90,7 +94,11 @@ export function Event() {
           <Header />
           <Image source={{ uri: eventDetails?.photo_location }} />
           <GlobalTitle title={eventDetails?.name} />
-          <Buttons />
+          <Buttons
+            Geo={eventDetails?.googleLink}
+            Insta={eventDetails?.instagram}
+            Whats={eventDetails?.whatsapp}
+          />
           <Individual
             date={eventDetails?.date}
             local={eventDetails?.local}
