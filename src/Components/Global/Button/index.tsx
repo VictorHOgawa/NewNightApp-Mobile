@@ -1,5 +1,6 @@
+import { ActivityIndicator, TouchableOpacityProps } from "react-native";
+import Theme from "../../../styles/themes";
 import { Container, Title } from "./styles";
-import { TouchableOpacityProps } from "react-native";
 
 interface ButtonProps extends TouchableOpacityProps {
   background?: string;
@@ -37,7 +38,11 @@ export function Button({
     >
       {children}
       <Title fontSize={fontSize} color={color}>
-        {title}
+        {loading ? (
+          <ActivityIndicator color={Theme.color.secondary_100} />
+        ) : (
+          title
+        )}
       </Title>
     </Container>
   );

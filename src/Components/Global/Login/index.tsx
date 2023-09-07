@@ -1,10 +1,25 @@
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import Theme from "../../../styles/themes";
 import { Button } from "../Button";
 import { HorizontalView } from "../View/HorizontalView";
 
 export function LoginValidation() {
+  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
   const navigation = useNavigation<any>();
+
+  const handleLogin = () => {
+    setLoading(true);
+    navigation.navigate("Login");
+    return setLoading(false);
+  };
+
+  const handleRegister = () => {
+    setLoading1(true);
+    navigation.navigate("Register");
+    return setLoading1(false);
+  };
   return (
     <>
       <HorizontalView style={{ justifyContent: "space-around" }}>
@@ -15,7 +30,8 @@ export function LoginValidation() {
           width={150}
           height={50}
           fontSize={18}
-          onPress={() => navigation.navigate("Login")}
+          onPress={handleLogin}
+          loading={loading}
         />
         <Button
           title="Se Cadastrar"
@@ -24,7 +40,8 @@ export function LoginValidation() {
           width={150}
           height={50}
           fontSize={18}
-          onPress={() => navigation.navigate("Register")}
+          onPress={handleRegister}
+          loading={loading1}
         />
       </HorizontalView>
     </>

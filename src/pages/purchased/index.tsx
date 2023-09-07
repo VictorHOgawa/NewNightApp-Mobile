@@ -36,7 +36,7 @@ export function Purchased() {
     if (verify === 200) {
       setLogged(true);
     }
-    return setLogged(false);
+    return setLoading(false);
   }
 
   useEffect(() => {
