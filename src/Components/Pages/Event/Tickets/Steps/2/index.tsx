@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useCart } from "../../../../../../context/cart";
+import { LineBreak } from "../../../../../Global/LineBreak";
 import { GlobalTitle } from "../../../../../Global/Title";
+import { VerticalView } from "../../../../../Global/View/VerticalView";
 import {
   Counter,
   CounterArea,
@@ -15,11 +17,6 @@ import {
   TicketType,
   Title,
 } from "../../styles";
-import { Text } from "../../../Buttons/styles";
-import { HorizontalView } from "../../../../../Global/View/HorizontalView";
-import { TextInput } from "react-native";
-import { VerticalView } from "../../../../../Global/View/VerticalView";
-import { LineBreak } from "../../../../../Global/LineBreak";
 
 interface StepTwoProps {
   product: {
@@ -77,37 +74,62 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
       {type === "" ? (
         <>
           <Items>
-            <ItemButton onPress={() => handleSelectType("VODKA")}>
-              <Item
-                source={require("../../../../../../../assets/Event/Item1.png")}
-              />
-            </ItemButton>
-            <ItemButton onPress={() => handleSelectType("WHISKEY")}>
-              <Item
-                source={require("../../../../../../../assets/Event/Item2.png")}
-              />
-            </ItemButton>
-            <ItemButton onPress={() => handleSelectType("BEER")}>
-              <Item
-                source={require("../../../../../../../assets/Event/Item3.png")}
-              />
-            </ItemButton>
+            {product.filter((item) => item.type === "VODKA").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("VODKA")}>
+                <Item
+                  source={require("../../../../../../../assets/Event/Item1.png")}
+                />
+              </ItemButton>
+            ) : (
+              <></>
+            )}
+            {product.filter((item) => item.type === "WHISKEY").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("WHISKEY")}>
+                <Item
+                  source={require("../../../../../../../assets/Event/Item2.png")}
+                />
+              </ItemButton>
+            ) : (
+              <></>
+            )}
+            {product.filter((item) => item.type === "BEER").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("BEER")}>
+                <Item
+                  source={require("../../../../../../../assets/Event/Item3.png")}
+                />
+              </ItemButton>
+            ) : (
+              <></>
+            )}
             <LineBreak />
-            <ItemButton onPress={() => handleSelectType("COMBO")}>
-              <Item
-                source={require("../../../../../../../assets/Event/Item4.png")}
-              />
-            </ItemButton>
-            <ItemButton onPress={() => handleSelectType("ENERGÉTICOS")}>
-              <Item
-                source={require("../../../../../../../assets/Event/Item5.png")}
-              />
-            </ItemButton>
-            <ItemButton onPress={() => handleSelectType("OUTROS")}>
-              <Item
-                source={require("../../../../../../../assets/Event/Item6.png")}
-              />
-            </ItemButton>
+            {product.filter((item) => item.type === "COMBO").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("COMBO")}>
+                <Item
+                  source={require("../../../../../../../assets/Event/Item4.png")}
+                />
+              </ItemButton>
+            ) : (
+              <></>
+            )}
+            {product.filter((item) => item.type === "ENERGÉTICOS").length >
+            0 ? (
+              <ItemButton onPress={() => handleSelectType("ENERGÉTICOS")}>
+                <Item
+                  source={require("../../../../../../../assets/Event/Item5.png")}
+                />
+              </ItemButton>
+            ) : (
+              <></>
+            )}
+            {product.filter((item) => item.type === "OUTROS").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("OUTROS")}>
+                <Item
+                  source={require("../../../../../../../assets/Event/Item6.png")}
+                />
+              </ItemButton>
+            ) : (
+              <></>
+            )}
           </Items>
         </>
       ) : (

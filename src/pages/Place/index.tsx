@@ -31,6 +31,7 @@ export function Place() {
       return setLoading(false);
     }
   }
+  console.log("place.photo: ", place.photo);
 
   useEffect(() => {
     if (id) {
@@ -38,7 +39,6 @@ export function Place() {
     }
   }, [id]);
 
-  console.log("place", place);
   return (
     <Container>
       {loading ? (

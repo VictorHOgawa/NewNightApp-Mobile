@@ -1,6 +1,6 @@
-import { styled } from "styled-components/native";
 import { TextProps, TouchableOpacityProps } from "react-native";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import { RFValue } from "react-native-responsive-fontsize";
+import { styled } from "styled-components/native";
 import Theme from "../../../styles/themes";
 
 interface ContainerProps extends TouchableOpacityProps {
@@ -8,6 +8,7 @@ interface ContainerProps extends TouchableOpacityProps {
   height?: number;
   marginTop?: number;
   background?: string;
+  loading?: boolean;
 }
 
 interface TitleProps extends TextProps {

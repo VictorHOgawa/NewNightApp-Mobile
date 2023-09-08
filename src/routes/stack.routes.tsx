@@ -31,6 +31,7 @@ export function StackRoutes() {
       }}
     >
       <Screen name="Home" component={AppRoutes} />
+      <Screen name="Login" component={Login} />
       <Screen name="Purchased" component={Purchased} />
       <Screen name="Profile" component={Profile} />
       <Screen name="Match" component={Match} />
@@ -38,7 +39,6 @@ export function StackRoutes() {
       <Screen name="Place" component={Place} />
       <Screen name="Tickets" component={Tickets} />
       <Screen name="Checkout" component={Checkout} />
-      <Screen name="Login" component={Login} />
       <Screen name="Event" component={Event} />
       <Screen name="Register" component={Register} />
       <Screen name="Shop" component={Shop} />

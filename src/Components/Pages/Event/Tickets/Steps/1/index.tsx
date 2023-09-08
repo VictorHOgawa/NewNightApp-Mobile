@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useCart } from "../../../../../../context/cart";
 import { GlobalTitle } from "../../../../../Global/Title";
 import { VerticalView } from "../../../../../Global/View/VerticalView";
@@ -11,7 +12,6 @@ import {
   TicketTitle,
   TicketType,
 } from "../../styles";
-import { useState, useEffect } from "react";
 
 interface StepOneProps {
   ticketSlots: {
@@ -28,11 +28,15 @@ interface StepOneProps {
 
 export function StepOne({ ticketSlots }: StepOneProps) {
   const { cart, add } = useCart();
+  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
 
   const handleChange = (
     type: string,
     ticket: { name: string; value: number; id: string }
   ) => {
+    setLoading(true);
+    setLoading1(true);
     const exists = cart.ticket.ticket.find(
       (item: { id: string }) => item.id === ticket.id
     );
@@ -43,25 +47,31 @@ export function StepOne({ ticketSlots }: StepOneProps) {
     if (type === "increase") {
       const quantity = exists ? exists.quantity + 1 : 1;
 
-      return add(
+      add(
         {
           slotId: ticketSlots.id,
           ticket: [...tickets, { ...ticket, quantity }],
         },
         "ticket"
       );
+      setLoading(false);
+      return setLoading1(false);
     }
     if (type === "decrease" && exists && exists.quantity > 1) {
       const quantity = exists.quantity - 1;
-      return add(
+      add(
         {
           slotId: ticketSlots.id,
           ticket: [...tickets, { ...ticket, quantity }],
         },
         "ticket"
       );
+      setLoading(false);
+      return setLoading1(false);
     } else {
-      return add({ slotId: ticketSlots.id, ticket: tickets }, "ticket");
+      add({ slotId: ticketSlots.id, ticket: tickets }, "ticket");
+      setLoading(false);
+      return setLoading1(false);
     }
   };
 
@@ -100,7 +110,10 @@ export function StepOne({ ticketSlots }: StepOneProps) {
                   </TicketTitle>
                 </VerticalView>
                 <CounterArea>
-                  <IconButton onPress={() => handleChange("decrease", item)}>
+                  <IconButton
+                    onPress={() => handleChange("decrease", item)}
+                    disabled={loading}
+                  >
                     <Icon
                       source={require("../../../../../../../assets/Event/Minus.png")}
                     />
@@ -108,7 +121,10 @@ export function StepOne({ ticketSlots }: StepOneProps) {
                   <Counter>
                     <CounterText>{ticketQuantity(item.id)}</CounterText>
                   </Counter>
-                  <IconButton onPress={() => handleChange("increase", item)}>
+                  <IconButton
+                    onPress={() => handleChange("increase", item)}
+                    disabled={loading1}
+                  >
                     <Icon
                       source={require("../../../../../../../assets/Event/Plus.png")}
                     />

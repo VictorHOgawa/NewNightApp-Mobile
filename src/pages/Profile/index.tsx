@@ -14,7 +14,6 @@ export function Profile() {
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
-    console.log("verify: ", verify);
     if (verify === 200) {
       setLogged(true);
     }

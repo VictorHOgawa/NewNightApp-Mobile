@@ -1,8 +1,5 @@
-import {
-  StackActions,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
 import Theme from "../../../styles/themes";
@@ -15,19 +12,26 @@ import { Container, Remember, Title } from "./styles";
 export function Form() {
   const navigation = useNavigation<any>();
   const { control, handleSubmit } = useForm();
-  const { page } = useRoute().params as any;
+  const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
 
   async function handleLogin(formData: any) {
+    setLoading(true);
     const connect = await PostAPI("/user/login", formData);
     if (connect.status !== 200) {
-      return Alert.alert(connect.body);
+      Alert.alert(connect.body);
+      return setLoading(false);
     }
     await storageToken(connect.body);
-
-    return page
-      ? navigation.dispatch(StackActions.replace(page))
-      : navigation.dispatch(StackActions.replace("Home"));
+    navigation.dispatch(StackActions.replace("Home"));
+    return setLoading(false);
   }
+
+  const handleRegister = () => {
+    setLoading1(true);
+    navigation.navigate("Register");
+    return setLoading1(false);
+  };
 
   return (
     <Container>
@@ -60,14 +64,14 @@ export function Form() {
           background={`${Theme.color.confirmation}`}
           color={`${Theme.color.background}`}
           width={120}
+          loading={loading}
         />
         <Button
           title="Cadastro"
-          onPress={() =>
-            navigation.navigate("Register" /* , screen ? { screen } : {} */)
-          }
+          onPress={handleRegister}
           background={`${Theme.color.primary_100}`}
           width={120}
+          loading={loading1}
         />
       </View>
     </Container>

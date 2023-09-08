@@ -34,12 +34,13 @@ export function Button({
       height={height}
       marginTop={marginTop}
       background={background}
+      loading={loading}
       {...rest}
     >
       {children}
       <Title fontSize={fontSize} color={color}>
         {loading ? (
-          <ActivityIndicator color={Theme.color.secondary_100} />
+          <ActivityIndicator color={Theme.color.secondary_100} size="large" />
         ) : (
           title
         )}

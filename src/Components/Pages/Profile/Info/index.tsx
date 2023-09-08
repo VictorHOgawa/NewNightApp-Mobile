@@ -1,17 +1,22 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import Theme from "../../../../styles/themes";
 import { Button } from "../../../Global/Button";
 import { GlobalTitle } from "../../../Global/Title";
 import { Container, NightPremium } from "./styles";
 
 export function Info() {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigation<any>();
+
   async function logOut() {
+    setLoading(true);
     await AsyncStorage.removeItem("@nightapp:userToken");
     await AsyncStorage.removeItem("@nightapp:userRefreshToken");
     const token = await AsyncStorage.getItem("@nightapp:userToken");
     navigation.replace("Home");
+    return setLoading(false);
   }
 
   return (
@@ -49,6 +54,7 @@ export function Info() {
         width={310}
         height={30}
         onPress={logOut}
+        loading={loading}
       />
     </Container>
   );

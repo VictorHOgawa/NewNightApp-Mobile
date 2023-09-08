@@ -1,9 +1,5 @@
-import {
-  useNavigation,
-  useRoute,
-  useScrollToTop,
-} from "@react-navigation/native";
-import { useEffect, useRef, useState } from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
@@ -28,6 +24,7 @@ export function Event() {
   const navigation = useNavigation<any>();
   const [eventDetails, setEventDetails] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const [loading1, setLoading1] = useState(false);
   const { id } = useRoute().params as any;
   const [step, setStep] = useState(1);
   const [type, setType] = useState("");
@@ -54,6 +51,7 @@ export function Event() {
       setLogged(true);
     }
   }
+  console.log("logged: ", logged);
 
   useEffect(() => {
     handleVerify();
@@ -72,15 +70,19 @@ export function Event() {
       cart.ticket.ticket.length === 0 &&
       cart.product.length === 0
     ) {
-      return Alert.alert("Selecione um (ou mais) Produto(s)");
+      setLoading1(true);
+      Alert.alert("Selecione um (ou mais) Produto(s)");
+      return setLoading1(false);
     }
     if (
       (step === 2 && type === "" && cart.ticket.ticket.length !== 0) ||
       cart.product.length !== 0
     ) {
+      setLoading1(true);
       logged
         ? navigation.navigate("Checkout")
         : navigation.navigate("Login", { page: "Checkout" });
+      return setLoading1(false);
     }
   };
 
@@ -166,6 +168,7 @@ export function Event() {
                   ? true
                   : false
               }
+              loading={loading1}
             />
           </HorizontalView>
 

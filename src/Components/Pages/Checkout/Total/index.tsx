@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useCart } from "../../../../context/cart";
 import Theme from "../../../../styles/themes";
+import { AuthPostAPI } from "../../../../utils/api";
 import { HorizontalView } from "../../../Global/View/HorizontalView";
 import { VerticalView } from "../../../Global/View/VerticalView";
 import { Container, FullTotal, IndividualTotal, Map, Text } from "./styles";
-import { AuthPostAPI } from "../../../../utils/api";
 
 interface TotalProps {
   selected: string;
@@ -24,8 +24,6 @@ export function Total({ selected }: TotalProps) {
     setTotal(connect.body);
     setLoading(false);
   }
-
-  console.log("total: ", total);
 
   useEffect(() => {
     if (cart) {

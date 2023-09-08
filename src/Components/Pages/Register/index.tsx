@@ -1,4 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert } from "react-native";
 import Theme from "../../../styles/themes";
@@ -11,14 +12,18 @@ import { Container, FormContainer, Label } from "./styles";
 export function Form() {
   const navigation = useNavigation<any>();
   const { control, handleSubmit } = useForm();
+  const [loading, setLoading] = useState(false);
 
   async function handleRegister(formData: any) {
+    setLoading(true);
     const connect = await PostAPI("/user/register", formData);
     if (connect.status !== 200) {
-      return Alert.alert(connect.body);
+      Alert.alert(connect.body);
+      return setLoading(false);
     }
     await storageToken(connect.body);
-    return navigation.navigate("Home");
+    navigation.navigate("Home");
+    return setLoading(false);
   }
   return (
     <Container>
@@ -88,6 +93,7 @@ export function Form() {
           onPress={handleSubmit(handleRegister)}
           background={`${Theme.color.primary_100}`}
           color={`${Theme.color.background}`}
+          loading={loading}
         />
       </FormContainer>
     </Container>

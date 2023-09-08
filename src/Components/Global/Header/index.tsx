@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { CityButton } from "../../Pages/Home/CityButton";
 import { BackButton } from "../Back";
 import { AltContainer, AltLogo, Container, Logo } from "./styles";
-import { useState } from "react";
 
 interface HeaderProps {
   page?: string;
