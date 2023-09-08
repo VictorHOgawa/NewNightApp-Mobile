@@ -1,37 +1,45 @@
-import { styled } from "styled-components/native";
-import Theme from "../../../../styles/themes";
+import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
-
-interface CurrentProps {
-  current: boolean;
-}
+import Theme from "../../../../styles/themes";
 
 export const Container = styled.TouchableOpacity`
-  flex-direction: column;
-  align-items: center;
-  width: ${RFValue(150)}px;
-  text-align: center;
-  background-color: ${Theme.color.primaryFadePlus};
+  width: ${RFValue(210)}px;
   margin-left: ${RFValue(10)}px;
+  background-color: ${Theme.color.secondaryFadePlus};
+  justify-content: space-between;
   border-radius: ${RFValue(10)}px;
-  padding-bottom: 5px;
 `;
 
-export const SliderImg = styled.Image`
+export const Image = styled.Image`
   width: 100%;
   height: ${RFValue(100)}px;
   border-radius: 10px;
+  border: 0;
 `;
 
-export const PlaceCurrent = styled.Text<CurrentProps>`
-  color: ${({ current }) =>
-    current ? Theme.color.confirmation : Theme.color.red_70};
+export const DetailsContainer = styled.View`
+  padding: ${RFValue(5)}px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-export const PlaceTitle = styled.Text`
-  color: ${Theme.color.primary_80};
+export const TextContainer = styled.View`
+  padding: ${RFValue(5)}px;
+  flex-direction: column;
+  height: ${RFValue(60)}px;
+  flex: 1;
 `;
 
-export const PlacePlace = styled.Text`
+export const Title = styled.Text`
+  font-size: ${RFValue(15)}px;
+  margin-top: ${RFValue(5)}px;
+  margin-left: ${RFValue(5)}px;
   color: ${Theme.color.gray_10};
+`;
+
+export const City = styled.Text`
+  color: ${Theme.color.gray_10};
+  font-size: ${RFValue(10)}px;
+  margin-top: 5px;
 `;

@@ -16,57 +16,60 @@ import { Container, EventList } from "./styles";
 export function Home() {
   const navigation = useNavigation<any>();
 
-  const [event, setEvent] = useState<any>([]);
+  const [events, setEvents] = useState<any>([]);
   const [eventLoading, setEventLoading] = useState(true);
   const [placesLoading, setPlacesLoading] = useState(true);
   const [places, setPlaces] = useState<any>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCity, setSelectedCity] = useState({
+    name: "Qualquer Lugar",
+    id: "",
+    state: "",
+    created_at: "",
+  });
 
-  async function getEvents() {
-    const connect = await getAPI("/event");
-    if (connect.status === 200) {
-      setEvent(connect.body.events);
-      return setEventLoading(false);
+  async function getEverything() {
+    setLoading(true);
+    const [events, places] = await Promise.all([
+      getAPI("/event?city_id=" + selectedCity.id),
+      getAPI("/places?city_id=" + selectedCity.id),
+    ]);
+    if (events.status === 200 && places.status === 200) {
+      setEvents(events.body.events);
+      setPlaces(places.body.places);
+      return setLoading(false);
     }
   }
 
   useEffect(() => {
-    getEvents();
-  }, []);
-
-  async function getPlaces() {
-    const connect = await getAPI("/places");
-    if (connect.status === 200) {
-      setPlaces(connect.body.places);
-      return setPlacesLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    getPlaces();
-  }, []);
+    getEverything();
+  }, [selectedCity]);
 
   return (
     <Container
       contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
     >
-      {eventLoading || placesLoading ? (
+      {loading ? (
         <LoadingIn />
       ) : (
         <>
           <LoadingOut />
-          <Header page="main" />
+          <Header
+            page="main"
+            selectedCity={selectedCity}
+            setSelectedCity={setSelectedCity}
+          />
           <Ad />
           <GlobalTitle title="Eventos e Festas" />
-          <EventLoading loading={eventLoading}>
+          <EventLoading loading={loading}>
             <>
-              {event.length === 0 ? (
+              {events.length === 0 ? (
                 <></>
               ) : (
                 <View>
                   <EventList
                     horizontal
-                    data={event}
+                    data={events}
                     keyExtractor={(item: any) => item._id}
                     renderItem={({ item }: any) => (
                       <EventCard
@@ -87,9 +90,9 @@ export function Home() {
             </>
           </EventLoading>
           <GlobalTitle title="Lugares para Curtir" />
-          <EventLoading loading={eventLoading}>
+          <EventLoading loading={loading}>
             <>
-              {event.length === 0 ? (
+              {places.length === 0 ? (
                 <></>
               ) : (
                 <View>

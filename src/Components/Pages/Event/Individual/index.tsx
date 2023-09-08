@@ -45,7 +45,7 @@ export function Individual({ date, local, city, state }: IndividualProps) {
           </Text>
         </Info>
       </Left>
-      <Calendar date={date} />
+      <Calendar date={date} type="event" />
     </Container>
   );
 }

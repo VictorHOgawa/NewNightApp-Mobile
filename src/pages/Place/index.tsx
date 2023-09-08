@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import "moment/locale/pt-br";
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { Linking, View } from "react-native";
 import { Ad } from "../../Components/Global/Ad";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
@@ -31,13 +31,16 @@ export function Place() {
       return setLoading(false);
     }
   }
-  console.log("place.photo: ", place.photo);
 
   useEffect(() => {
     if (id) {
       getPlaceDetails();
     }
   }, [id]);
+
+  const handlePress = (link: string) => {
+    Linking.openURL(link);
+  };
 
   return (
     <Container>
@@ -48,13 +51,13 @@ export function Place() {
           <LoadingOut />
           <Header />
           <Ad />
-          <View style={{ width: "100%" }}>
+          <View>
             <Map
               horizontal
-              data={[1, 2, 3]}
+              data={place.photo}
               keyExtractor={(item) => item._id}
               renderItem={({ item }) => (
-                <Image source={{ uri: place.photo[0].photo_location }} />
+                <Image source={{ uri: item.photo_location }} />
               )}
             />
           </View>
@@ -64,12 +67,7 @@ export function Place() {
             Insta={place?.instagram}
             Whats={place?.whatsapp}
           />
-          <Individual
-            openTime={place?.openTime}
-            date={new Date()}
-            address={place?.address}
-            city={place?.city}
-          />
+          <Individual place={place} />
 
           <HorizontalView
             style={{
@@ -105,33 +103,22 @@ export function Place() {
             width={300}
             height={80}
             fontSize={25}
+            onPress={() =>
+              handlePress("https://www.google.com/search?q=card%C3%A1pio")
+            }
           />
           <Description description={place?.description[0]} />
           <Video video="https://www.youtube.com/watch?v=SAMpvaC4xR0" />
-          <ButtonGroup>
-            <Button
-              background={`${Theme.color.confirmation}`}
-              color={`${Theme.color.background}`}
-              title=" Escolher Meus Ingressos"
-              width={200}
-              height={30}
-              fontSize={12}
-            >
-              <Icon
-                source={require("../../../assets/Global/Icons/ticketIcon.png")}
-              />
-            </Button>
-            <Button
-              background={`${Theme.color.primary_80}`}
-              title=""
-              width={50}
-              height={30}
-            >
-              <Icon
-                source={require("../../../assets/Global/Icons/sendIcon.png")}
-              />
-            </Button>
-          </ButtonGroup>
+          <Button
+            background={`${Theme.color.primary_80}`}
+            title=""
+            width={50}
+            height={30}
+          >
+            <Icon
+              source={require("../../../assets/Global/Icons/sendIcon.png")}
+            />
+          </Button>
           <LineBreak />
           {place?.description.length === 1 ? (
             <></>

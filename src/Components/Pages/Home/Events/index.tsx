@@ -41,7 +41,7 @@ export function EventCard({
             {city} - {state}
           </City>
         </TextContainer>
-        <Calendar date={date} />
+        <Calendar date={date} type="event" />
       </DetailsContainer>
     </Container>
   );

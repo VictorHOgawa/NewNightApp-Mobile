@@ -39,7 +39,6 @@ export function LoadingIn() {
         top: "50%",
         left: "50%",
         transform: [{ translateX: -100 }, { translateY: -50 }],
-        backgroundColor: " red",
       }}
     >
       <Logo source={require("../../../../assets/Global/Logo2.png")} />

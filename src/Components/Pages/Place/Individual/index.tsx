@@ -6,23 +6,21 @@ import { Container, Icon, Info, Left, Text } from "./styles";
 import { useState, useEffect } from "react";
 
 interface IndividualProps {
-  date: Date;
-  address: string;
-  city: any;
-  openTime: any;
+  place: any;
 }
 
-export function Individual({ date, address, city, openTime }: IndividualProps) {
+export function Individual({ place }: IndividualProps) {
+  const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [test, setTest] = useState<any>();
-  const [loading, setLoading] = useState(true);
+  const [startHour, setStartHour] = useState<any>();
+  const [endHour, setEndHour] = useState<any>();
 
   useEffect(() => {
     function formatTime() {
       const currentDay = parseInt(moment().format("d")) - 1;
       const currentTime = moment().format("HH:mm");
 
-      const currentOpenTime = openTime.find((day: any) => {
+      const currentOpenTime = place.openTime.find((day: any) => {
         return day.day === currentDay;
       });
 
@@ -35,15 +33,18 @@ export function Individual({ date, address, city, openTime }: IndividualProps) {
             moment(currentOpenTime.close_time, "HH:mm")
           )
         ) {
-          setTest(currentOpenTime);
+          console.log("hora aberta");
           setIsOpen(true);
-          setLoading(false);
         }
+        setStartHour(currentOpenTime.open_time);
+        setEndHour(currentOpenTime.close_time);
       }
     }
 
-    formatTime();
-  }, []);
+    if (place) {
+      formatTime();
+    }
+  }, [place]);
   return (
     <Container>
       <Left>
@@ -51,20 +52,40 @@ export function Individual({ date, address, city, openTime }: IndividualProps) {
           <Icon
             source={require("../../../../../assets/Global/Icons/clockIcon.png")}
           />
-          <Text>
-            {""}
-            <Text
-              style={{
-                fontWeight: "bold",
-                color: isOpen ? `${Theme.color.next}` : `${Theme.color.red_60}`,
-              }}
-            >
-              {""}
-              {isOpen ? "Aberto" : "Fechado"}
-            </Text>{" "}
-            Das {""}
-            {test?.open_time} {""} até {""} {test?.close_time}
-          </Text>
+          {isOpen ? (
+            <>
+              <Text>
+                {""}
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    color: isOpen
+                      ? `${Theme.color.next}`
+                      : `${Theme.color.red_60}`,
+                  }}
+                >
+                  {""}
+                  {isOpen ? "Aberto" : "Fechado"}
+                </Text>{" "}
+                Das {""}
+                {startHour} {""} até {""} {endHour}
+              </Text>
+            </>
+          ) : (
+            <>
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: isOpen
+                    ? `${Theme.color.next}`
+                    : `${Theme.color.red_60}`,
+                }}
+              >
+                {""}
+                Horário de Funcionamento {""} {startHour} até {""} {endHour}
+              </Text>
+            </>
+          )}
         </Info>
         <Info>
           <Icon
@@ -73,14 +94,14 @@ export function Individual({ date, address, city, openTime }: IndividualProps) {
           <Text>
             {""}
             <Text style={{ fontWeight: "bold" }}>
-              {address} {""}
+              {place.address} {""}
             </Text>
             {""}
-            {city.name} - {city.state}
+            {place.city.name} - {place.city.state}
           </Text>
         </Info>
       </Left>
-      <Calendar date={date} />
+      <Calendar date={place.date} type="place" isOpen={isOpen} />
     </Container>
   );
 }

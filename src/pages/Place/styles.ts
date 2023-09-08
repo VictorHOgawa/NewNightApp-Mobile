@@ -9,8 +9,9 @@ export const Container = styled.ScrollView`
 `;
 
 export const Image = styled.Image`
-  width: 100%;
-  height: ${Dimensions.get("window").height * 0.3}px;
+  width: ${Dimensions.get("window").width}px;
+
+  height: 200px;
   border-radius: 10px;
 `;
 
@@ -45,5 +46,5 @@ export const Map = styled(
 ).attrs({
   showsHorizontalScrollIndicator: false,
 })`
-  width: 100%;
+  width: ${Dimensions.get("window").width}px;
 `;

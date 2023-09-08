@@ -3,8 +3,8 @@ import { RFValue } from "react-native-responsive-fontsize";
 import Theme from "../../../styles/themes";
 
 interface DateProps {
-  color?: string;
-  fontSize?: number;
+  type?: "event" | "place";
+  isOpen?: boolean;
 }
 
 export const Container = styled.View`
@@ -18,14 +18,23 @@ export const Container = styled.View`
 `;
 
 export const Date = styled.Text<DateProps>`
-  color: ${({ color }) =>
-    color === "primary" ? Theme.color.primary_100 : Theme.color.gray_10};
-  font-size: ${({ fontSize }) =>
-    fontSize ? RFValue(fontSize) : RFValue(10)}px;
+  color: ${({ type, isOpen }) =>
+    type === "place" && isOpen
+      ? Theme.color.secondary_100
+      : type === "place" && !isOpen
+      ? Theme.color.secondary_100
+      : type === "event"
+      ? Theme.color.gray_10
+      : Theme.color.secondary_100};
 `;
 
-export const Footer = styled.View`
-  background-color: ${Theme.color.primary_100};
+export const Footer = styled.View<DateProps>`
+  background-color: ${({ type, isOpen }) =>
+    type === "place" && isOpen
+      ? Theme.color.next
+      : type === "place" && !isOpen
+      ? Theme.color.red_60
+      : Theme.color.secondary_100};
   width: ${RFValue(70)}px;
   height: ${RFValue(20)}px;
   align-items: center;

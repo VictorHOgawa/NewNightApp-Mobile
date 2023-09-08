@@ -5,16 +5,20 @@ import { AltContainer, AltLogo, Container, Logo } from "./styles";
 
 interface HeaderProps {
   page?: string;
+  selectedCity?: any;
+  setSelectedCity?: any;
 }
-export function Header({ page }: HeaderProps) {
-  const [city, setCity] = useState({ id: "", name: "Cidades", state: "" });
+export function Header({ page, selectedCity, setSelectedCity }: HeaderProps) {
   return (
     <>
       {page === "main" ? (
         <Container>
           <>
             <Logo source={require("../../../../assets/Global/Logo.png")} />
-            <CityButton selected={setCity} />
+            <CityButton
+              selectedCity={selectedCity}
+              setSelectedCity={setSelectedCity}
+            />
           </>
         </Container>
       ) : (

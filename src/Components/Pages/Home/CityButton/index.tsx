@@ -5,38 +5,31 @@ import { Button, Container, Icon, LocationIcon, Title } from "./styles";
 
 import { getAPI } from "../../../../utils/api";
 interface Props extends TouchableOpacityProps {
-  selected: any;
+  selectedCity: any;
+  setSelectedCity: any;
 }
 
-export function CityButton({ selected }: Props) {
+export function CityButton({ selectedCity, setSelectedCity }: Props) {
   const actionSheetCity = useRef<any>();
   const [loading, setLoading] = useState(true);
-  const [cities, setCities] = useState<any>({
-    name: "",
-    state: "",
-  });
+  const [cities, setCities] = useState<any>(["Voltar"]);
   const [open, setOpen] = useState(false);
   const [list, setList] = useState<any>();
 
   async function getCities() {
     const connect = await getAPI("/city");
-    console.log("connect.body: ", connect.body);
     if (connect.status === 200) {
-      setList(connect.body);
+      setList(connect.body.city);
+      setCities(["Voltar", ...connect.body.city.map((city: any) => city.name)]);
       return setLoading(false);
     }
   }
-  console.log("cities: ", cities);
 
   useEffect(() => {
-    /* Verificar Lógica */
-    if (list) {
-      getCities();
-    }
-  }, [list]);
+    getCities();
+  }, []);
 
   async function showActionSheetCity() {
-    console.log("list: ", list);
     actionSheetCity.current.show();
   }
 
@@ -47,9 +40,9 @@ export function CityButton({ selected }: Props) {
           <Button onPress={showActionSheetCity}>
             <LocationIcon name="location-pin" />
             <Title>
-              {cities.name !== "" && cities.state !== ""
-                ? `${list.name} - ${list.state}`
-                : "Cidades"}
+              {selectedCity.name !== "" && selectedCity.state !== ""
+                ? `${selectedCity.name} - ${selectedCity.state}`
+                : selectedCity.name}
             </Title>
             <Icon name="chevron-down" />
           </Button>
@@ -63,14 +56,13 @@ export function CityButton({ selected }: Props) {
           <ActionSheet
             ref={actionSheetCity}
             title={"Escolha uma Cidade "}
-            options={list}
+            options={cities}
             cancelButtonIndex={0}
             onPress={(index: number) => {
               if (index == 0) {
               } else {
                 setLoading(false);
-                setCities(list[index]);
-                selected(list[index]);
+                setSelectedCity(list[index]);
               }
             }}
           />
