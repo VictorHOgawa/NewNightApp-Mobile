@@ -1,3 +1,8 @@
+import moment from "moment";
+import "moment/locale/pt-br";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
+import { Calendar } from "../../../Global/Calendar";
 import {
   City,
   Container,
@@ -6,11 +11,6 @@ import {
   TextContainer,
   Title,
 } from "./styles";
-import moment from "moment";
-import "moment/locale/pt-br";
-import { useState, useEffect } from "react";
-import { View } from "react-native";
-import { Calendar } from "../../../Global/Calendar";
 
 interface PlaceProps {
   photo?: string;
@@ -50,7 +50,6 @@ export function PlaceCard({
             moment(currentOpenTime.close_time, "HH:mm")
           )
         ) {
-          console.log("hora aberta");
           setIsOpen(true);
         }
         setStartHour(currentOpenTime.open_time);

@@ -51,7 +51,6 @@ export function Event() {
       setLogged(true);
     }
   }
-  console.log("logged: ", logged);
 
   useEffect(() => {
     handleVerify();

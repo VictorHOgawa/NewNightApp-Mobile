@@ -1,7 +1,7 @@
-import { styled } from "styled-components/native";
-import Theme from "../../styles/themes";
 import { FlatList, FlatListProps } from "react-native";
+import { styled } from "styled-components/native";
 import { partyDTO } from "../../DTOS/partyDTOS";
+import Theme from "../../styles/themes";
 
 export const Container = styled.ScrollView`
   flex: 1;
@@ -26,4 +26,8 @@ export const Map = styled(
   width: 98%;
   margin-top: 15px;
   margin-left: 1%;
+`;
+
+export const Text = styled.Text`
+  color: ${Theme.color.gray_10};
 `;

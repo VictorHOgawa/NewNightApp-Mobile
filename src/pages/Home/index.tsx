@@ -11,14 +11,11 @@ import { LoadingOut } from "../../Components/Loading/LoadingOut";
 import { EventCard } from "../../Components/Pages/Home/Events";
 import { PlaceCard } from "../../Components/Pages/Home/Places";
 import { getAPI } from "../../utils/api";
-import { Container, EventList } from "./styles";
+import { Container, EventList, Text } from "./styles";
 
 export function Home() {
   const navigation = useNavigation<any>();
-
   const [events, setEvents] = useState<any>([]);
-  const [eventLoading, setEventLoading] = useState(true);
-  const [placesLoading, setPlacesLoading] = useState(true);
   const [places, setPlaces] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState({
@@ -64,7 +61,7 @@ export function Home() {
           <EventLoading loading={loading}>
             <>
               {events.length === 0 ? (
-                <></>
+                <Text>Nenhum Evento Encontrado</Text>
               ) : (
                 <View>
                   <EventList
@@ -93,7 +90,7 @@ export function Home() {
           <EventLoading loading={loading}>
             <>
               {places.length === 0 ? (
-                <></>
+                <Text>Nenhum Lugar Encontrado</Text>
               ) : (
                 <View>
                   <EventList
