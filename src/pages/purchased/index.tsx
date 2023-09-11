@@ -7,6 +7,7 @@ import { LoadingIn } from "../../Components/Loading/LoadingIn";
 import { LoadingOut } from "../../Components/Loading/LoadingOut";
 import { loginVerifyAPI } from "../../utils/api";
 import { Btn, Container, Img, Logo } from "./styles";
+import { useCart } from "../../context/cart";
 
 export function Purchased() {
   const navigation = useNavigation<any>();
@@ -30,10 +31,12 @@ export function Purchased() {
   ];
   const [logged, setLogged] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { cart, setCart } = useCart();
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
     if (verify === 200) {
+      setCart({ ticket: { slotId: "", ticket: [] }, product: [] });
       setLogged(true);
     }
     return setLoading(false);

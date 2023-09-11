@@ -1,6 +1,7 @@
 import { RFValue } from "react-native-responsive-fontsize";
 import { styled } from "styled-components/native";
 import Theme from "../../../../../styles/themes";
+import { FlatList, FlatListProps } from "react-native";
 
 export const Container = styled.ScrollView`
   flex: 1;
@@ -40,4 +41,13 @@ export const Form = styled.TextInput`
 
 export const Text = styled.Text`
   color: ${Theme.color.gray_10};
+`;
+
+export const Map = styled(
+  FlatList as new (props: FlatListProps<any>) => FlatList<any>
+).attrs({
+  showsHorizontalScrollIndicator: false,
+})`
+  width: 100%;
+  margin-top: 15px;
 `;

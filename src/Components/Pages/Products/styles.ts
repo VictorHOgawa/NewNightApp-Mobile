@@ -6,6 +6,7 @@ import { FlatList, FlatListProps } from "react-native";
 export const Container = styled.View`
   width: 95%;
   align-self: center;
+  flex: 1;
 `;
 
 export const Card = styled.View`
@@ -86,4 +87,11 @@ export const ModalBody = styled.View`
   height: 100%;
   background-color: ${Theme.color.background};
   align-self: center;
+`;
+
+export const QrCodeImage = styled.Image`
+  width: ${RFValue(300)}px;
+  height: ${RFValue(300)}px;
+  align-self: center;
+  margin-top: 5%;
 `;

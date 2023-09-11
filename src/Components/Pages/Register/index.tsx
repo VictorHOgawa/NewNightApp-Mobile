@@ -22,7 +22,7 @@ export function Form() {
       return setLoading(false);
     }
     await storageToken(connect.body);
-    navigation.navigate("Home");
+    navigation.replace("AppRoutes", { screen: "Home" });
     return setLoading(false);
   }
   return (

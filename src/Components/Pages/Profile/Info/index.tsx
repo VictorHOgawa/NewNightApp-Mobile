@@ -14,8 +14,7 @@ export function Info() {
     setLoading(true);
     await AsyncStorage.removeItem("@nightapp:userToken");
     await AsyncStorage.removeItem("@nightapp:userRefreshToken");
-    const token = await AsyncStorage.getItem("@nightapp:userToken");
-    navigation.replace("Home");
+    navigation.replace("AppRoutes", { screen: "Home" });
     return setLoading(false);
   }
 

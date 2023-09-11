@@ -20,7 +20,10 @@ export function CityButton({ selectedCity, setSelectedCity }: Props) {
     const connect = await getAPI("/city");
     if (connect.status === 200) {
       setList(connect.body.city);
-      setCities(["Voltar", ...connect.body.city.map((city: any) => city.name)]);
+      setCities([
+        "Voltar",
+        ...connect.body.city.map((city: any) => `${city.name} - ${city.state}`),
+      ]);
       return setLoading(false);
     }
   }

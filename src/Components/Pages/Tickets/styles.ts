@@ -6,6 +6,7 @@ import { FlatList, FlatListProps } from "react-native";
 export const Container = styled.View`
   width: 95%;
   align-self: center;
+  flex: 1;
 `;
 
 export const Card = styled.View`

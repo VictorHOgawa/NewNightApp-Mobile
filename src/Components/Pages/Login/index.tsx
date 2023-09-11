@@ -23,7 +23,7 @@ export function Form() {
       return setLoading(false);
     }
     await storageToken(connect.body);
-    navigation.dispatch(StackActions.replace("Home"));
+    navigation.replace("AppRoutes", { screen: "Home" });
     return setLoading(false);
   }
 

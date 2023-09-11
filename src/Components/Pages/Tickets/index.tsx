@@ -20,30 +20,49 @@ import Theme from "../../../styles/themes";
 import { HorizontalView } from "../../Global/View/HorizontalView";
 import { Button } from "../../Global/Button";
 import { More } from "../../Global/More";
-import { useState } from "react";
 import { Modal } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { useState, useEffect } from "react";
+interface TicketProps {
+  tickets: any;
+}
 
-export function TicketCards() {
-  const Tickets = [1, 2, 3];
+export function TicketCards({ tickets }: TicketProps) {
+  const [show, setShow] = useState(false);
+  const [id, setId] = useState("");
+  const [type, setType] = useState("");
+  const [qrCode, setQrCode] = useState<any>({ id: "", type: "" });
   const [open, setOpen] = useState(false);
+  const handlePay = (item: any) => {
+    if (item.status === "ACTIVE") {
+      console.log("entrou");
+      setId(item.id);
+      setType("ticket");
+      setShow(true);
+    }
+  };
+
+  useEffect(() => {
+    setQrCode({
+      id: id,
+      type: type,
+    });
+  }, [id, type]);
 
   return (
     <Container>
       <GlobalTitle title="Meus Ingressos" />
-      <VerticalView>
+      <VerticalView style={{ flex: 1, paddingBottom: 20 }}>
         <Map
-          data={Tickets}
+          data={tickets}
           renderItem={({ item }) => (
             <>
               <Card>
                 <Details>
-                  <TicketImage
-                    source={require("../../../../assets/Event/Event1.png")}
-                  />
+                  <TicketImage source={{ uri: item.event.photo_location }} />
                   <VerticalView>
                     <Text style={{ fontWeight: "bold", fontSize: RFValue(15) }}>
-                      Nome do Evento
+                      {item.event.name}
                     </Text>
                     <Text>
                       <Icons
@@ -51,9 +70,9 @@ export function TicketCards() {
                       />
                       {""}
                       <Text style={{ fontWeight: "bold" }}>
-                        {""} {moment().format("LL")} {""}
+                        {""} {moment(item.event.date).format("LL")} {""}
                       </Text>
-                      às {moment().format("LT")}
+                      às {moment(item.event.date).format("LT")}
                     </Text>
                     <Text>
                       <Icons
@@ -61,9 +80,10 @@ export function TicketCards() {
                       />
                       {""}
                       <Text style={{ fontWeight: "bold" }}>
-                        {""} Cerveja de Garrafa{" "}
+                        {""} {item.event.local}{" "}
                       </Text>
-                      {""}Sinop/MT
+                      {""}
+                      {item.event.city.name} / {item.event.city.state}
                     </Text>
                   </VerticalView>
                   <Area>
@@ -75,7 +95,7 @@ export function TicketCards() {
                           color: `${Theme.color.primary_60}`,
                         }}
                       >
-                        Pista
+                        {item.ticket.name}
                       </Text>
                     </Text>
                   </Area>
@@ -87,7 +107,7 @@ export function TicketCards() {
                   }}
                 >
                   <Button
-                    title="Excluir"
+                    title={item.status === "ACTIVE" ? "Transferir" : "Excluir"}
                     background={`${Theme.color.primary_40}`}
                     color={`${Theme.color.gray_10}`}
                     fontSize={10}
@@ -95,7 +115,7 @@ export function TicketCards() {
                     width={80}
                   />
                   <Button
-                    title="Pagamento"
+                    title={item.status === "ACTIVE" ? "QrCode" : "Pagamento"}
                     background={`${Theme.color.confirmation}`}
                     color={`${Theme.color.background}`}
                     fontSize={10}
@@ -118,25 +138,6 @@ export function TicketCards() {
         <Text> {""}Dúvidas? Veja esse Rápido Vídeo</Text>
       </Help>
       <More onPress={() => setOpen(true)} />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={open}
-        onRequestClose={() => setOpen(false)}
-        style={{
-          width: "80%",
-          height: "100%",
-          backgroundColor: "red",
-          alignItems: "center",
-          justifyContent: "center",
-          alignSelf: "center",
-        }}
-      >
-        <ModalBody>
-          <Test />
-          <Close onPress={() => setOpen(false)} />
-        </ModalBody>
-      </Modal>
     </Container>
   );
 }

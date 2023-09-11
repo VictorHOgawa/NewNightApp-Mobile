@@ -30,11 +30,11 @@ export function StackRoutes() {
         },
       }}
     >
-      <Screen name="Home" component={AppRoutes} />
+      <Screen name="AppRoutes" component={AppRoutes} />
+      <Screen name="Match" component={Match} />
       <Screen name="Login" component={Login} />
       <Screen name="Purchased" component={Purchased} />
       <Screen name="Profile" component={Profile} />
-      <Screen name="Match" component={Match} />
       <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Place" component={Place} />
       <Screen name="Tickets" component={Tickets} />

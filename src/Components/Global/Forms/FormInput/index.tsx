@@ -103,13 +103,13 @@ export function InputForm({
             />
           ) : name === "addressNumber" ? (
             <BaseInput
-              onChange={onChange}
+              onChangeText={onChange}
               {...rest}
               value={value}
               keyboardType="numeric"
             />
           ) : (
-            <BaseInput onChange={onChange} {...rest} value={value} />
+            <BaseInput onChangeText={onChange} {...rest} value={value} />
           )
         }
         name={name}
