@@ -4,6 +4,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { FlatList, FlatListProps } from "react-native";
 
 export const Container = styled.View`
+  flex-direction: column;
   width: 95%;
   align-self: center;
   flex: 1;
@@ -60,6 +61,8 @@ export const Help = styled.TouchableOpacity`
   border-radius: 10px;
   padding: 5px 10px;
   align-self: center;
+  position: absolute;
+  bottom: 2%;
 `;
 
 export const Map = styled(
@@ -89,4 +92,18 @@ export const ModalBody = styled.View`
   height: 100%;
   background-color: green;
   align-self: center;
+`;
+
+export const QrCodeImage = styled.Image`
+  width: ${RFValue(300)}px;
+  height: ${RFValue(300)}px;
+  align-self: center;
+  margin-top: 5%;
+`;
+
+export const NoTickets = styled.View`
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-top: 20%;
 `;

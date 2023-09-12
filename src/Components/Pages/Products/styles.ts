@@ -58,6 +58,8 @@ export const Help = styled.TouchableOpacity`
   border-radius: 10px;
   padding: 5px 10px;
   align-self: center;
+  position: absolute;
+  bottom: 2%;
 `;
 
 export const Map = styled(
@@ -94,4 +96,11 @@ export const QrCodeImage = styled.Image`
   height: ${RFValue(300)}px;
   align-self: center;
   margin-top: 5%;
+`;
+
+export const NoProducts = styled.View`
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  margin-top: 20%;
 `;

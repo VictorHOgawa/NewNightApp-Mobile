@@ -19,7 +19,7 @@ export const Icon = styled.Image`
 export const ModalBody = styled.View`
   background: ${Theme.color.primary_40};
   align-self: center;
-  margin-top: 80%;
+  margin-top: 60%;
   width: ${RFValue(250)}px;
 `;
 
@@ -30,6 +30,6 @@ export const Input = styled.TextInput`
   color: ${Theme.color.gray_10};
   width: 90%;
   align-self: center;
-  margin-top: 5%;
+  margin-top: 2%;
   padding: 2%;
 `;

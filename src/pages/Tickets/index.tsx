@@ -35,7 +35,7 @@ export function Tickets() {
           <LoadingOut />
           <Header />
           <Ad />
-          <TicketCards tickets={tickets} />
+          <TicketCards tickets={tickets} reload={getTickets} />
         </>
       )}
     </Container>
