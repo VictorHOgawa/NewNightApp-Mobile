@@ -2,10 +2,12 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { styled } from "styled-components/native";
 import Theme from "../../styles/themes";
 import { Dimensions } from "react-native";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 export const Container = styled.ScrollView`
   background-color: ${Theme.color.background};
-  padding: 0px 10px 50px 10px;
+  padding-bottom: ${getBottomSpace() + 20}px;
+  padding: 0px 10px;
 `;
 
 export const Image = styled.Image`

@@ -1,4 +1,8 @@
-import { StackActions, useNavigation } from "@react-navigation/native";
+import {
+  StackActions,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
@@ -11,9 +15,11 @@ import { Container, Remember, Title } from "./styles";
 
 export function Form() {
   const navigation = useNavigation<any>();
+  const { page } = useRoute().params as any;
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
+  console.log("page: ", page);
 
   async function handleLogin(formData: any) {
     setLoading(true);
@@ -23,13 +29,21 @@ export function Form() {
       return setLoading(false);
     }
     await storageToken(connect.body);
+    if (page === "Checkout") {
+      navigation.replace("Checkout");
+      return setLoading1(false);
+    }
     navigation.replace("AppRoutes", { screen: "Home" });
     return setLoading(false);
   }
 
   const handleRegister = () => {
     setLoading1(true);
-    navigation.navigate("Register");
+    if (page === "Checkout") {
+      navigation.replace("Register", { page: "Checkout" });
+      return setLoading1(false);
+    }
+    navigation.replace("Register");
     return setLoading1(false);
   };
 

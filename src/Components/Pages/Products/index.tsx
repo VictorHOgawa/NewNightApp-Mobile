@@ -277,7 +277,7 @@ export function ProductCards({ events, reload }: ProductProps) {
                           flexDirection: "column",
                           alignItems: "center",
                           justifyContent: "center",
-                          backgroundColor: "white",
+                          backgroundColor: Theme.color.background,
                           width: "90%",
                           alignSelf: "center",
                           marginTop: "25%",
@@ -328,7 +328,7 @@ export function ProductCards({ events, reload }: ProductProps) {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: "white",
+                        backgroundColor: Theme.color.background,
                         width: "90%",
                         alignSelf: "center",
                         marginTop: "25%",
@@ -376,7 +376,7 @@ export function ProductCards({ events, reload }: ProductProps) {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "white",
+                backgroundColor: Theme.color.background,
                 width: "90%",
                 alignSelf: "center",
                 marginTop: "25%",
@@ -384,7 +384,9 @@ export function ProductCards({ events, reload }: ProductProps) {
                 borderRadius: 20,
               }}
             >
-              <QRCode value={JSON.stringify(qrCode)} />
+              <View style={{ padding: 5, backgroundColor: "white" }}>
+                <QRCode value={JSON.stringify(qrCode)} />
+              </View>
               <Button
                 title="Copiar Código"
                 background={Theme.color.pix}

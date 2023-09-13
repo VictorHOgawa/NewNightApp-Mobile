@@ -56,3 +56,30 @@ export const Map = styled(
   width: 100%;
   margin-top: 15px;
 `;
+
+export const ModalBody = styled.View`
+  background-color: ${Theme.color.secondary_100};
+  border-radius: 10px;
+  width: 90%;
+  padding: 10px;
+  align-self: center;
+  margin-top: 50%;
+  align-items: center;
+`;
+
+export const EventPhoto = styled.Image`
+  width: ${RFValue(100)}px;
+  height: ${RFValue(100)}px;
+  border-radius: 10px;
+`;
+
+export const Names = styled.Text`
+  color: ${Theme.color.gray_10};
+  font-weight: bold;
+  font-size: ${RFValue(20)};
+`;
+
+export const TicketIcon = styled.Image`
+  width: ${RFValue(30)}px;
+  height: ${RFValue(30)}px;
+`;

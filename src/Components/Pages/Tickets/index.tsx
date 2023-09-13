@@ -204,7 +204,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                           flexDirection: "column",
                           alignItems: "center",
                           justifyContent: "center",
-                          backgroundColor: "white",
+                          backgroundColor: Theme.color.background,
                           width: "90%",
                           alignSelf: "center",
                           marginTop: "25%",
@@ -252,7 +252,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        backgroundColor: "white",
+                        backgroundColor: Theme.color.background,
                         width: "90%",
                         alignSelf: "center",
                         marginTop: "25%",
@@ -299,7 +299,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: "white",
+                backgroundColor: Theme.color.background,
                 width: "90%",
                 alignSelf: "center",
                 marginTop: "25%",
@@ -307,7 +307,9 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                 borderRadius: 20,
               }}
             >
-              <QRCode value={JSON.stringify(qrCode)} />
+              <View style={{ padding: 5, backgroundColor: "white" }}>
+                <QRCode value={JSON.stringify(qrCode)} />
+              </View>
               <Button
                 title="Copiar Código"
                 background={Theme.color.pix}

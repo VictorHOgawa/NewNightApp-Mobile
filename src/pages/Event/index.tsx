@@ -19,6 +19,7 @@ import { useCart } from "../../context/cart";
 import Theme from "../../styles/themes";
 import { getAPI, loginVerifyAPI } from "../../utils/api";
 import { Banner, ButtonGroup, Container, Icon, Image, Text } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export function Event() {
   const navigation = useNavigation<any>();
@@ -30,6 +31,7 @@ export function Event() {
   const [type, setType] = useState("");
   const [logged, setLogged] = useState(false);
   const { cart } = useCart();
+  console.log("eventDetails: ", eventDetails);
 
   async function getEventInfo() {
     const connect = await getAPI(`/event/${id}`);
@@ -108,12 +110,19 @@ export function Event() {
           />
 
           {step === 1 && eventDetails?.ticketSlots.length === 0 ? (
-            <Text style={{ alignSelf: "center", textAlign: "center" }}>
+            <Text
+              style={{
+                alignSelf: "center",
+                textAlign: "center",
+                fontSize: RFValue(20),
+                marginTop: "5%",
+              }}
+            >
               Nenhum ingresso disponível
             </Text>
           ) : step === 1 && eventDetails?.ticketSlots.length !== 0 ? (
             <>
-              <ButtonGroup style={{ marginTop: 10 }}>
+              <ButtonGroup style={{ marginTop: 10, marginBottom: 10 }}>
                 <Tabs active={true} />
                 <Tabs active={false} />
                 <Tabs active={false} />
@@ -125,11 +134,18 @@ export function Event() {
               Nenhum Produto Disponível
             </Text>
           ) : (
-            <StepTwo
-              product={eventDetails?.products}
-              type={type}
-              setType={setType}
-            />
+            <>
+              <ButtonGroup style={{ marginTop: 10, marginBottom: 10 }}>
+                <Tabs active={true} />
+                <Tabs active={false} />
+                <Tabs active={false} />
+              </ButtonGroup>
+              <StepTwo
+                product={eventDetails?.products}
+                type={type}
+                setType={setType}
+              />
+            </>
           )}
 
           <HorizontalView

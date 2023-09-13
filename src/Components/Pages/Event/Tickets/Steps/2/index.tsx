@@ -17,6 +17,10 @@ import {
   TicketType,
   Title,
 } from "../../styles";
+import { RFValue } from "react-native-responsive-fontsize";
+import { Checkbox } from "../../../../../Global/Checkbox";
+import { HorizontalView } from "../../../../../Global/View/HorizontalView";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface StepTwoProps {
   product: {
@@ -33,6 +37,7 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
   const [filteredProduct, setFilteredProduct] = useState<any>([]);
   const { cart, add } = useCart();
   const [moreProducts, setMoreProducts] = useState(true);
+  const [checked, setChecked] = useState(false);
   function handleSelectType(type: string) {
     setFilteredProduct(product.filter((item) => item.type === type));
     setType(type);
@@ -66,6 +71,30 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
       (ticket: { id: string }) => ticket.id === id
     );
     return ticketExists ? ticketExists.quantity : 0;
+  }
+
+  function handleTitle(type: string) {
+    switch (type) {
+      case "COMBO":
+        return "Combo";
+
+      case "VODKA":
+        return "Vodka";
+
+      case "WHISKEY":
+        return "Whiskey";
+
+      case "BEER":
+        return "Cerveja";
+
+      case "ENERGÉTICOS":
+        return "Energéticos";
+
+      case "OUTROS":
+        return "Outros";
+      default:
+        "";
+    }
   }
 
   return (
@@ -131,55 +160,71 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
               <></>
             )}
           </Items>
+          <HorizontalView>
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={() => setChecked(!checked)}
+            >
+              <Checkbox
+                checked={checked}
+                onPress={() => setChecked(!checked)}
+              />
+              <Title>{""} Não quero comprar Produtos</Title>
+            </TouchableOpacity>
+          </HorizontalView>
         </>
       ) : (
-        <Map
-          data={filteredProduct}
-          renderItem={({ item }) =>
-            filteredProduct.length === 0 ? (
-              <></>
-            ) : (
-              <>
-                <Title>{item.type}</Title>
-                <VerticalView>
-                  <TicketType>
-                    <Item source={{ uri: item.photo_location }} />
-                    <VerticalView>
-                      <TicketTitle style={{ fontWeight: "bold" }}>
-                        {item.name}
-                      </TicketTitle>
-                      <TicketTitle>
-                        {item.value.toLocaleString("pt-br", {
-                          style: "currency",
-                          currency: "BRL",
-                        })}
-                      </TicketTitle>
-                    </VerticalView>
-                    <CounterArea>
-                      <IconButton
-                        onPress={() => handleChange("decrease", item)}
-                      >
-                        <Icon
-                          source={require("../../../../../../../assets/Event/Minus.png")}
-                        />
-                      </IconButton>
-                      <Counter>
-                        <CounterText>{ticketQuantity(item.id)}</CounterText>
-                      </Counter>
-                      <IconButton
-                        onPress={() => handleChange("increase", item)}
-                      >
-                        <Icon
-                          source={require("../../../../../../../assets/Event/Plus.png")}
-                        />
-                      </IconButton>
-                    </CounterArea>
-                  </TicketType>
-                </VerticalView>
-              </>
-            )
-          }
-        />
+        <>
+          <Title style={{ fontSize: RFValue(20) }}>
+            {handleTitle(filteredProduct[0].type)}
+          </Title>
+          <Map
+            data={filteredProduct}
+            renderItem={({ item }) =>
+              filteredProduct.length === 0 ? (
+                <></>
+              ) : (
+                <>
+                  <VerticalView>
+                    <TicketType>
+                      <Item source={{ uri: item.photo_location }} />
+                      <VerticalView>
+                        <TicketTitle style={{ fontWeight: "bold" }}>
+                          {item.name}
+                        </TicketTitle>
+                        <TicketTitle>
+                          {item.value.toLocaleString("pt-br", {
+                            style: "currency",
+                            currency: "BRL",
+                          })}
+                        </TicketTitle>
+                      </VerticalView>
+                      <CounterArea>
+                        <IconButton
+                          onPress={() => handleChange("decrease", item)}
+                        >
+                          <Icon
+                            source={require("../../../../../../../assets/Event/Minus.png")}
+                          />
+                        </IconButton>
+                        <Counter>
+                          <CounterText>{ticketQuantity(item.id)}</CounterText>
+                        </Counter>
+                        <IconButton
+                          onPress={() => handleChange("increase", item)}
+                        >
+                          <Icon
+                            source={require("../../../../../../../assets/Event/Plus.png")}
+                          />
+                        </IconButton>
+                      </CounterArea>
+                    </TicketType>
+                  </VerticalView>
+                </>
+              )
+            }
+          />
+        </>
       )}
     </>
   );

@@ -24,10 +24,7 @@ export function Installments({
 }: InstallmentsProps) {
   const [loading, setLoading] = useState(false);
   const { cart } = useCart();
-  const [installment, setInstallment] = useState({
-    installmentNumber: 0,
-    value: 0,
-  });
+  const [installment, setInstallment] = useState("");
   const [installments, setInstallments] = useState<any>(["Voltar"]);
   const ref = useRef<any>();
   const handleOpen = () => {
@@ -37,12 +34,16 @@ export function Installments({
     setInstallment(item);
   };
 
+  console.log("installment: ", installment);
   async function handleCart() {
     setLoading(true);
     const connect = await AuthPostAPI("/purchase/cart", {
       ...cart,
       coupon: "",
     });
+    setInstallment(
+      `${connect.body.payment.installments[0].installmentNumber} x R$ ${connect.body.payment.installments[0].value}`
+    );
     setInstallments([
       "Voltar",
       ...connect.body.payment.installments.map(
@@ -107,11 +108,7 @@ export function Installments({
           )}
           <GlobalTitle title="Parcelas" />
           <Button
-            title={
-              installment.installmentNumber === 0
-                ? "Selecione as Parcelas"
-                : `${installment}`
-            }
+            title={installment}
             background={Theme.color.secondary_100}
             color={Theme.color.gray_10}
             width={300}

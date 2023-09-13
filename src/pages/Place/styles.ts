@@ -2,17 +2,19 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { styled } from "styled-components/native";
 import Theme from "../../styles/themes";
 import { Dimensions, FlatList, FlatListProps } from "react-native";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 export const Container = styled.ScrollView`
   background-color: ${Theme.color.background};
-  padding: 0px 10px 50px 10px;
+  padding-bottom: ${getBottomSpace() + 20}px;
+  padding: 0px 10px;
 `;
 
 export const Image = styled.Image`
-  width: ${Dimensions.get("window").width}px;
-
+  width: ${Dimensions.get("window").width * 0.95}px;
   height: 200px;
   border-radius: 10px;
+  margin-right: ${RFValue(100)}px;
 `;
 
 export const Banner = styled.View`

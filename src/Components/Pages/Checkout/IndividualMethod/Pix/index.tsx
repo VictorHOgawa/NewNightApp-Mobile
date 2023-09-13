@@ -12,6 +12,7 @@ import { AuthPostAPI } from "../../../../../utils/api";
 import { useCart } from "../../../../../context/cart";
 import { ActivityIndicator } from "react-native";
 import * as Clipboard from "expo-clipboard";
+import { HorizontalView } from "../../../../Global/View/HorizontalView";
 
 export function PixMethod() {
   const navigation = useNavigation<any>();
@@ -51,12 +52,33 @@ export function PixMethod() {
   };
   return (
     <Container>
-      <GlobalTitle title="Código da Galera" />
-      <Form
-        placeholder="Insira o Melhor Código aqui"
-        placeholderTextColor={`${Theme.color.gray_70}`}
-        style={{ width: "90%", alignSelf: "center" }}
-      />
+      <GlobalTitle title="Código da Galera" fontSize={15} />
+      <HorizontalView
+        style={{
+          width: "90%",
+          height: RFValue(50),
+          padding: 0,
+          marginLeft: "5%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Form
+          placeholder="Insira o Melhor Código aqui"
+          placeholderTextColor={`${Theme.color.gray_70}`}
+          style={{
+            width: "45%",
+            height: RFValue(30),
+            alignSelf: "center",
+          }}
+        />
+        <Button
+          title="Aplicar Código"
+          height={RFValue(30)}
+          background={Theme.color.confirmation}
+          color={Theme.color.background}
+        />
+      </HorizontalView>
       {QrCode ? (
         <></>
       ) : (
@@ -103,7 +125,7 @@ export function PixMethod() {
               <Button
                 title="Finalizar"
                 background={`${Theme.color.confirmation}`}
-                color={`${Theme.color.gray_10}`}
+                color={`${Theme.color.background}`}
                 width={300}
                 height={40}
                 onPress={handleFinish}

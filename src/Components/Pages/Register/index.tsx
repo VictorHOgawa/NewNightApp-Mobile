@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert } from "react-native";
@@ -11,6 +11,7 @@ import { Container, FormContainer, Label } from "./styles";
 
 export function Form() {
   const navigation = useNavigation<any>();
+  const { page } = useRoute().params as any;
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +23,10 @@ export function Form() {
       return setLoading(false);
     }
     await storageToken(connect.body);
+    if (page === "Checkout") {
+      navigation.replace("Checkout");
+      return setLoading(false);
+    }
     navigation.replace("AppRoutes", { screen: "Home" });
     return setLoading(false);
   }

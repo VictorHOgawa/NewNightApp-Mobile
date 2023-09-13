@@ -12,6 +12,7 @@ export const Container = styled.View`
   width: 95%;
   justify-content: space-between;
   margin-top: 5%;
+  margin-bottom: 5%;
 `;
 
 export const Button = styled.TouchableOpacity<SelectedProps>`

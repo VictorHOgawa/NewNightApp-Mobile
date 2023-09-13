@@ -35,6 +35,7 @@ export function Button({
       marginTop={marginTop}
       background={background}
       loading={loading}
+      style={{ opacity: disabled ? 0.5 : 1 }}
       {...rest}
     >
       {children}

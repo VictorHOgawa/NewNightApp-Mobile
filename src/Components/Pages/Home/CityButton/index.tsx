@@ -65,7 +65,7 @@ export function CityButton({ selectedCity, setSelectedCity }: Props) {
               if (index == 0) {
               } else {
                 setLoading(false);
-                setSelectedCity(list[index]);
+                setSelectedCity(list[index - 1]);
               }
             }}
           />

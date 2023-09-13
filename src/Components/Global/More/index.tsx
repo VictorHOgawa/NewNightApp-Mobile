@@ -32,8 +32,6 @@ export function More({
   const navigation = useNavigation<any>();
   const [loading, setLoading] = useState(false);
 
-  console.log("type: ", type);
-
   const handleOpen = () => {
     setSelected("1");
     setOpen1(true);

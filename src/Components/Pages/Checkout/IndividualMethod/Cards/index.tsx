@@ -245,7 +245,7 @@ export function CardMethod() {
                         width={300}
                         style={{
                           alignSelf: "center",
-                          justifyContent: "space-evenly",
+                          justifyContent: "flex-start",
                           padding: 10,
                           alignItems: "center",
                         }}
@@ -253,7 +253,8 @@ export function CardMethod() {
                       >
                         <Radio active={selected === item.id ? true : false} />
                         <Text>
-                          {item.creditCardBrand} **** {item.creditCardNumber}
+                          {""} {item.creditCardBrand} ****{" "}
+                          {item.creditCardNumber}
                         </Text>
                       </Button>
                     )}
@@ -269,17 +270,18 @@ export function CardMethod() {
             width={300}
             style={{
               alignSelf: "center",
-              justifyContent: "space-evenly",
+              justifyContent: "flex-start",
               padding: 10,
               alignItems: "center",
             }}
             onPress={() => setSelected("New")}
           >
             <Radio active={selected === "New" ? true : false} />
+            <Text>{""} </Text>
             <Icon
               source={require("../../../../../../assets/Checkout/Add.png")}
             />
-            <Text>Inserir dados de um Cartão</Text>
+            <Text>{""} Inserir dados de um Cartão</Text>
           </Button>
           <GlobalTitle title="Código da Galera" />
           <Form
