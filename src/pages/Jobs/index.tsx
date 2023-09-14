@@ -11,19 +11,19 @@ export function Jobs() {
       id: 1,
       bannerLocation: "../../../assets/Global/Premium.png",
       title: "Portaria",
-      type: "Portaria",
+      screen: "Portaria",
     },
-    {
-      id: 2,
-      bannerLocation: "../../../assets/Global/Premium.png",
-      title: "Bar",
-      type: "Bar",
-    },
+    // {
+    //   id: 2,
+    //   bannerLocation: "../../../assets/Global/Premium.png",
+    //   title: "Bar",
+    //   screen: "Bar",
+    // },
     {
       id: 3,
       bannerLocation: "../../../assets/Global/Premium.png",
       title: "Promoters",
-      type: "Promoters",
+      screen: "Promoter",
     },
   ];
   return (
@@ -35,11 +35,7 @@ export function Jobs() {
         renderItem={({ item }) => (
           <>
             <GlobalTitle title={item.title} />
-            <PremiumButton
-              onPress={() =>
-                navigation.navigate("JobDetails", { type: item.type })
-              }
-            >
+            <PremiumButton onPress={() => navigation.navigate(item.screen)}>
               <NightPremium
                 source={require("../../../assets/Global/Premium.png")}
               />

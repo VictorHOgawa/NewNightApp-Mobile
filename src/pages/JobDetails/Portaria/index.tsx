@@ -1,38 +1,36 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { Ad } from "../../Components/Global/Ad";
-import { Button } from "../../Components/Global/Button";
-import { Header } from "../../Components/Global/Header";
-import { More } from "../../Components/Global/More";
-import { GlobalTitle } from "../../Components/Global/Title";
-import { HorizontalView } from "../../Components/Global/View/HorizontalView";
-import { VerticalView } from "../../Components/Global/View/VerticalView";
-import Theme from "../../styles/themes";
+import { useEffect, useState } from "react";
+import { AuthPostAPI, authGetAPI } from "../../../utils/api";
+import { Alert, Modal } from "react-native";
 import {
   Container,
+  EventPhoto,
   Help,
   Icon,
   Image,
   JobCard,
   Map,
   ModalBody,
-  EventPhoto,
-  Text,
   Names,
+  Text,
   TicketIcon,
 } from "./styles";
-import { useState, useEffect } from "react";
-import { AuthPostAPI, authGetAPI } from "../../utils/api";
-import { LoadingIn } from "../../Components/Loading/LoadingIn";
-import { LoadingOut } from "../../Components/Loading/LoadingOut";
-import { Alert, Modal } from "react-native";
+import { LoadingIn } from "../../../Components/Loading/LoadingIn";
+import { LoadingOut } from "../../../Components/Loading/LoadingOut";
+import { Header } from "../../../Components/Global/Header";
+import { Ad } from "../../../Components/Global/Ad";
+import { GlobalTitle } from "../../../Components/Global/Title";
+import { HorizontalView } from "../../../Components/Global/View/HorizontalView";
+import { VerticalView } from "../../../Components/Global/View/VerticalView";
 import moment from "moment";
-import "moment/locale/pt-br";
-import { Scanner } from "../../Components/Global/Scanner";
+import { Button } from "../../../Components/Global/Button";
+import Theme from "../../../styles/themes";
+import { Scanner } from "../../../Components/Global/Scanner";
+import { More } from "../../../Components/Global/More";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export function JobDetails() {
+export function Portaria() {
   const navigation = useNavigation<any>();
-  const { type } = useRoute().params as any;
   const [open, setOpen] = useState(false);
   const [jobs, setJobs] = useState<any>([]);
   const [loading, setLoading] = useState(false);
@@ -56,16 +54,14 @@ export function JobDetails() {
   }
 
   const handleClick = async () => {
-    if (type === "Portaria") {
-      setLoading(true);
-      const connect = await AuthPostAPI(`/user/work/${portariaCode}`, {});
-      if (connect.status !== 200) {
-        Alert.alert(connect.body);
-        return setLoading(false);
-      }
-      navigation.replace("Jobs");
+    setLoading(true);
+    const connect = await AuthPostAPI(`/user/work/${portariaCode}`, {});
+    if (connect.status !== 200) {
+      Alert.alert(connect.body);
       return setLoading(false);
     }
+    navigation.replace("Jobs");
+    return setLoading(false);
   };
 
   async function sendQrCode(qrCode: any) {
@@ -125,7 +121,7 @@ export function JobDetails() {
             <LoadingOut />
             <Header />
             <Ad />
-            <GlobalTitle title={"Jobs - " + type} />
+            <GlobalTitle title={"Jobs - Portaria"} />
             <Map
               data={jobs}
               renderItem={({ item }) => (
@@ -136,7 +132,7 @@ export function JobDetails() {
                       <Text style={{ fontWeight: "bold" }}>Nome do Evento</Text>
                       <Text>
                         <Icon
-                          source={require("../../../assets/Global/Icons/clockIcon.png")}
+                          source={require("../../../../assets/Global/Icons/clockIcon.png")}
                         />
                         <Text style={{ fontWeight: "bold" }}>
                           {""} {moment(item.event.date).format("DD/MM/YYYY")}
@@ -145,7 +141,7 @@ export function JobDetails() {
                       </Text>
                       <Text>
                         <Icon
-                          source={require("../../../assets/Global/Icons/pinIcon.png")}
+                          source={require("../../../../assets/Global/Icons/pinIcon.png")}
                         />
                         <Text style={{ fontWeight: "bold" }}>
                           {""} {item.event.local}
@@ -155,7 +151,7 @@ export function JobDetails() {
                     </VerticalView>
                   </HorizontalView>
                   <Button
-                    title={type === "Promoters" ? "Pegar Código" : "Ler QrCode"}
+                    title="Ler QrCode"
                     background={`${Theme.color.confirmation}`}
                     color={`${Theme.color.background}`}
                     height={40}
@@ -176,14 +172,14 @@ export function JobDetails() {
             />
             <Help>
               <Icon
-                source={require("../../../assets/Global/Icons/youtubeIcon.png")}
+                source={require("../../../../assets/Global/Icons/youtubeIcon.png")}
               />
               <Text> {""}Dúvidas? Veja esse Rápido Vídeo</Text>
             </Help>
 
             <More
               style={{ bottom: "2%" }}
-              type={type}
+              type={"portaria"}
               handleClick={handleClick}
               portariaCode={portariaCode}
               setPortariaCode={setPortariaCode}
@@ -211,7 +207,7 @@ export function JobDetails() {
               {receivedInfo.item.type === "ticket" ? (
                 <HorizontalView style={{ marginTop: "5%" }}>
                   <TicketIcon
-                    source={require("../../../assets/Global/Icons/ticketIcon.png")}
+                    source={require("../../../../assets/Global/Icons/ticketIcon.png")}
                   />
                   <Names>
                     {""} {receivedInfo.item.ticket.name}
@@ -234,7 +230,7 @@ export function JobDetails() {
                   }}
                 >
                   <Icon
-                    source={require("../../../assets/Global/Icons/clockIcon.png")}
+                    source={require("../../../../assets/Global/Icons/clockIcon.png")}
                   />
                   <Text>
                     {""}{" "}
@@ -249,7 +245,7 @@ export function JobDetails() {
                   }}
                 >
                   <Icon
-                    source={require("../../../assets/Global/Icons/pinIcon.png")}
+                    source={require("../../../../assets/Global/Icons/pinIcon.png")}
                   />
                   <Text>
                     {""} {receivedInfo.item.event.local}{" "}

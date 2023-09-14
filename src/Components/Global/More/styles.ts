@@ -33,3 +33,25 @@ export const Input = styled.TextInput`
   margin-top: 2%;
   padding: 2%;
 `;
+
+export const PromoterBody = styled.View`
+  width: 90%;
+  align-self: center;
+  background-color: ${Theme.color.primary_20};
+  border-radius: 10px;
+  padding: 5%;
+`;
+
+export const Text = styled.Text`
+  color: ${Theme.color.gray_10};
+  font-weight: bold;
+`;
+
+export const Display = styled.View`
+  align-items: center;
+  justify-content: center;
+  background-color: ${Theme.color.secondary_100};
+  border-radius: 10px;
+  padding: 2px 10px;
+  width: ${RFValue(60)}px;
+`;

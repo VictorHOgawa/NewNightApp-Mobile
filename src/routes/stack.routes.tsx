@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Chat } from "../pages/Chat";
 import { Checkout } from "../pages/Checkout";
 import { Event } from "../pages/Event";
-import { JobDetails } from "../pages/JobDetails";
+import { Portaria } from "../pages/JobDetails/Portaria";
 import { Jobs } from "../pages/Jobs";
 import { Login } from "../pages/Login";
 import { Match } from "../pages/Match";
@@ -16,6 +16,7 @@ import { Register } from "../pages/Register";
 import { Shop } from "../pages/Shop";
 import { Tickets } from "../pages/Tickets";
 import { AppRoutes } from "./NavBar.routes";
+import { Promoter } from "../pages/JobDetails/Promoter";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -46,7 +47,8 @@ export function StackRoutes() {
       <Screen name="MyMatches" component={MyMatches} />
       <Screen name="Chat" component={Chat} />
       <Screen name="Jobs" component={Jobs} />
-      <Screen name="JobDetails" component={JobDetails} />
+      <Screen name="Promoter" component={Promoter} />
+      <Screen name="Portaria" component={Portaria} />
     </Navigator>
   );
 }

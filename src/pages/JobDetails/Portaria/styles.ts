@@ -1,5 +1,5 @@
 import { styled } from "styled-components/native";
-import Theme from "../../styles/themes";
+import Theme from "../../../styles/themes";
 import { RFValue } from "react-native-responsive-fontsize";
 import { FlatList, FlatListProps } from "react-native";
 

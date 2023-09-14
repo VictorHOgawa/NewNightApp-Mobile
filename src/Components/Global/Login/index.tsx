@@ -11,13 +11,13 @@ export function LoginValidation() {
 
   const handleLogin = () => {
     setLoading(true);
-    navigation.navigate("Login");
+    navigation.navigate("Login", { page: "Home" });
     return setLoading(false);
   };
 
   const handleRegister = () => {
     setLoading1(true);
-    navigation.navigate("Register");
+    navigation.navigate("Register", { page: "Home" });
     return setLoading1(false);
   };
   return (

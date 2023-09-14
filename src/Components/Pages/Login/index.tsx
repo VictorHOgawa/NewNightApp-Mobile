@@ -19,7 +19,6 @@ export function Form() {
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
-  console.log("page: ", page);
 
   async function handleLogin(formData: any) {
     setLoading(true);
