@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
-import { Modal } from "react-native";
 import Theme from "../../../../styles/themes";
 import { BackButton } from "../../../Global/Back";
 import { Button } from "../../../Global/Button";
@@ -10,6 +9,7 @@ import { GlobalTitle } from "../../../Global/Title";
 import { HorizontalView } from "../../../Global/View/HorizontalView";
 import { VerticalView } from "../../../Global/View/VerticalView";
 import { Logo, Top } from "../Register/styles";
+import Modal from "react-native-modal";
 import {
   AddPhoto,
   Container,
@@ -160,12 +160,12 @@ export function Form({
             <Text>Modelos de Descrição, dá uma olhadinha!</Text>
           </Models>
           <Modal
-            animationType="slide"
-            transparent={true}
-            visible={open}
-            onRequestClose={() => setOpen(false)}
+            isVisible={open}
+            onModalHide={() => setOpen(false)}
+            onBackdropPress={() => setOpen(false)}
+            onBackButtonPress={() => setOpen(false)}
           >
-            <ModalBody>
+            <ModalBody style={{ padding: 10, borderRadius: 10 }}>
               <Top style={{ justifyContent: "center" }}>
                 <BackButton onPress={() => setOpen(false)} />
                 <Logo

@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { AuthPostAPI, authGetAPI } from "../../../utils/api";
-import { Alert, Modal } from "react-native";
+import { Alert } from "react-native";
 import {
   Container,
   EventPhoto,
@@ -28,6 +28,7 @@ import Theme from "../../../styles/themes";
 import { Scanner } from "../../../Components/Global/Scanner";
 import { More } from "../../../Components/Global/More";
 import { RFValue } from "react-native-responsive-fontsize";
+import Modal from "react-native-modal";
 
 export function Portaria() {
   const navigation = useNavigation<any>();
@@ -77,7 +78,6 @@ export function Portaria() {
       return Alert.alert(connect.body);
     }
 
-    Alert.alert("Funcionou");
     setReceivedInfo(connect.body);
     return setVerifyTicket(true);
   }
@@ -158,15 +158,132 @@ export function Portaria() {
                     width={150}
                     onPress={() => setOpenScanner(true)}
                   />
-                  <Scanner
-                    handleScan={(item: any) => sendQrCode(item)}
-                    openScanner={openScanner}
-                    setOpenScanner={setOpenScanner}
-                    qrCodeInfo={qrCodeInfo}
-                    setQrCodeInfo={setQrCodeInfo}
-                    scanned={scanned}
-                    setScanned={setScanned}
-                  />
+                  <Modal
+                    isVisible={openScanner}
+                    onModalHide={() => setOpenScanner(false)}
+                    onBackdropPress={() => setOpenScanner(false)}
+                    onBackButtonPress={() => setOpenScanner(false)}
+                  >
+                    <Scanner
+                      handleScan={(item: any) => sendQrCode(item)}
+                      openScanner={openScanner}
+                      setOpenScanner={setOpenScanner}
+                      qrCodeInfo={qrCodeInfo}
+                      setQrCodeInfo={setQrCodeInfo}
+                      scanned={scanned}
+                      setScanned={setScanned}
+                    />
+                    <Modal
+                      isVisible={verifyTicket}
+                      onModalHide={() => setVerifyTicket(false)}
+                      onBackdropPress={() => setVerifyTicket(false)}
+                      onBackButtonPress={() => setVerifyTicket(false)}
+                    >
+                      <ModalBody>
+                        {receivedInfo ? (
+                          <>
+                            <EventPhoto
+                              source={{
+                                uri: receivedInfo.item.event.photo_location,
+                              }}
+                            />
+                            <Names
+                              style={{
+                                fontSize: RFValue(18),
+                                color: Theme.color.primary_80,
+                              }}
+                            >
+                              {receivedInfo.item.event.name}
+                            </Names>
+                            <Names style={{ marginTop: "2%" }}>
+                              {receivedInfo.item.user.name}
+                            </Names>
+                            {receivedInfo.item.type === "ticket" ? (
+                              <HorizontalView style={{ marginTop: "5%" }}>
+                                <TicketIcon
+                                  source={require("../../../../assets/Global/Icons/ticketIcon.png")}
+                                />
+                                <Names>
+                                  {""} {receivedInfo.item.ticket.name}
+                                </Names>
+                              </HorizontalView>
+                            ) : (
+                              <></>
+                            )}
+                            <VerticalView
+                              style={{
+                                alignItems: "start",
+                                width: "100%",
+                                marginTop: "5%",
+                              }}
+                            >
+                              <HorizontalView
+                                style={{
+                                  alignItems: "center",
+                                  width: "100%",
+                                }}
+                              >
+                                <Icon
+                                  source={require("../../../../assets/Global/Icons/clockIcon.png")}
+                                />
+                                <Text>
+                                  {""}{" "}
+                                  {moment(receivedInfo.item.event.date).format(
+                                    "DD/MM/YYYY"
+                                  )}{" "}
+                                  às{" "}
+                                  {moment(receivedInfo.item.event.date).format(
+                                    "HH:mm"
+                                  )}
+                                </Text>
+                              </HorizontalView>
+                              <HorizontalView
+                                style={{
+                                  alignItems: "center",
+                                  width: "100%",
+                                }}
+                              >
+                                <Icon
+                                  source={require("../../../../assets/Global/Icons/pinIcon.png")}
+                                />
+                                <Text>
+                                  {""} {receivedInfo.item.event.local}{" "}
+                                  {receivedInfo.item.event.city.name} /{" "}
+                                  {receivedInfo.item.event.city.state}
+                                </Text>
+                              </HorizontalView>
+                            </VerticalView>
+                            <HorizontalView
+                              style={{
+                                justifyContent: "space-evenly",
+                                width: "100%",
+                              }}
+                            >
+                              <Button
+                                title="Retornar"
+                                background={Theme.color.primary_100}
+                                color={Theme.color.background}
+                                height={40}
+                                width={125}
+                                onPress={handleBack}
+                              />
+                              <Button
+                                title="Aprovar Entrada"
+                                background={Theme.color.confirmation}
+                                color={Theme.color.background}
+                                height={40}
+                                width={125}
+                                onPress={Approve}
+                                loading={loading1}
+                              />
+                            </HorizontalView>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </ModalBody>
+                    </Modal>
+                  </Modal>
                 </JobCard>
               )}
             />
@@ -187,100 +304,6 @@ export function Portaria() {
           </>
         )}
       </Container>
-      <Modal
-        visible={verifyTicket}
-        onRequestClose={() => setVerifyTicket(false)}
-        style={{ backgroundColor: "red" }}
-      >
-        <ModalBody>
-          {receivedInfo ? (
-            <>
-              <EventPhoto
-                source={{ uri: receivedInfo.item.event.photo_location }}
-              />
-              <Names style={{ fontSize: RFValue(18) }}>
-                {receivedInfo.item.event.name}
-              </Names>
-              <Names style={{ marginTop: "2%" }}>
-                {receivedInfo.item.user.name}
-              </Names>
-              {receivedInfo.item.type === "ticket" ? (
-                <HorizontalView style={{ marginTop: "5%" }}>
-                  <TicketIcon
-                    source={require("../../../../assets/Global/Icons/ticketIcon.png")}
-                  />
-                  <Names>
-                    {""} {receivedInfo.item.ticket.name}
-                  </Names>
-                </HorizontalView>
-              ) : (
-                <></>
-              )}
-              <VerticalView
-                style={{
-                  alignItems: "start",
-                  width: "100%",
-                  marginTop: "5%",
-                }}
-              >
-                <HorizontalView
-                  style={{
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Icon
-                    source={require("../../../../assets/Global/Icons/clockIcon.png")}
-                  />
-                  <Text>
-                    {""}{" "}
-                    {moment(receivedInfo.item.event.date).format("DD/MM/YYYY")}{" "}
-                    às {moment(receivedInfo.item.event.date).format("HH:mm")}
-                  </Text>
-                </HorizontalView>
-                <HorizontalView
-                  style={{
-                    alignItems: "center",
-                    width: "100%",
-                  }}
-                >
-                  <Icon
-                    source={require("../../../../assets/Global/Icons/pinIcon.png")}
-                  />
-                  <Text>
-                    {""} {receivedInfo.item.event.local}{" "}
-                    {receivedInfo.item.event.city.name} /{" "}
-                    {receivedInfo.item.event.city.state}
-                  </Text>
-                </HorizontalView>
-              </VerticalView>
-              <HorizontalView
-                style={{ justifyContent: "space-evenly", width: "100%" }}
-              >
-                <Button
-                  title="Retornar"
-                  background={Theme.color.primary_100}
-                  color={Theme.color.background}
-                  height={40}
-                  width={125}
-                  onPress={handleBack}
-                />
-                <Button
-                  title="Aprovar Entrada"
-                  background={Theme.color.confirmation}
-                  color={Theme.color.background}
-                  height={40}
-                  width={125}
-                  onPress={Approve}
-                  loading={loading1}
-                />
-              </HorizontalView>
-            </>
-          ) : (
-            <></>
-          )}
-        </ModalBody>
-      </Modal>
     </>
   );
 }

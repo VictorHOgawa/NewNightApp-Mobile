@@ -11,11 +11,28 @@ import { Form, Icon, Map, Text } from "./styles";
 import { useEffect, useState } from "react";
 import { useCart } from "../../../../../context/cart";
 import { AuthPostAPI, authGetAPI } from "../../../../../utils/api";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import { useForm } from "react-hook-form";
+import { RFValue } from "react-native-responsive-fontsize";
+import {
+  CreditCardHolderValidation,
+  CreditCardValidation,
+} from "../../../../../utils/fieldValidation";
 
-export function CardMethod() {
-  const { cart, setCart } = useCart();
+interface CardProps {
+  coupon: string;
+  setCoupon: any;
+  AddCoupon: any;
+  loadingCoupon: boolean;
+}
+
+export function CardMethod({
+  coupon,
+  setCoupon,
+  AddCoupon,
+  loadingCoupon,
+}: CardProps) {
+  const { cart } = useCart();
   const navigation = useNavigation<any>();
   const [selected, setSelected] = useState("");
   const [newCard, setNewCard] = useState(false);
@@ -37,21 +54,7 @@ export function CardMethod() {
     postalCode: "",
     addressNumber: "",
   });
-  const [creditCard, setCreditCard] = useState<any>({
-    holderName: "",
-    number: "",
-    expiryMonth: "",
-    expiryYear: "",
-    ccv: "",
-  });
-  const [creditCardHolderInfo, setCreditCardHolderInfo] = useState<any>({
-    name: "",
-    email: "",
-    mobilePhone: "",
-    cpfCnpj: "",
-    postalCode: "",
-    addressNumber: "",
-  });
+
   const [installmentCount, setInstallmentCount] = useState(1);
 
   function handleBack() {
@@ -70,6 +73,7 @@ export function CardMethod() {
     }
   }
   function handleNext(formData: any) {
+    console.log("formData: ", formData);
     if (selected === "") {
       return alert("Selecione um Cartão");
     }
@@ -83,10 +87,7 @@ export function CardMethod() {
       selected === "New" &&
       newCard === true &&
       !stepTwo &&
-      formData.holderName !== "" &&
-      formData.number !== "" &&
-      formData.expiryDate !== "" &&
-      formData.ccv !== ""
+      CreditCardValidation(formData) === "ok"
     ) {
       return setStepTwo(true);
     }
@@ -95,16 +96,7 @@ export function CardMethod() {
       stepTwo &&
       !installments &&
       newCard === true &&
-      formData.holderName !== "" &&
-      formData.number !== "" &&
-      formData.expiryDate !== "" &&
-      formData.ccv !== "" &&
-      formData.name !== "" &&
-      formData.email !== "" &&
-      formData.mobilePhone !== "" &&
-      formData.cpfCnpj !== "" &&
-      formData.postalCode !== "" &&
-      formData.addressNumber !== ""
+      CreditCardHolderValidation(formData) === "ok"
     ) {
       {
         setInstallments(true);
@@ -115,24 +107,13 @@ export function CardMethod() {
       sendExistingCard();
     }
     if (!newCard && installments && selected === "New") {
-      setCreditCard({
-        holderName: formData.holderName,
-        number: formData.number,
-        expiryMonth: formData.expiryDate.split("/")[0],
-        expiryYear: formData.expiryDate.split("/")[1],
-        ccv: formData.ccv,
-      });
-      setCreditCardHolderInfo({
-        name: formData.name,
-        email: formData.email,
-        mobilePhone: formData.mobilePhone,
-        cpfCnpj: formData.cpfCnpj,
-        postalCode: formData.postalCode,
-        addressNumber: formData.addressNumber,
-      });
       sendNewCard(formData);
     }
   }
+  console.log("selected: ", selected);
+  console.log("stepTwo: ", stepTwo);
+  console.log("installments: ", installments);
+  console.log("newCard: ", newCard);
 
   async function sendNewCard(formData: any) {
     const creditCard = {
@@ -163,11 +144,11 @@ export function CardMethod() {
       alert(connect.body);
       return setLoading(false);
     }
+    Alert.alert("Compra Efetuada com Sucesso!");
     navigation.navigate("AppRoutes", {
       screen: "Purchased",
       params: { screen: "Purchased" },
     });
-
     return setLoading(false);
   }
 
@@ -182,11 +163,11 @@ export function CardMethod() {
       alert(connect.body);
       return setLoading(false);
     }
+    Alert.alert("Compra Efetuada com Sucesso!");
     navigation.navigate("AppRoutes", {
       screen: "Purchased",
       params: { screen: "Purchased" },
     });
-
     return setLoading(false);
   }
 
@@ -206,6 +187,37 @@ export function CardMethod() {
 
   return (
     <Container>
+      <GlobalTitle title="Código da Galera" />
+      <HorizontalView
+        style={{
+          width: "90%",
+          height: RFValue(50),
+          padding: 0,
+          marginLeft: "5%",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Form
+          placeholder="Insira o Melhor Código aqui"
+          placeholderTextColor={`${Theme.color.gray_70}`}
+          style={{
+            width: "45%",
+            height: RFValue(30),
+            alignSelf: "center",
+          }}
+          value={coupon}
+          onChangeText={setCoupon}
+        />
+        <Button
+          title="Aplicar Código"
+          height={RFValue(30)}
+          background={Theme.color.confirmation}
+          color={Theme.color.background}
+          onPress={AddCoupon}
+          loading={loadingCoupon}
+        />
+      </HorizontalView>
       {newCard ? (
         <>
           <NewCard
@@ -230,7 +242,7 @@ export function CardMethod() {
             <>
               {loadingCards ? (
                 <ActivityIndicator
-                  size="large"
+                  size="small"
                   color={Theme.color.primary_80}
                 />
               ) : (
@@ -251,11 +263,31 @@ export function CardMethod() {
                         }}
                         onPress={() => setSelected(item.id)}
                       >
-                        <Radio active={selected === item.id ? true : false} />
-                        <Text>
-                          {""} {item.creditCardBrand} ****{" "}
-                          {item.creditCardNumber}
-                        </Text>
+                        <>
+                          <Radio active={selected === item.id ? true : false} />
+                          {item.creditCardBrand === "AMEX" ? (
+                            <Icon
+                              style={{ width: RFValue(35), marginLeft: "2%" }}
+                              source={require("../../../../../../assets/Global/Icons/AECard.png")}
+                            />
+                          ) : item.creditCardBrand === "MASTERCARD" ? (
+                            <Icon
+                              style={{ width: RFValue(35), marginLeft: "2%" }}
+                              source={require("../../../../../../assets/Global/Icons/MasterCard.png")}
+                            />
+                          ) : item.creditCardBrand === "VISA" ? (
+                            <Icon
+                              style={{ width: RFValue(35), marginLeft: "2%" }}
+                              source={require("../../../../../../assets/Global/Icons/VisaCard.png")}
+                            />
+                          ) : (
+                            <></>
+                          )}
+                          <Text>
+                            {""} {item.creditCardBrand} ****{" "}
+                            {item.creditCardNumber}
+                          </Text>
+                        </>
                       </Button>
                     )}
                   />
@@ -283,12 +315,6 @@ export function CardMethod() {
             />
             <Text>{""} Inserir dados de um Cartão</Text>
           </Button>
-          <GlobalTitle title="Código da Galera" />
-          <Form
-            placeholder="Insira o Melhor Código aqui"
-            placeholderTextColor={`${Theme.color.gray_70}`}
-            style={{ width: "90%", alignSelf: "center" }}
-          />
         </>
       )}
 

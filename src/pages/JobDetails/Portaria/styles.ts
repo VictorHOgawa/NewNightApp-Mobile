@@ -63,7 +63,6 @@ export const ModalBody = styled.View`
   width: 90%;
   padding: 10px;
   align-self: center;
-  margin-top: 50%;
   align-items: center;
 `;
 

@@ -11,24 +11,7 @@ import { useCart } from "../../context/cart";
 
 export function Purchased() {
   const navigation = useNavigation<any>();
-  const list = [
-    {
-      location: "../../../assets/Purchased/Tickets.png",
-      onPress: () => navigation.navigate("Tickets"),
-    },
-    {
-      location: "../../../assets/Purchased/Products.png",
-      onPress: () => navigation.navigate("Products"),
-    },
-    {
-      location: "../../../assets/Purchased/Suggestions.png",
-      onPress: () => navigation.navigate("Suggestions"),
-    },
-    {
-      location: "../../../assets/Purchased/VIP.png",
-      onPress: () => navigation.navigate("vip"),
-    },
-  ];
+
   const [logged, setLogged] = useState(false);
   const [loading, setLoading] = useState(true);
   const { cart, setCart } = useCart();
@@ -79,7 +62,7 @@ export function Purchased() {
                     source={require("../../../assets/Purchased/Suggestions.png")}
                   />
                 </Btn>
-                <Btn onPress={() => navigation.navigate("vip")}>
+                <Btn onPress={() => navigation.navigate("VIP")}>
                   <Img source={require("../../../assets/Purchased/VIP.png")} />
                 </Btn>
               </HorizontalView>

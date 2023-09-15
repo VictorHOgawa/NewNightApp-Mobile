@@ -59,6 +59,6 @@ export const Text = styled.Text`
 
 export const ModalBody = styled.View`
   width: 95%;
-  background-color: red;
+  background-color: ${Theme.color.primary_80};
   align-self: center;
 `;

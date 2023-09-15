@@ -101,6 +101,12 @@ export function maskCard(value: string) {
   if (!value) {
     return "";
   }
+  if (value.length <= 17) {
+    value = value.replace(/\D/g, "");
+    value = value.replace(/(\d{4})(\d)/, "$1 $2");
+    value = value.replace(/(\d{6})(\d)/, "$1 $2");
+    return value;
+  }
   value = value.replace(/\D/g, "");
   value = value.replace(/(\d{4})(\d)/, "$1 $2");
   value = value.replace(/(\d{4})(\d)/, "$1 $2");

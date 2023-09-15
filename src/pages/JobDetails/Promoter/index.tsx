@@ -32,7 +32,6 @@ export function Promoter() {
       return setLoading(false);
     }
     setJobs(connect.body.userEventPromoter);
-    console.log("jobs: ", jobs);
 
     return setLoading(false);
   }

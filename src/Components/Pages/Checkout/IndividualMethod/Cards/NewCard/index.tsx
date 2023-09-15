@@ -1,4 +1,5 @@
 import { Controller, useForm } from "react-hook-form";
+import { View } from "react-native";
 import {
   stripeCardExpirValidation,
   stripeCardNumberValidation,
@@ -105,137 +106,132 @@ export function NewCard({ formData, stepTwo, control }: NewCardProps) {
             </CardDetails>
           </VerticalView>
         </CardContainer>
-        {stepTwo ? (
-          <>
-            <GlobalTitle title="Nome do Titular" fontSize={15} />
-            <InputForm
-              control={control}
-              name="name"
-              placeholder="Nome Aqui..."
-              autoCapitalize="words"
-              autoCorrect={true}
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-              onBlur={handleBlur}
-            />
-            {error && error.nameError && error.nameError.length > 1 && (
-              <Error>{error.nameError}</Error>
-            )}
-            <GlobalTitle title="Email do Titular" fontSize={15} />
+        <View style={{ display: stepTwo ? "flex" : "none" }}>
+          <GlobalTitle title="Nome do Titular" fontSize={15} />
+          <InputForm
+            control={control}
+            name="name"
+            placeholder="Nome Aqui..."
+            autoCapitalize="words"
+            autoCorrect={true}
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+            onBlur={handleBlur}
+          />
+          {error && error.nameError && error.nameError.length > 1 && (
+            <Error>{error.nameError}</Error>
+          )}
+          <GlobalTitle title="Email do Titular" fontSize={15} />
 
-            <InputForm
-              control={control}
-              name="email"
-              placeholder="Email"
-              autoCapitalize="none"
-              autoCorrect={true}
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-              onBlur={handleBlur}
-            />
+          <InputForm
+            control={control}
+            name="email"
+            placeholder="Email"
+            autoCapitalize="none"
+            autoCorrect={true}
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+            onBlur={handleBlur}
+          />
 
-            <GlobalTitle
-              title="Telefone de Cobrança do Titular"
-              fontSize={15}
-            />
-            <InputForm
-              control={control}
-              name="mobilePhone"
-              placeholder="Telefone Aqui..."
-              autoCapitalize="none"
-              autoCorrect={true}
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-              onBlur={handleBlur}
-            />
-            {error &&
-              error.mobilePhoneError &&
-              error.mobilePhoneError.length > 1 && (
-                <Error>{error.mobilePhoneError}</Error>
-              )}
-            <GlobalTitle title="CPF do Titular" fontSize={15} />
-            <InputForm
-              control={control}
-              name="cpfCnpj"
-              placeholder="CPF"
-              keyboardType="numeric"
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-            />
-            <GlobalTitle title="CEP de Cobrança" fontSize={15} />
-            <InputForm
-              control={control}
-              name="postalCode"
-              placeholder="Número Aqui"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="numeric"
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-            />
-            <GlobalTitle title="Número da Casa" fontSize={15} />
-            <InputForm
-              control={control}
-              name="addressNumber"
-              placeholder="Número da casa"
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="numeric"
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-            />
-          </>
-        ) : (
-          <>
-            <GlobalTitle title="Nome no Cartão" fontSize={15} />
-            <InputForm
-              control={control}
-              name="holderName"
-              placeholder="Nome Aqui..."
-              autoCapitalize="words"
-              autoCorrect={true}
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-              onBlur={handleBlur}
-            />
-            {error && error.CEPError && error.CEPError.length > 1 && (
-              <Error>{error.CEPError}</Error>
+          <GlobalTitle title="Telefone de Cobrança do Titular" fontSize={15} />
+          <InputForm
+            control={control}
+            name="mobilePhone"
+            placeholder="Telefone Aqui..."
+            autoCapitalize="none"
+            autoCorrect={true}
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+            onBlur={handleBlur}
+          />
+          {error &&
+            error.mobilePhoneError &&
+            error.mobilePhoneError.length > 1 && (
+              <Error>{error.mobilePhoneError}</Error>
             )}
-            <GlobalTitle title="Número do Cartão" fontSize={15} />
-            <InputForm
-              control={control}
-              name="number"
-              placeholder="Número Aqui"
-              keyboardType="numeric"
-              style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
-            />
-            <HorizontalView style={{ alignSelf: "center" }}>
-              <VerticalView style={{ width: "45%" }}>
-                <GlobalTitle title="Expiração" fontSize={15} />
-                <InputForm
-                  control={control}
-                  name="expiryDate"
-                  placeholder="Número Aqui"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="numeric"
-                  style={{
-                    height: RFPercentage(5),
-                    fontSize: RFValue(15),
-                    width: "80%",
-                  }}
-                />
-              </VerticalView>
-              <VerticalView style={{ width: "45%" }}>
-                <GlobalTitle title="CVC" fontSize={15} />
-                <InputForm
-                  control={control}
-                  name="ccv"
-                  placeholder="Número Aqui"
-                  keyboardType="numeric"
-                  style={{
-                    height: RFPercentage(5),
-                    fontSize: RFValue(15),
-                    width: "80%",
-                  }}
-                />
-              </VerticalView>
-            </HorizontalView>
-          </>
-        )}
+          <GlobalTitle title="CPF do Titular" fontSize={15} />
+          <InputForm
+            control={control}
+            name="cpfCnpj"
+            placeholder="CPF"
+            keyboardType="numeric"
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+          />
+          <GlobalTitle title="CEP de Cobrança" fontSize={15} />
+          <InputForm
+            control={control}
+            name="postalCode"
+            placeholder="Número Aqui"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="numeric"
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+          />
+          <GlobalTitle title="Número da Casa" fontSize={15} />
+          <InputForm
+            control={control}
+            name="addressNumber"
+            placeholder="Número da casa"
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="numeric"
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+          />
+        </View>
+
+        <View style={{ display: stepTwo ? "none" : "flex" }}>
+          <GlobalTitle title="Nome no Cartão" fontSize={15} />
+          <InputForm
+            control={control}
+            name="holderName"
+            placeholder="Nome Aqui..."
+            autoCapitalize="words"
+            autoCorrect={true}
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+            onBlur={handleBlur}
+          />
+          {error && error.CEPError && error.CEPError.length > 1 && (
+            <Error>{error.CEPError}</Error>
+          )}
+          <GlobalTitle title="Número do Cartão" fontSize={15} />
+          <InputForm
+            control={control}
+            name="number"
+            placeholder="Número Aqui"
+            keyboardType="numeric"
+            style={{ height: RFPercentage(5), fontSize: RFValue(15) }}
+          />
+          <HorizontalView style={{ alignSelf: "center" }}>
+            <VerticalView style={{ width: "45%" }}>
+              <GlobalTitle title="Expiração" fontSize={15} />
+              <InputForm
+                control={control}
+                name="expiryDate"
+                placeholder="Número Aqui"
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="numeric"
+                style={{
+                  height: RFPercentage(5),
+                  fontSize: RFValue(15),
+                  width: "80%",
+                }}
+              />
+            </VerticalView>
+            <VerticalView style={{ width: "45%" }}>
+              <GlobalTitle title="CVC" fontSize={15} />
+              <InputForm
+                control={control}
+                name="ccv"
+                placeholder="Número Aqui"
+                keyboardType="numeric"
+                style={{
+                  height: RFPercentage(5),
+                  fontSize: RFValue(15),
+                  width: "80%",
+                }}
+              />
+            </VerticalView>
+          </HorizontalView>
+        </View>
       </>
     </Container>
   );

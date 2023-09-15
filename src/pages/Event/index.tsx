@@ -88,7 +88,9 @@ export function Event() {
   };
 
   return (
-    <Container>
+    <Container
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
+    >
       {loading ? (
         <LoadingIn />
       ) : (

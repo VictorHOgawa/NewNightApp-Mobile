@@ -96,7 +96,7 @@ export function InputForm({
             />
           ) : name === "ccv" ? (
             <BaseInput
-              maxLength={3}
+              maxLength={4}
               onChangeText={onChange}
               {...rest}
               value={value}

@@ -9,29 +9,15 @@ import { Container, FullTotal, IndividualTotal, Map, Text } from "./styles";
 
 interface TotalProps {
   selected: string;
+  total: any;
+  loading: boolean;
 }
 
-export function Total({ selected }: TotalProps) {
-  const { cart } = useCart();
-  const [loading, setLoading] = useState(true);
-  const [total, setTotal] = useState<any>();
-
-  async function handleCart() {
-    const connect = await AuthPostAPI("/purchase/cart", {
-      ...cart,
-      coupon: "",
-    });
-    setTotal(connect.body);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    if (cart) {
-      handleCart();
-    }
-  }, [cart]);
-
+export function Total({ selected, total, loading }: TotalProps) {
+  
   const [seeAll, setSeeAll] = useState(false);
+ 
+
   return (
     <Container>
       {loading ? (

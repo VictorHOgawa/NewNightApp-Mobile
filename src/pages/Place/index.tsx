@@ -18,6 +18,7 @@ import Theme from "../../styles/themes";
 import { getAPI } from "../../utils/api";
 import { Banner } from "../Event/styles";
 import { ButtonGroup, Container, Icon, Image, Map } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export function Place() {
   const navigation = useNavigation<any>();
@@ -43,7 +44,9 @@ export function Place() {
   };
 
   return (
-    <Container>
+    <Container
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
+    >
       {loading ? (
         <LoadingIn />
       ) : (

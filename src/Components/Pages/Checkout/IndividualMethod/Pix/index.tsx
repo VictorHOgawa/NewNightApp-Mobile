@@ -10,22 +10,42 @@ import { Form } from "../styles";
 import { Container, QrCodeImage, Text } from "./styles";
 import { AuthPostAPI } from "../../../../../utils/api";
 import { useCart } from "../../../../../context/cart";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, Alert } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import { HorizontalView } from "../../../../Global/View/HorizontalView";
 
-export function PixMethod() {
+interface PixProps {
+  coupon: string;
+  setCoupon: any;
+  AddCoupon: any;
+  loadingCoupon: boolean;
+  QrCode: boolean;
+  setQrCode: any;
+}
+
+export function PixMethod({
+  coupon,
+  setCoupon,
+  AddCoupon,
+  loadingCoupon,
+  QrCode,
+  setQrCode,
+}: PixProps) {
+  const { cart } = useCart();
   const navigation = useNavigation<any>();
-  const [QrCode, setQrCode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
   const [pix, setPix] = useState<any>();
-  const [width, setWidth] = useState(100);
-  const [show, setShow] = useState(false);
-  const { cart } = useCart();
 
   async function getPix() {
-    const connect = await AuthPostAPI("/purchase/pix", { ...cart, coupon: "" });
+    const connect = await AuthPostAPI("/purchase/pix", {
+      ...cart,
+      coupon: coupon,
+    });
+    if (connect.status !== 200) {
+      Alert.alert(connect.body);
+      return setLoading1(false);
+    }
     setPix(connect.body);
     return setLoading1(false);
   }
@@ -37,9 +57,7 @@ export function PixMethod() {
   };
 
   const handleCopy = async () => {
-    setShow(true);
     await Clipboard.setStringAsync(pix.payload);
-    setTimeout(() => setShow(false), 1000);
   };
 
   const handleFinish = () => {
@@ -71,12 +89,16 @@ export function PixMethod() {
             height: RFValue(30),
             alignSelf: "center",
           }}
+          value={coupon}
+          onChangeText={setCoupon}
         />
         <Button
           title="Aplicar Código"
           height={RFValue(30)}
           background={Theme.color.confirmation}
           color={Theme.color.background}
+          onPress={AddCoupon}
+          loading={loadingCoupon}
         />
       </HorizontalView>
       {QrCode ? (
@@ -106,7 +128,7 @@ export function PixMethod() {
             <>
               <ActivityIndicator
                 color={Theme.color.secondary_100}
-                size="large"
+                size="small"
                 style={{ marginTop: "5%" }}
               />
             </>
@@ -129,6 +151,7 @@ export function PixMethod() {
                 width={300}
                 height={40}
                 onPress={handleFinish}
+                loading={loading}
               />
             </>
           )}

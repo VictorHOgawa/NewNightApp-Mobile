@@ -88,10 +88,9 @@ export const Close = styled.TouchableOpacity`
 `;
 
 export const ModalBody = styled.View`
-  width: 80%;
-  height: 100%;
-  background-color: green;
+  background: ${Theme.color.primary_40};
   align-self: center;
+  width: 100%;
 `;
 
 export const QrCodeImage = styled.Image`

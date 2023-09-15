@@ -7,6 +7,7 @@ import { Crew } from "../../Components/Pages/MyMatches/Crew";
 import { Matched } from "../../Components/Pages/MyMatches/Matched";
 import { loginVerifyAPI } from "../../utils/api";
 import { Container, Logo, MainView } from "./styles";
+import { Image } from "react-native";
 
 export function MyMatches() {
   const [logged, setLogged] = useState(false);
@@ -25,7 +26,7 @@ export function MyMatches() {
   }, []);
   return (
     <Container>
-      {loading ? (
+      {/* {loading ? (
         <LoadingIn />
       ) : (
         <>
@@ -43,7 +44,11 @@ export function MyMatches() {
             <LoginValidation />
           )}
         </>
-      )}
+      )} */}
+      <Image
+        source={require("../../../assets/NightShop.png")}
+        style={{ width: "100%", height: "100%" }}
+      />
     </Container>
   );
 }

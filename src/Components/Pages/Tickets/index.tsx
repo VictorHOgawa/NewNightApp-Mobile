@@ -22,12 +22,13 @@ import Theme from "../../../styles/themes";
 import { HorizontalView } from "../../Global/View/HorizontalView";
 import { Button } from "../../Global/Button";
 import { More } from "../../Global/More";
-import { Modal, Alert, View } from "react-native";
+import { Alert, Dimensions, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useState, useEffect } from "react";
 import { authDeleteAPI, authGetAPI } from "../../../utils/api";
 import QRCode from "react-qr-code";
 import * as Clipboard from "expo-clipboard";
+import Modal from "react-native-modal";
 
 interface TicketProps {
   tickets: any;
@@ -52,9 +53,25 @@ export function TicketCards({ tickets, reload }: TicketProps) {
   const handlePay = async (item: any, index: number) => {
     setCurrentIndex(index);
     if (item.status === "ACTIVE") {
+      setLoading(true);
       setId(item.id);
       setType("ticket");
-      setShow(true);
+      Alert.alert(
+        "Cuidado!",
+        "Esse QrCode é de uso Único, não Compartilhe com Ninguém!",
+        [
+          {
+            text: "Ver qrCode",
+            onPress: () => {
+              setShow(true);
+              return setLoading(false);
+            },
+          },
+          {
+            text: "Voltar",
+          },
+        ]
+      );
     }
     if (item.status === "INACTIVE") {
       setLoading(true);
@@ -192,36 +209,27 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                     </HorizontalView>
                   </Card>
                   <Modal
-                    visible={showQrCodeImage}
-                    onRequestClose={() => setShowQrCodeImage(false)}
-                    animationType="slide"
-                    transparent
+                    isVisible={showQrCodeImage}
+                    onModalHide={() => setShowQrCodeImage(false)}
+                    onBackdropPress={() => setShowQrCodeImage(false)}
+                    onBackButtonPress={() => setShowQrCodeImage(false)}
                   >
                     {qrCodeImage ? (
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          backgroundColor: Theme.color.background,
-                          width: "90%",
-                          alignSelf: "center",
-                          marginTop: "25%",
-                          padding: "5%",
-                          borderRadius: 20,
-                        }}
-                      >
+                      <ModalBody style={{ padding: 10, borderRadius: 10 }}>
                         <QrCodeImage
                           source={{
                             uri: `data:image/png;base64, ${qrCodeImage.encodedImage}`,
+                          }}
+                          style={{
+                            width: Dimensions.get("window").width * 0.8,
+                            height: Dimensions.get("window").width * 0.8,
                           }}
                         />
                         <Button
                           title="Copiar Código"
                           background={Theme.color.pix}
                           color={Theme.color.gray_10}
-                          width={300}
+                          width={225}
                           height={40}
                           onPress={() =>
                             Clipboard.setStringAsync(qrCodeImage.payload)
@@ -231,40 +239,27 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                           title="Voltar"
                           background={Theme.color.primary_80}
                           color={Theme.color.gray_10}
-                          width={300}
+                          width={225}
                           height={40}
                           onPress={() => setShowQrCodeImage(false)}
                         />
-                      </View>
+                      </ModalBody>
                     ) : (
                       <></>
                     )}
                   </Modal>
                   <Modal
-                    visible={openTransfer}
-                    onRequestClose={() => setOpenTransfer(false)}
-                    animationType="slide"
-                    transparent
+                    isVisible={openTransfer}
+                    onModalHide={() => setOpenTransfer(false)}
+                    onBackdropPress={() => setOpenTransfer(false)}
+                    onBackButtonPress={() => setOpenTransfer(false)}
                   >
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: Theme.color.background,
-                        width: "90%",
-                        alignSelf: "center",
-                        marginTop: "25%",
-                        padding: "5%",
-                        borderRadius: 20,
-                      }}
-                    >
+                    <ModalBody style={{ padding: 10, borderRadius: 10 }}>
                       <Button
                         title="Copiar Código"
                         background={Theme.color.pix}
                         color={Theme.color.gray_10}
-                        width={300}
+                        width={225}
                         height={40}
                         onPress={() =>
                           Clipboard.setStringAsync(
@@ -276,58 +271,57 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                         title="Voltar"
                         background={Theme.color.primary_80}
                         color={Theme.color.gray_10}
-                        width={300}
+                        width={225}
                         height={40}
                         onPress={() => setOpenTransfer(false)}
                       />
-                    </View>
+                    </ModalBody>
+                  </Modal>
+                  <Modal
+                    isVisible={show}
+                    onModalHide={() => setShow(false)}
+                    onBackdropPress={() => setShow(false)}
+                    onBackButtonPress={() => setShow(false)}
+                  >
+                    <ModalBody style={{ padding: 10, borderRadius: 10 }}>
+                      <View
+                        style={{
+                          padding: 5,
+                          backgroundColor: "white",
+                          alignItems: "center",
+                        }}
+                      >
+                        <QRCode
+                          value={JSON.stringify(qrCode)}
+                          size={Dimensions.get("window").width * 0.8}
+                        />
+                      </View>
+                      <Button
+                        title="Copiar Código de Transferência"
+                        background={Theme.color.pix}
+                        color={Theme.color.gray_10}
+                        width={225}
+                        height={40}
+                        onPress={() =>
+                          Clipboard.setStringAsync(
+                            tickets[currentIndex].transfer_code
+                          )
+                        }
+                      />
+                      <Button
+                        title="Voltar"
+                        background={Theme.color.primary_80}
+                        color={Theme.color.gray_10}
+                        width={225}
+                        height={40}
+                        onPress={() => setShow(false)}
+                      />
+                    </ModalBody>
                   </Modal>
                 </>
               )}
             />
           </VerticalView>
-
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={show}
-            onRequestClose={() => setShow(false)}
-          >
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: Theme.color.background,
-                width: "90%",
-                alignSelf: "center",
-                marginTop: "25%",
-                padding: "5%",
-                borderRadius: 20,
-              }}
-            >
-              <View style={{ padding: 5, backgroundColor: "white" }}>
-                <QRCode value={JSON.stringify(qrCode)} />
-              </View>
-              <Button
-                title="Copiar Código"
-                background={Theme.color.pix}
-                color={Theme.color.gray_10}
-                width={300}
-                height={40}
-                onPress={() => Clipboard.setStringAsync(JSON.stringify(qrCode))}
-              />
-              <Button
-                title="Voltar"
-                background={Theme.color.primary_80}
-                color={Theme.color.gray_10}
-                width={300}
-                height={40}
-                onPress={() => setShow(false)}
-              />
-            </View>
-          </Modal>
         </>
       )}
       <Help>

@@ -12,6 +12,7 @@ import { Total } from "../../Components/Pages/Checkout/Total";
 import { useCart } from "../../context/cart";
 import { AuthPostAPI, loginVerifyAPI } from "../../utils/api";
 import { Container, Safe } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export function Checkout() {
   const { cart } = useCart();
@@ -19,6 +20,10 @@ export function Checkout() {
   const [selected, setSelected] = useState("Pix");
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState<any>();
+  const [coupon, setCoupon] = useState("");
+  const [loadingCoupon, setLoadingCoupon] = useState(false);
+  const [QrCode, setQrCode] = useState(false);
+
   async function handleVerify() {
     const verify = await loginVerifyAPI();
     if (verify !== 200) {
@@ -28,32 +33,42 @@ export function Checkout() {
   }
 
   async function handleCart() {
+    if (coupon !== "") {
+      setLoadingCoupon(true);
+    }
     if (cart.ticket.ticket.length === 0 && cart.product.length === 0) {
       Alert.alert("Selecione um (ou mais) Produto(s)");
       return navigation.goBack();
     }
     const connect = await AuthPostAPI("/purchase/cart", {
       ...cart,
-      coupon: "",
+      coupon: coupon,
     });
     if (connect.status !== 200) {
       Alert.alert(connect.body);
+      setLoadingCoupon(false);
       return navigation.goBack();
     }
+    setQrCode(false);
     setTotal(connect.body);
+    setLoadingCoupon(false);
     return setLoading(false);
   }
+
+  useEffect(() => {
+    if (cart) {
+      handleCart();
+    }
+  }, []);
 
   useEffect(() => {
     handleVerify();
   }, []);
 
-  useEffect(() => {
-    handleCart();
-  }, []);
-
   return (
-    <Container>
+    <Container
+      contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
+    >
       {loading ? (
         <LoadingIn />
       ) : (
@@ -63,9 +78,17 @@ export function Checkout() {
           <Title />
           <LineBreak />
           <Method selected={selected} setSelected={setSelected} />
-          <IndividualMethod selected={selected} />
+          <IndividualMethod
+            selected={selected}
+            coupon={coupon}
+            setCoupon={setCoupon}
+            AddCoupon={handleCart}
+            loadingCoupon={loadingCoupon}
+            QrCode={QrCode}
+            setQrCode={setQrCode}
+          />
           <LineBreak />
-          <Total selected={selected} />
+          <Total selected={selected} total={total} loading={loading} />
           <Safe source={require("../../../assets/Checkout/Safe.png")} />
         </>
       )}

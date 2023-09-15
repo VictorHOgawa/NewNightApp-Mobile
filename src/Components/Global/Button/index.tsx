@@ -41,7 +41,7 @@ export function Button({
       {children}
       <Title fontSize={fontSize} color={color}>
         {loading ? (
-          <ActivityIndicator color={Theme.color.secondary_100} size="large" />
+          <ActivityIndicator color={Theme.color.secondary_100} size="small" />
         ) : (
           title
         )}

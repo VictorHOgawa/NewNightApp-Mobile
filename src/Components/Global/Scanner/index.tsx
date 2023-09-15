@@ -1,18 +1,9 @@
-import {
-  View,
-  Modal,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-  Text,
-  ActivityIndicator,
-} from "react-native";
+import { View, StyleSheet, Alert, ActivityIndicator } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useState, useEffect } from "react";
 import { Button } from "../Button";
 import Theme from "../../../styles/themes";
-import { useNavigation } from "@react-navigation/native";
-import { AuthPostAPI } from "../../../utils/api";
+import Modal from "react-native-modal";
 
 interface ScannerProps {
   openScanner: boolean;
@@ -60,53 +51,53 @@ export function Scanner({
 
   return (
     <>
-      <Modal
-        visible={openScanner}
-        onRequestClose={() => setOpenScanner(false)}
-        style={{ backgroundColor: "red" }}
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "column",
+          alignItems: "center",
+          backgroundColor: Theme.color.background,
+        }}
       >
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            alignItems: "center",
-            backgroundColor: Theme.color.background,
-          }}
-        >
-          {scanned ? (
-            <ActivityIndicator
-              size="large"
-              color={Theme.color.primary_100}
-              style={{ marginTop: "100%" }}
-            />
-          ) : (
-            <BarCodeScanner
-              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-              style={StyleSheet.absoluteFillObject}
-            />
-          )}
-          {scanned ? (
-            <Button
-              onPress={() => setScanned(false)}
-              title="Ler novamente"
-              height={30}
-              style={{ position: "absolute", bottom: 10, right: 20 }}
-            />
-          ) : (
-            <></>
-          )}
+        {scanned ? (
+          <ActivityIndicator
+            size="small"
+            color={Theme.color.primary_100}
+            style={{ marginTop: "100%" }}
+          />
+        ) : (
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={StyleSheet.absoluteFillObject}
+          />
+        )}
+        {scanned ? (
           <Button
-            onPress={() => setOpenScanner(false)}
-            title="Voltar"
+            onPress={() => setScanned(false)}
+            title="Ler novamente"
             height={30}
             style={{
               position: "absolute",
               bottom: 10,
-              left: scanned ? 20 : null,
+              right: 20,
+              width: "40%",
             }}
           />
-        </View>
-      </Modal>
+        ) : (
+          <></>
+        )}
+        <Button
+          onPress={() => setOpenScanner(false)}
+          title="Voltar"
+          height={30}
+          style={{
+            position: "absolute",
+            bottom: 10,
+            left: scanned ? 20 : null,
+            width: "40%",
+          }}
+        />
+      </View>
     </>
   );
 }

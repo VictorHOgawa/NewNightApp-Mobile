@@ -19,7 +19,6 @@ export const Icon = styled.Image`
 export const ModalBody = styled.View`
   background: ${Theme.color.primary_40};
   align-self: center;
-  margin-top: 60%;
   width: ${RFValue(250)}px;
 `;
 
@@ -32,14 +31,6 @@ export const Input = styled.TextInput`
   align-self: center;
   margin-top: 2%;
   padding: 2%;
-`;
-
-export const PromoterBody = styled.View`
-  width: 90%;
-  align-self: center;
-  background-color: ${Theme.color.primary_20};
-  border-radius: 10px;
-  padding: 5%;
 `;
 
 export const Text = styled.Text`

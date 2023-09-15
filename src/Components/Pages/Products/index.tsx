@@ -9,6 +9,7 @@ import {
   Details,
   Help,
   Icons,
+  MainModalBody,
   Map,
   Match,
   ModalBody,
@@ -23,13 +24,14 @@ import { HorizontalView } from "../../Global/View/HorizontalView";
 import { Button } from "../../Global/Button";
 import { More } from "../../Global/More";
 import { useState, useEffect } from "react";
-import { Alert, Modal, View } from "react-native";
+import { Alert, Dimensions, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { BackButton } from "../../Global/Back";
 import { AltContainer, AltLogo } from "../../Global/Header/styles";
 import QRCode from "react-qr-code";
 import { authDeleteAPI, authGetAPI } from "../../../utils/api";
 import * as Clipboard from "expo-clipboard";
+import Modal from "react-native-modal";
 
 interface ProductProps {
   events: any;
@@ -58,9 +60,25 @@ export function ProductCards({ events, reload }: ProductProps) {
   const handlePay = async (item: any, index: number) => {
     setCurrentIndex(index);
     if (item.status === "ACTIVE") {
+      setLoading(true);
       setId(item.id);
       setType("product");
-      setShow(true);
+      Alert.alert(
+        "Cuidado!",
+        "Esse QrCode é de uso Único, não Compartilhe com Ninguém!",
+        [
+          {
+            text: "Ver qrCode",
+            onPress: () => {
+              setShow(true);
+              return setLoading(false);
+            },
+          },
+          {
+            text: "Voltar",
+          },
+        ]
+      );
     }
     if (item.status === "INACTIVE") {
       setLoading(true);
@@ -165,12 +183,12 @@ export function ProductCards({ events, reload }: ProductProps) {
                     </HorizontalView>
                   </Card>
                   <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={open}
-                    onRequestClose={handleClose}
+                    isVisible={open}
+                    onModalHide={handleClose}
+                    onBackButtonPress={handleClose}
+                    onBackdropPress={handleClose}
                   >
-                    <ModalBody>
+                    <MainModalBody style={{ padding: 10, borderRadius: 10 }}>
                       <AltContainer>
                         <BackButton onPress={handleClose} />
                         <AltLogo
@@ -262,39 +280,59 @@ export function ProductCards({ events, reload }: ProductProps) {
                           )}
                         />
                       </VerticalView>
-                    </ModalBody>
-                  </Modal>
-                  <Modal
-                    visible={showQrCodeImage}
-                    onRequestClose={() => setShowQrCodeImage(false)}
-                    animationType="slide"
-                    transparent
-                  >
-                    {qrCodeImage ? (
-                      <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          backgroundColor: Theme.color.background,
-                          width: "90%",
-                          alignSelf: "center",
-                          marginTop: "25%",
-                          padding: "5%",
-                          borderRadius: 20,
-                        }}
-                      >
-                        <QrCodeImage
-                          source={{
-                            uri: `data:image/png;base64, ${qrCodeImage.encodedImage}`,
-                          }}
-                        />
+                    </MainModalBody>
+                    <Modal
+                      isVisible={showQrCodeImage}
+                      onModalHide={() => setShowQrCodeImage(false)}
+                      onBackButtonPress={() => setShowQrCodeImage(false)}
+                      onBackdropPress={() => setShowQrCodeImage(false)}
+                    >
+                      {qrCodeImage ? (
+                        <ModalBody style={{ padding: 10, borderRadius: 10 }}>
+                          <QrCodeImage
+                            source={{
+                              uri: `data:image/png;base64, ${qrCodeImage.encodedImage}`,
+                            }}
+                            style={{ width: 225, height: 225 }}
+                          />
+                          <Button
+                            title="Copiar Código"
+                            background={Theme.color.pix}
+                            color={Theme.color.gray_10}
+                            width={225}
+                            height={40}
+                            onPress={() =>
+                              Clipboard.setStringAsync(
+                                events[eventCurrentIndex].products[currentIndex]
+                                  .transfer_code
+                              )
+                            }
+                          />
+                          <Button
+                            title="Voltar"
+                            background={Theme.color.primary_80}
+                            color={Theme.color.gray_10}
+                            width={225}
+                            height={40}
+                            onPress={() => setShowQrCodeImage(false)}
+                          />
+                        </ModalBody>
+                      ) : (
+                        <></>
+                      )}
+                    </Modal>
+                    <Modal
+                      isVisible={openTransfer}
+                      onModalHide={() => setOpenTransfer(false)}
+                      onBackButtonPress={() => setOpenTransfer(false)}
+                      onBackdropPress={() => setOpenTransfer(false)}
+                    >
+                      <ModalBody style={{ padding: 10, borderRadius: 10 }}>
                         <Button
                           title="Copiar Código"
                           background={Theme.color.pix}
                           color={Theme.color.gray_10}
-                          width={300}
+                          width={225}
                           height={40}
                           onPress={() =>
                             Clipboard.setStringAsync(
@@ -307,103 +345,60 @@ export function ProductCards({ events, reload }: ProductProps) {
                           title="Voltar"
                           background={Theme.color.primary_80}
                           color={Theme.color.gray_10}
-                          width={300}
+                          width={225}
                           height={40}
-                          onPress={() => setShowQrCodeImage(false)}
+                          onPress={() => setOpenTransfer(false)}
                         />
-                      </View>
-                    ) : (
-                      <></>
-                    )}
-                  </Modal>
-                  <Modal
-                    visible={openTransfer}
-                    onRequestClose={() => setOpenTransfer(false)}
-                    animationType="slide"
-                    transparent
-                  >
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: Theme.color.background,
-                        width: "90%",
-                        alignSelf: "center",
-                        marginTop: "25%",
-                        padding: "5%",
-                        borderRadius: 20,
-                      }}
+                      </ModalBody>
+                    </Modal>
+                    <Modal
+                      isVisible={show}
+                      onModalHide={() => setShow(false)}
+                      onBackButtonPress={() => setShow(false)}
+                      onBackdropPress={() => setShow(false)}
                     >
-                      <Button
-                        title="Copiar Código"
-                        background={Theme.color.pix}
-                        color={Theme.color.gray_10}
-                        width={300}
-                        height={40}
-                        onPress={() =>
-                          Clipboard.setStringAsync(
-                            events[eventCurrentIndex].products[currentIndex]
-                              .transfer_code
-                          )
-                        }
-                      />
-                      <Button
-                        title="Voltar"
-                        background={Theme.color.primary_80}
-                        color={Theme.color.gray_10}
-                        width={300}
-                        height={40}
-                        onPress={() => setOpenTransfer(false)}
-                      />
-                    </View>
+                      <ModalBody style={{ padding: 10, borderRadius: 10 }}>
+                        <View
+                          style={{
+                            padding: 5,
+                            backgroundColor: "white",
+                            alignItems: "center",
+                          }}
+                        >
+                          <QRCode
+                            value={JSON.stringify(qrCode)}
+                            size={Dimensions.get("window").width * 0.8}
+                          />
+                        </View>
+                        <Button
+                          title="Copiar Código de Transferência"
+                          background={Theme.color.pix}
+                          color={Theme.color.gray_10}
+                          width={225}
+                          height={40}
+                          fontSize={12}
+                          onPress={() =>
+                            Clipboard.setStringAsync(
+                              events[eventCurrentIndex].products[currentIndex]
+                                .transfer_code
+                            )
+                          }
+                        />
+                        <Button
+                          title="Voltar"
+                          background={Theme.color.primary_80}
+                          color={Theme.color.gray_10}
+                          width={225}
+                          height={40}
+                          onPress={() => setShow(false)}
+                        />
+                      </ModalBody>
+                    </Modal>
                   </Modal>
                 </>
               )}
             />
           </VerticalView>
-
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={show}
-            onRequestClose={() => setShow(false)}
-          >
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: Theme.color.background,
-                width: "90%",
-                alignSelf: "center",
-                marginTop: "25%",
-                padding: "5%",
-                borderRadius: 20,
-              }}
-            >
-              <View style={{ padding: 5, backgroundColor: "white" }}>
-                <QRCode value={JSON.stringify(qrCode)} />
-              </View>
-              <Button
-                title="Copiar Código"
-                background={Theme.color.pix}
-                color={Theme.color.gray_10}
-                width={300}
-                height={40}
-              />
-              <Button
-                title="Voltar"
-                background={Theme.color.primary_80}
-                color={Theme.color.gray_10}
-                width={300}
-                height={40}
-                onPress={() => setShow(false)}
-              />
-            </View>
-          </Modal>
         </>
       )}
       <Help>

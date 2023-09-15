@@ -5,8 +5,8 @@ import { Dimensions } from "react-native";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 
 export const Container = styled.ScrollView`
+  flex: 1;
   background-color: ${Theme.color.background};
-  padding-bottom: ${getBottomSpace() + 20}px;
   padding: 0px 10px;
 `;
 

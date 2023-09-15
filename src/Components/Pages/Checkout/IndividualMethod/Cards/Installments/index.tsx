@@ -62,7 +62,7 @@ export function Installments({
   return (
     <Container>
       {loading ? (
-        <ActivityIndicator size="large" color={Theme.color.primary_80} />
+        <ActivityIndicator size="small" color={Theme.color.primary_80} />
       ) : (
         <>
           {selected !== "New" ? (

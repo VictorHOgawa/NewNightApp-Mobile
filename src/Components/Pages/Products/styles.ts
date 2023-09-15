@@ -84,9 +84,9 @@ export const Close = styled.TouchableOpacity`
   background-color: blue;
 `;
 
-export const ModalBody = styled.View`
-  width: 95%;
-  height: 100%;
+export const MainModalBody = styled.View`
+  width: 100%;
+  height: 90%;
   background-color: ${Theme.color.background};
   align-self: center;
 `;
@@ -103,4 +103,10 @@ export const NoProducts = styled.View`
   justify-content: center;
   align-self: center;
   margin-top: 20%;
+`;
+
+export const ModalBody = styled.View`
+  background: ${Theme.color.primary_40};
+  align-self: center;
+  width: 100%;
 `;

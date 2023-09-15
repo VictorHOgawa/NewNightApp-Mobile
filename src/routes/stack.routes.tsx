@@ -17,6 +17,8 @@ import { Shop } from "../pages/Shop";
 import { Tickets } from "../pages/Tickets";
 import { AppRoutes } from "./NavBar.routes";
 import { Promoter } from "../pages/JobDetails/Promoter";
+import { Suggestions } from "../pages/Suggestions";
+import { VIP } from "../pages/VIP";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -32,12 +34,12 @@ export function StackRoutes() {
       }}
     >
       <Screen name="AppRoutes" component={AppRoutes} />
+      <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Tickets" component={Tickets} />
       <Screen name="Match" component={Match} />
       <Screen name="Login" component={Login} />
       <Screen name="Purchased" component={Purchased} />
       <Screen name="Profile" component={Profile} />
-      <Screen name="MatchRegister" component={MatchRegister} />
       <Screen name="Place" component={Place} />
       <Screen name="Checkout" component={Checkout} />
       <Screen name="Event" component={Event} />
@@ -49,6 +51,8 @@ export function StackRoutes() {
       <Screen name="Jobs" component={Jobs} />
       <Screen name="Promoter" component={Promoter} />
       <Screen name="Portaria" component={Portaria} />
+      <Screen name="Suggestions" component={Suggestions} />
+      <Screen name="VIP" component={VIP} />
     </Navigator>
   );
 }

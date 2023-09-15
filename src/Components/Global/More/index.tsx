@@ -1,22 +1,15 @@
 import { useState } from "react";
-import { Alert, Modal } from "react-native";
+import { Alert } from "react-native";
 import Theme from "../../../styles/themes";
 import { BackButton } from "../Back";
 import { Button } from "../Button";
 import { GlobalTitle } from "../Title";
-import {
-  Container,
-  Display,
-  Icon,
-  Input,
-  ModalBody,
-  PromoterBody,
-  Text,
-} from "./styles";
+import { Container, Display, Icon, Input, ModalBody, Text } from "./styles";
 import { AuthPostAPI, getAPI } from "../../../utils/api";
 import { useNavigation } from "@react-navigation/native";
 import { HorizontalView } from "../View/HorizontalView";
 import { LineBreak } from "../LineBreak";
+import Modal from "react-native-modal";
 
 interface MoreProps extends React.ComponentProps<typeof Container> {
   type?: string;
@@ -117,10 +110,10 @@ export function More({
             <Icon source={require("../../../../assets/Global/Plus.png")} />
           </Container>
           <Modal
-            animationType="slide"
-            transparent={true}
-            visible={open}
-            onRequestClose={() => setOpen(false)}
+            isVisible={open}
+            onModalHide={() => setOpen(false)}
+            onBackButtonPress={() => setOpen(false)}
+            onBackdropPress={() => setOpen(false)}
           >
             <ModalBody style={{ padding: 10, borderRadius: 10 }}>
               <HorizontalView style={{ justifyContent: "space-evenly" }}>
@@ -131,6 +124,7 @@ export function More({
                   onPress={handleOpen}
                   width={100}
                   height={40}
+                  fontSize={12}
                 />
                 {type === "ticket" ? (
                   <Button
@@ -140,6 +134,7 @@ export function More({
                     onPress={handleOpen2}
                     width={100}
                     height={40}
+                    fontSize={12}
                   />
                 ) : (
                   <></>
@@ -157,12 +152,12 @@ export function More({
           {selected === "1" ? (
             <>
               <Modal
-                animationType="slide"
-                transparent={true}
-                visible={open1}
-                onRequestClose={() => setOpen1(false)}
+                isVisible={open1}
+                onModalHide={() => setOpen1(false)}
+                onBackButtonPress={() => setOpen1(false)}
+                onBackdropPress={() => setOpen1(false)}
               >
-                <ModalBody style={{ padding: "5%" }}>
+                <ModalBody style={{ padding: 10, borderRadius: 10 }}>
                   <BackButton
                     onPress={() => setOpen1(false)}
                     style={{ marginTop: 10 }}
@@ -195,12 +190,12 @@ export function More({
           ) : (
             <>
               <Modal
-                animationType="slide"
-                transparent={true}
-                visible={open2}
-                onRequestClose={() => setOpen2(false)}
+                isVisible={open2}
+                onModalHide={() => setOpen2(false)}
+                onBackButtonPress={() => setOpen2(false)}
+                onBackdropPress={() => setOpen2(false)}
               >
-                <ModalBody style={{ padding: "5%" }}>
+                <ModalBody style={{ padding: 10, borderRadius: 10 }}>
                   <BackButton onPress={() => setOpen2(false)} />
                   <GlobalTitle title="Insira o Código" />
                   <Input
@@ -235,12 +230,12 @@ export function More({
             <Icon source={require("../../../../assets/Global/Plus.png")} />
           </Container>
           <Modal
-            animationType="slide"
-            transparent={true}
-            visible={open3}
-            onRequestClose={() => setOpen3(false)}
+            isVisible={open3}
+            onModalHide={() => setOpen3(false)}
+            onBackButtonPress={() => setOpen3(false)}
+            onBackdropPress={() => setOpen3(false)}
           >
-            <ModalBody style={{ padding: "5%" }}>
+            <ModalBody style={{ padding: 10, borderRadius: 10 }}>
               <BackButton onPress={() => setOpen3(false)} />
               <GlobalTitle title="Insira o Código" />
               <Input
@@ -272,12 +267,12 @@ export function More({
             <Icon source={require("../../../../assets/Global/Plus.png")} />
           </Container>
           <Modal
-            animationType="slide"
-            transparent={true}
-            visible={open4}
-            onRequestClose={() => setOpen4(false)}
+            isVisible={open4}
+            onModalHide={() => setOpen4(false)}
+            onBackButtonPress={() => setOpen4(false)}
+            onBackdropPress={() => setOpen4(false)}
           >
-            <PromoterBody style={{ marginTop: "60%" }}>
+            <ModalBody style={{ padding: 10, borderRadius: 10 }}>
               {step === 1 ? (
                 <>
                   <GlobalTitle
@@ -366,7 +361,7 @@ export function More({
                 onPress={() => setOpen4(false)}
                 height={40}
               />
-            </PromoterBody>
+            </ModalBody>
           </Modal>
         </>
       ) : (
