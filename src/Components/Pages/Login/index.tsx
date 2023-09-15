@@ -1,8 +1,4 @@
-import {
-  StackActions,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
@@ -42,7 +38,7 @@ export function Form() {
       navigation.replace("Register", { page: "Checkout" });
       return setLoading1(false);
     }
-    navigation.replace("Register");
+    navigation.replace("Register", { page: "Login" });
     return setLoading1(false);
   };
 
