@@ -1,14 +1,14 @@
 import ActionSheet from "@alessiocancian/react-native-actionsheet";
+import { useEffect, useRef, useState } from "react";
+import { ActivityIndicator } from "react-native";
+import { useCart } from "../../../../../../context/cart";
+import Theme from "../../../../../../styles/themes";
+import { AuthPostAPI } from "../../../../../../utils/api";
+import { Button } from "../../../../../Global/Button";
 import { GlobalTitle } from "../../../../../Global/Title";
 import { VerticalView } from "../../../../../Global/View/VerticalView";
 import { CardContainer, CardDetails, NightAppCard } from "../styles";
-import { Container, ShowInstallments } from "./styles";
-import { useState, useEffect, useRef } from "react";
-import { AuthPostAPI } from "../../../../../../utils/api";
-import { useCart } from "../../../../../../context/cart";
-import { Button } from "../../../../../Global/Button";
-import Theme from "../../../../../../styles/themes";
-import { ActivityIndicator } from "react-native";
+import { Container } from "./styles";
 
 interface InstallmentsProps {
   formData: any;
@@ -32,9 +32,10 @@ export function Installments({
   };
   const handleClose = (item: any) => {
     setInstallment(item);
+    setInstallmentCount(item.installmentCount);
+    ref.current.close();
   };
 
-  console.log("installment: ", installment);
   async function handleCart() {
     setLoading(true);
     const connect = await AuthPostAPI("/purchase/cart", {

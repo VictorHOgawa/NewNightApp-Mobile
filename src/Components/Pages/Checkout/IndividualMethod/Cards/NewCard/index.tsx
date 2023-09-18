@@ -1,21 +1,18 @@
-import { Controller, useForm } from "react-hook-form";
+import { useState } from "react";
 import { View } from "react-native";
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import {
   stripeCardExpirValidation,
   stripeCardNumberValidation,
 } from "../../../../../../utils/creditCardValidation";
 import { minLength, textWithSpacesOnly } from "../../../../../../utils/masks";
+import { InputForm } from "../../../../../Global/Forms/FormInput";
 import { GlobalTitle } from "../../../../../Global/Title";
+import { HorizontalView } from "../../../../../Global/View/HorizontalView";
 import { VerticalView } from "../../../../../Global/View/VerticalView";
+import { Error } from "../../../../../Global/error";
 import { CardContainer, CardDetails, NightAppCard } from "../styles";
 import { Container } from "./styles";
-import { useState } from "react";
-import { InputForm } from "../../../../../Global/Forms/FormInput";
-import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
-import { Error } from "../../../../../Global/error";
-import { HorizontalView } from "../../../../../Global/View/HorizontalView";
-import { BaseInput } from "../../../../../Global/Forms/BaseInput";
-import { Button } from "../../../../../Global/Button";
 
 interface NewCardProps {
   formData: any;
