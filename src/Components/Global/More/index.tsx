@@ -1,15 +1,15 @@
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert } from "react-native";
+import Modal from "react-native-modal";
 import Theme from "../../../styles/themes";
+import { AuthPostAPI, getAPI } from "../../../utils/api";
 import { BackButton } from "../Back";
 import { Button } from "../Button";
-import { GlobalTitle } from "../Title";
-import { Container, Display, Icon, Input, ModalBody, Text } from "./styles";
-import { AuthPostAPI, getAPI } from "../../../utils/api";
-import { useNavigation } from "@react-navigation/native";
-import { HorizontalView } from "../View/HorizontalView";
 import { LineBreak } from "../LineBreak";
-import Modal from "react-native-modal";
+import { GlobalTitle } from "../Title";
+import { HorizontalView } from "../View/HorizontalView";
+import { Container, Display, Icon, Input, ModalBody, Text } from "./styles";
 
 interface MoreProps extends React.ComponentProps<typeof Container> {
   type?: string;

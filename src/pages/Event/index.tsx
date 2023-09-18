@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert } from "react-native";
+import { RFValue } from "react-native-responsive-fontsize";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
 import { LineBreak } from "../../Components/Global/LineBreak";
@@ -19,7 +20,6 @@ import { useCart } from "../../context/cart";
 import Theme from "../../styles/themes";
 import { getAPI, loginVerifyAPI } from "../../utils/api";
 import { Banner, ButtonGroup, Container, Icon, Image, Text } from "./styles";
-import { RFValue } from "react-native-responsive-fontsize";
 
 export function Event() {
   const navigation = useNavigation<any>();
@@ -87,9 +87,18 @@ export function Event() {
     }
   };
 
+  const scrollRef = useRef<any>();
+  const handleScroll = () => {
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  };
+
   return (
     <Container
       contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
+      ref={scrollRef}
     >
       {loading ? (
         <LoadingIn />
@@ -98,6 +107,7 @@ export function Event() {
           <LoadingOut />
           <Header />
           <Image source={{ uri: eventDetails?.photo_location }} />
+
           <GlobalTitle title={eventDetails?.name} />
           <Buttons
             Geo={eventDetails?.googleLink}
@@ -202,6 +212,7 @@ export function Event() {
               width={200}
               height={30}
               fontSize={12}
+              onPress={handleScroll}
             >
               <Icon
                 source={require("../../../assets/Global/Icons/ticketIcon.png")}

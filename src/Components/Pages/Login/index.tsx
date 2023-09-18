@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Alert, View } from "react-native";
 import Theme from "../../../styles/themes";
 import { PostAPI } from "../../../utils/api";
+import { maskCpfCnpj } from "../../../utils/masks";
 import { storageToken } from "../../../utils/tokenManagement";
 import { Button } from "../../Global/Button";
 import { InputForm } from "../../Global/Forms/FormInput";
@@ -18,6 +19,7 @@ export function Form() {
 
   async function handleLogin(formData: any) {
     setLoading(true);
+    formData.cpfCnpj = maskCpfCnpj(formData.cpfCnpj);
     const connect = await PostAPI("/user/login", formData);
     if (connect.status !== 200) {
       Alert.alert(connect.body);
@@ -66,7 +68,7 @@ export function Form() {
       <Remember>
         <Title>Esqueci a Senha</Title>
       </Remember>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <View style={{ justifyContent: "space-between" }}>
         <Button
           title="Entrar"
           onPress={handleSubmit(handleLogin)}
