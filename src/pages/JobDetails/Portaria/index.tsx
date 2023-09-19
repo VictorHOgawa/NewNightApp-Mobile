@@ -71,7 +71,6 @@ export function Portaria() {
       `/user/work/qr-code/${formattedQrCode.id}?type=${formattedQrCode.type}`,
       {}
     );
-    console.log("connect: ", connect);
     if (connect.status !== 200) {
       setScanned(false);
 
@@ -129,7 +128,9 @@ export function Portaria() {
                   <HorizontalView style={{ alignItems: "center" }}>
                     <Image source={{ uri: item.event.photo_location }} />
                     <VerticalView style={{ marginLeft: "5%" }}>
-                      <Text style={{ fontWeight: "bold" }}>Nome do Evento</Text>
+                      <Text style={{ fontWeight: "bold" }}>
+                        {item.event.name}
+                      </Text>
                       <Text>
                         <Icon
                           source={require("../../../../assets/Global/Icons/clockIcon.png")}

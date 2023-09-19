@@ -307,6 +307,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                             tickets[currentIndex].transfer_code
                           )
                         }
+                        fontSize={12}
                       />
                       <Button
                         title="Voltar"

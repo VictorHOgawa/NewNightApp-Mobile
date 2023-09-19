@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Share } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
@@ -31,7 +31,6 @@ export function Event() {
   const [type, setType] = useState("");
   const [logged, setLogged] = useState(false);
   const { cart } = useCart();
-  console.log("eventDetails: ", eventDetails);
 
   async function getEventInfo() {
     const connect = await getAPI(`/event/${id}`);
@@ -39,6 +38,7 @@ export function Event() {
       setEventDetails(connect.body);
       return setLoading(false);
     }
+    return;
   }
 
   useEffect(() => {
@@ -49,6 +49,7 @@ export function Event() {
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
+    console.log("verify: ", verify);
     if (verify === 200) {
       setLogged(true);
     }
@@ -80,10 +81,31 @@ export function Event() {
       cart.product.length !== 0
     ) {
       setLoading1(true);
+      console.log("logged: ", logged);
       logged
         ? navigation.navigate("Checkout")
         : navigation.navigate("Login", { page: "Checkout" });
       return setLoading1(false);
+    }
+  };
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          "React Native | A framework for building native apps using React",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {
+      Alert.alert(error.message);
     }
   };
 
@@ -141,7 +163,7 @@ export function Event() {
               </ButtonGroup>
               <StepOne ticketSlots={eventDetails?.ticketSlots[0]} />
             </>
-          ) : step === 2 && eventDetails.products.length === 0 ? (
+          ) : step === 2 && eventDetails?.products.length === 0 ? (
             <Text style={{ alignSelf: "center", textAlign: "center" }}>
               Nenhum Produto Disponível
             </Text>
@@ -201,7 +223,11 @@ export function Event() {
 
           <Banner />
 
-          <Description description={eventDetails?.description[0]} />
+          {eventDetails?.description.length === 0 ? (
+            <></>
+          ) : (
+            <Description description={eventDetails?.description[0]} />
+          )}
           <Video video={eventDetails?.video} />
 
           <ButtonGroup>
@@ -223,6 +249,7 @@ export function Event() {
               title=""
               width={50}
               height={30}
+              onPress={onShare}
             >
               <Icon
                 source={require("../../../assets/Global/Icons/sendIcon.png")}
@@ -230,7 +257,9 @@ export function Event() {
             </Button>
           </ButtonGroup>
           <LineBreak />
-          {eventDetails?.description.length === 1 ? (
+          {eventDetails.description.length === 0 ? (
+            <></>
+          ) : eventDetails?.description.length === 1 ? (
             <></>
           ) : (
             eventDetails?.description

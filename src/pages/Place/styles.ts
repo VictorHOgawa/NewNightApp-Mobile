@@ -50,3 +50,9 @@ export const Map = styled(
 })`
   width: ${Dimensions.get("window").width}px;
 `;
+
+export const ModalBody = styled.View`
+  background: ${Theme.color.primary_40};
+  align-self: center;
+  width: ${Dimensions.get("window").width * 0.9}px;
+`;

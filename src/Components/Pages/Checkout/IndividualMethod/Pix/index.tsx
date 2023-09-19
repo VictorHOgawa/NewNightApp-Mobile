@@ -21,6 +21,8 @@ interface PixProps {
   loadingCoupon: boolean;
   QrCode: boolean;
   setQrCode: any;
+  pix: any;
+  setPix: any;
 }
 
 export function PixMethod({
@@ -30,12 +32,13 @@ export function PixMethod({
   loadingCoupon,
   QrCode,
   setQrCode,
+  pix,
+  setPix,
 }: PixProps) {
   const { cart } = useCart();
   const navigation = useNavigation<any>();
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
-  const [pix, setPix] = useState<any>();
 
   async function getPix() {
     const connect = await AuthPostAPI("/purchase/pix", {
@@ -134,9 +137,13 @@ export function PixMethod({
             </>
           ) : (
             <>
-              <QrCodeImage
-                source={{ uri: `data:image/png;base64,${pix.encodedImage}` }}
-              />
+              {pix ? (
+                <QrCodeImage
+                  source={{ uri: `data:image/png;base64,${pix.encodedImage}` }}
+                />
+              ) : (
+                <></>
+              )}
               <Button
                 title="Copiar Código"
                 background={Theme.color.pix}
@@ -157,7 +164,13 @@ export function PixMethod({
           )}
         </>
       ) : (
-        <></>
+        <>
+          <ActivityIndicator
+            color={Theme.color.secondary_100}
+            size="small"
+            style={{ marginTop: "5%" }}
+          />
+        </>
       )}
       <Video />
     </Container>

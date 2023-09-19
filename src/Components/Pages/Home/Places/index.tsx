@@ -34,7 +34,7 @@ export function PlaceCard({
   const [endHour, setEndHour] = useState<any>();
   useEffect(() => {
     function formatTime() {
-      const currentDay = parseInt(moment().format("d")) - 1;
+      const currentDay = parseInt(moment().format("d"));
       const currentTime = moment().format("HH:mm");
 
       const currentOpenTime = openTime.find((day: any) => {

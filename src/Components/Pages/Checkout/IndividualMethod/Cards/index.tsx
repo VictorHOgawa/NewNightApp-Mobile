@@ -73,7 +73,6 @@ export function CardMethod({
     }
   }
   function handleNext(formData: any) {
-    console.log("formData: ", formData);
     if (selected === "") {
       return alert("Selecione um Cartão");
     }
@@ -110,10 +109,6 @@ export function CardMethod({
       sendNewCard(formData);
     }
   }
-  console.log("selected: ", selected);
-  console.log("stepTwo: ", stepTwo);
-  console.log("installments: ", installments);
-  console.log("newCard: ", newCard);
 
   async function sendNewCard(formData: any) {
     const creditCard = {

@@ -53,7 +53,7 @@ export function Chat() {
 
   return (
     <Container>
-      <LoadingFull />
+      {/* <LoadingFull />
       <Header>
         <BackButton style={{ position: "absolute", left: 0 }} />
         <VerticalView
@@ -83,7 +83,7 @@ export function Chat() {
           placeholder="Digite uma mensagem..."
           placeholderTextColor={`${Theme.color.gray_70}`}
         />
-      </MainView>
+      </MainView> */}
     </Container>
   );
 }

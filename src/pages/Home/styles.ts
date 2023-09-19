@@ -2,6 +2,7 @@ import { FlatList, FlatListProps } from "react-native";
 import { styled } from "styled-components/native";
 import { partyDTO } from "../../DTOS/partyDTOS";
 import Theme from "../../styles/themes";
+import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.ScrollView`
   flex: 1;
@@ -29,5 +30,8 @@ export const Map = styled(
 `;
 
 export const Text = styled.Text`
-  color: ${Theme.color.gray_10};
+  color: ${Theme.color.primary_100};
+  padding: 20px;
+  align-self: center;
+  font-size: ${RFValue(18)}px;
 `;

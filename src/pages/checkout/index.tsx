@@ -23,6 +23,7 @@ export function Checkout() {
   const [coupon, setCoupon] = useState("");
   const [loadingCoupon, setLoadingCoupon] = useState(false);
   const [QrCode, setQrCode] = useState(false);
+  const [pix, setPix] = useState<any>();
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
@@ -86,6 +87,8 @@ export function Checkout() {
             loadingCoupon={loadingCoupon}
             QrCode={QrCode}
             setQrCode={setQrCode}
+            pix={pix}
+            setPix={setPix}
           />
           <LineBreak />
           <Total selected={selected} total={total} loading={loading} />

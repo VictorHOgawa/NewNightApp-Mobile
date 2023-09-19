@@ -10,6 +10,8 @@ interface IndividualMethodProps {
   loadingCoupon: boolean;
   QrCode: boolean;
   setQrCode: any;
+  pix: any;
+  setPix: any;
 }
 
 export function IndividualMethod({
@@ -20,6 +22,8 @@ export function IndividualMethod({
   AddCoupon,
   QrCode,
   setQrCode,
+  pix,
+  setPix,
 }: IndividualMethodProps) {
   return (
     <Container>
@@ -31,6 +35,8 @@ export function IndividualMethod({
           loadingCoupon={loadingCoupon}
           QrCode={QrCode}
           setQrCode={setQrCode}
+          pix={pix}
+          setPix={setPix}
         />
       ) : (
         <CardMethod

@@ -9,12 +9,12 @@ export function LoadingOut() {
     Animated.timing(opacity.current, {
       toValue: 0,
       useNativeDriver: true,
-      duration: 1000,
+      duration: 350,
     }).start();
     Animated.timing(zIndex.current, {
       toValue: 0,
       useNativeDriver: true,
-      duration: 1000,
+      duration: 350,
     }).start();
   }, [opacity]);
   return (

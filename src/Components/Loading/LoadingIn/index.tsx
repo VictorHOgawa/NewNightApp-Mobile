@@ -11,22 +11,22 @@ export function LoadingIn() {
         Animated.timing(opacity.current, {
           toValue: 1,
           useNativeDriver: true,
-          duration: 500,
+          duration: 350,
         }),
         Animated.timing(scale.current, {
           toValue: 1.2,
           useNativeDriver: true,
-          duration: 500,
+          duration: 350,
         }),
         Animated.timing(opacity.current, {
           toValue: 0.5,
           useNativeDriver: true,
-          duration: 500,
+          duration: 350,
         }),
         Animated.timing(scale.current, {
           toValue: 1,
           useNativeDriver: true,
-          duration: 500,
+          duration: 350,
         }),
       ])
     ).start();

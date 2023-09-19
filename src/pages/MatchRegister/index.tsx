@@ -6,10 +6,10 @@ import { Background, Container } from "./styles";
 export function MatchRegister() {
   return (
     <Container>
-      <LoadingFull />
+      {/* <LoadingFull />
       <Background source={require("../../../assets/Match/Background.png")} />
       <Register />
-      <Learn />
+      <Learn /> */}
     </Container>
   );
 }

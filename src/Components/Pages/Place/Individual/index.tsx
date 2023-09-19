@@ -17,7 +17,7 @@ export function Individual({ place }: IndividualProps) {
 
   useEffect(() => {
     function formatTime() {
-      const currentDay = parseInt(moment().format("d")) - 1;
+      const currentDay = parseInt(moment().format("d"));
       const currentTime = moment().format("HH:mm");
 
       const currentOpenTime = place.openTime.find((day: any) => {
@@ -78,6 +78,7 @@ export function Individual({ place }: IndividualProps) {
                   color: isOpen
                     ? `${Theme.color.next}`
                     : `${Theme.color.red_60}`,
+                  width: "70%",
                 }}
               >
                 {""}

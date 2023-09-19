@@ -140,9 +140,8 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
             ) : (
               <></>
             )}
-            {product.filter((item) => item.type === "ENERGÉTICOS").length >
-            0 ? (
-              <ItemButton onPress={() => handleSelectType("ENERGÉTICOS")}>
+            {product.filter((item) => item.type === "ENERGETIC").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("ENERGETIC")}>
                 <Item
                   source={require("../../../../../../../assets/Event/Item5.png")}
                 />
@@ -150,8 +149,8 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
             ) : (
               <></>
             )}
-            {product.filter((item) => item.type === "OUTROS").length > 0 ? (
-              <ItemButton onPress={() => handleSelectType("OUTROS")}>
+            {product.filter((item) => item.type === "OTHERS").length > 0 ? (
+              <ItemButton onPress={() => handleSelectType("OTHERS")}>
                 <Item
                   source={require("../../../../../../../assets/Event/Item6.png")}
                 />

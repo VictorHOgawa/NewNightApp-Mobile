@@ -25,7 +25,7 @@ export function Match() {
   const [shown, setShown] = useState(people[0]);
   return (
     <Container>
-      <LoadingFull />
+      {/* <LoadingFull />
       <Background source={require("../../../assets/Match/Background.png")} />
       <Top>
         <BackButton style={{ marginLeft: -100 }} />
@@ -86,7 +86,7 @@ export function Match() {
         <Buttons>
           <Text>3</Text>
         </Buttons>
-      </Footer1>
+      </Footer1> */}
     </Container>
   );
 }
