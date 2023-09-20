@@ -11,6 +11,7 @@ import {
   TextContainer,
   Title,
 } from "./styles";
+import { RFValue } from "react-native-responsive-fontsize";
 
 interface PlaceProps {
   photo?: string;
@@ -19,6 +20,7 @@ interface PlaceProps {
   onPress?: any;
   city?: any;
   openTime?: any;
+  address?: string;
 }
 export function PlaceCard({
   photo,
@@ -27,6 +29,7 @@ export function PlaceCard({
   onPress,
   city,
   openTime,
+  address,
   ...rest
 }: PlaceProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,6 +73,7 @@ export function PlaceCard({
       <Title>{name}</Title>
       <DetailsContainer>
         <TextContainer>
+          <City style={{ fontSize: RFValue(12) }}>{address}</City>
           <City>
             {city.name} - {city.state}
           </City>

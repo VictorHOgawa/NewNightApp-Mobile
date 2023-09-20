@@ -98,8 +98,12 @@ export function StepOne({ ticketSlots }: StepOneProps) {
                   source={require("../../../../../../../assets/Event/Ticket.png")}
                   style={{ width: 40, height: 40 }}
                 />
-                <VerticalView>
-                  <TicketTitle style={{ fontWeight: "bold" }}>
+                <VerticalView style={{ width: "45%" }}>
+                  <TicketTitle
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
                     {item.name}
                   </TicketTitle>
                   <TicketTitle>

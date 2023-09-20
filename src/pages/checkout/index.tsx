@@ -24,6 +24,9 @@ export function Checkout() {
   const [loadingCoupon, setLoadingCoupon] = useState(false);
   const [QrCode, setQrCode] = useState(false);
   const [pix, setPix] = useState<any>();
+  const [installment, setInstallment] = useState("");
+  const [installments, setInstallments] = useState<any>([""]);
+  const [installmentCount, setInstallmentCount] = useState(1);
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
@@ -50,6 +53,15 @@ export function Checkout() {
       setLoadingCoupon(false);
       return navigation.goBack();
     }
+    setInstallment(
+      `${connect.body.payment.installments[0].installmentNumber} x RS ${connect.body.payment.installments[0].value}`
+    );
+    setInstallments([
+      "Voltar",
+      ...connect.body.payment.installments.map(
+        (item: any) => `${item.installmentNumber} x R$ ${item.value}`
+      ),
+    ]);
     setQrCode(false);
     setTotal(connect.body);
     setLoadingCoupon(false);
@@ -89,6 +101,12 @@ export function Checkout() {
             setQrCode={setQrCode}
             pix={pix}
             setPix={setPix}
+            installment={installment}
+            setInstallment={setInstallment}
+            installments={installments}
+            setInstallments={setInstallments}
+            installmentCount={installmentCount}
+            setInstallmentCount={setInstallmentCount}
           />
           <LineBreak />
           <Total selected={selected} total={total} loading={loading} />

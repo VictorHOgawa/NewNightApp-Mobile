@@ -29,6 +29,7 @@ import { authDeleteAPI, authGetAPI } from "../../../utils/api";
 import QRCode from "react-qr-code";
 import * as Clipboard from "expo-clipboard";
 import Modal from "react-native-modal";
+import { LineBreak } from "../../Global/LineBreak";
 
 interface TicketProps {
   tickets: any;
@@ -94,10 +95,12 @@ export function TicketCards({ tickets, reload }: TicketProps) {
     if (item.status === "INACTIVE" || "DISABLED") {
       setLoading1(true);
       const connect = await authDeleteAPI(`/user/ticket/${item.id}`);
-      if (connect.status === 200) {
-        reload();
+      if (connect.status !== 200) {
+        Alert.alert(connect.body);
         return setLoading1(false);
       }
+      reload();
+      return setLoading1(false);
     }
   };
 
@@ -117,8 +120,9 @@ export function TicketCards({ tickets, reload }: TicketProps) {
         </NoTickets>
       ) : (
         <>
-          <VerticalView style={{ flex: 1, paddingBottom: 20 }}>
+          <VerticalView style={{ flex: 1, paddingBottom: 50 }}>
             <Map
+              showsVerticalScrollIndicator={false}
               data={tickets}
               renderItem={({ item, index }) => (
                 <>
@@ -156,8 +160,8 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                         </Text>
                       </VerticalView>
                       <Area>
-                        <Text>
-                          Área: {""}
+                        <Text style={{ textAlign: "center" }}>
+                          Área: {""} {"\n"}
                           <Text
                             style={{
                               fontWeight: "bold",
@@ -218,7 +222,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                       <ModalBody style={{ padding: 10, borderRadius: 10 }}>
                         <QrCodeImage
                           source={{
-                            uri: `data:image/png;base64, ${qrCodeImage.encodedImage}`,
+                            uri: `data:image/png;base64,${qrCodeImage.encodedImage}`,
                           }}
                           style={{
                             width: Dimensions.get("window").width * 0.8,

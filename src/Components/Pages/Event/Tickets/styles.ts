@@ -20,14 +20,15 @@ export const Title = styled.Text`
 export const TicketType = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   padding: 5px;
   margin-top: 5px;
   background-color: ${Theme.color.secondary_80};
+  justify-content: space-between;
 
   /* background: linear-gradient(90deg, #8f00ff, #dd7cff); */
 
   width: 95%;
+  max-width: 99%;
   align-self: center;
   border-radius: 5px;
 
@@ -39,8 +40,8 @@ export const TicketType = styled.View`
 export const TicketTitle = styled.Text`
   color: ${Theme.color.gray_10};
   text-align: start;
-  font-size: ${RFValue(15)}px;
-  margin-right: 30px;
+  font-size: ${RFValue(12)}px;
+  margin-left: 5px;
 `;
 
 export const CounterArea = styled.View`
@@ -81,8 +82,8 @@ export const ItemButton = styled.TouchableOpacity`
 `;
 
 export const Item = styled.Image`
-  width: 100px;
-  height: 100px;
+  width: 70px;
+  height: 70px;
 `;
 
 export const Check = styled.View``;

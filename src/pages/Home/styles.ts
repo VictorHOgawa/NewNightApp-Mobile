@@ -3,6 +3,7 @@ import { styled } from "styled-components/native";
 import { partyDTO } from "../../DTOS/partyDTOS";
 import Theme from "../../styles/themes";
 import { RFValue } from "react-native-responsive-fontsize";
+import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const Container = styled.ScrollView`
   flex: 1;
@@ -34,4 +35,13 @@ export const Text = styled.Text`
   padding: 20px;
   align-self: center;
   font-size: ${RFValue(18)}px;
+`;
+
+export const HeaderBar = styled.View`
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  height: ${getStatusBarHeight() + 5}px;
+  background-color: ${Theme.color.background};
 `;

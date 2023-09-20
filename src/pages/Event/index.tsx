@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { Alert, Share } from "react-native";
+import { Alert, Share, TouchableOpacity, View } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
@@ -30,15 +30,18 @@ export function Event() {
   const [step, setStep] = useState(1);
   const [type, setType] = useState("");
   const [logged, setLogged] = useState(false);
+  const [bannerNumber, setBannerNumber] = useState(0);
   const { cart } = useCart();
 
   async function getEventInfo() {
+    handleMatchBanner();
     const connect = await getAPI(`/event/${id}`);
-    if (connect.status === 200) {
-      setEventDetails(connect.body);
-      return setLoading(false);
+    if (connect.status !== 200) {
+      Alert.alert(connect.body);
+      return navigation.goBack();
     }
-    return;
+    setEventDetails(connect.body);
+    return setLoading(false);
   }
 
   useEffect(() => {
@@ -49,7 +52,6 @@ export function Event() {
 
   async function handleVerify() {
     const verify = await loginVerifyAPI();
-    console.log("verify: ", verify);
     if (verify === 200) {
       setLogged(true);
     }
@@ -63,8 +65,27 @@ export function Event() {
     if (type !== "") {
       return setType("");
     }
-    if (step === 1) {
+    if (step === 1 && eventDetails?.products.length !== 0) {
       return setStep(step + 1);
+    }
+    if (
+      step === 1 &&
+      eventDetails?.products.length === 0 &&
+      cart.ticket.ticket.length === 0
+    ) {
+      return Alert.alert("Selecione um (ou mais) Ingresso(s)");
+    }
+
+    if (
+      step === 1 &&
+      eventDetails?.products.length === 0 &&
+      cart.ticket.ticket.length !== 0
+    ) {
+      setLoading1(true);
+      logged
+        ? navigation.navigate("Checkout")
+        : navigation.navigate("Login", { page: "Checkout" });
+      return setLoading1(false);
     }
     if (
       step === 2 &&
@@ -81,7 +102,6 @@ export function Event() {
       cart.product.length !== 0
     ) {
       setLoading1(true);
-      console.log("logged: ", logged);
       logged
         ? navigation.navigate("Checkout")
         : navigation.navigate("Login", { page: "Checkout" });
@@ -117,6 +137,16 @@ export function Event() {
     });
   };
 
+  const handleMatchBanner = () => {
+    function generateRandomNumber(min: number, max: number) {
+      const randomNumber = Math.random() * (max - min + 1) + min;
+      return Math.floor(randomNumber);
+    }
+
+    const randomNumber = generateRandomNumber(1, 5);
+    return setBannerNumber(randomNumber);
+  };
+
   return (
     <Container
       contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
@@ -129,8 +159,25 @@ export function Event() {
           <LoadingOut />
           <Header />
           <Image source={{ uri: eventDetails?.photo_location }} />
-
-          <GlobalTitle title={eventDetails?.name} />
+          <LineBreak />
+          <HorizontalView
+            style={{ justifyContent: "space-between", paddingRight: 10 }}
+          >
+            <View style={{ width: "83%" }}>
+              <GlobalTitle title={eventDetails?.name} />
+            </View>
+            <Button
+              background={`${Theme.color.primary_80}`}
+              title=""
+              width={50}
+              height={30}
+              onPress={onShare}
+            >
+              <Icon
+                source={require("../../../assets/Global/Icons/sendIcon.png")}
+              />
+            </Button>
+          </HorizontalView>
           <Buttons
             Geo={eventDetails?.googleLink}
             Insta={eventDetails?.instagram}
@@ -143,7 +190,9 @@ export function Event() {
             state={eventDetails?.city.state}
           />
 
-          {step === 1 && eventDetails?.ticketSlots.length === 0 ? (
+          {step === 1 &&
+          eventDetails?.ticketSlots.length === 0 &&
+          eventDetails?.products.length !== 0 ? (
             <Text
               style={{
                 alignSelf: "center",
@@ -163,11 +212,13 @@ export function Event() {
               </ButtonGroup>
               <StepOne ticketSlots={eventDetails?.ticketSlots[0]} />
             </>
-          ) : step === 2 && eventDetails?.products.length === 0 ? (
+          ) : step === 2 &&
+            eventDetails?.products.length === 0 &&
+            eventDetails?.ticketSlots.length !== 0 ? (
             <Text style={{ alignSelf: "center", textAlign: "center" }}>
               Nenhum Produto Disponível
             </Text>
-          ) : (
+          ) : step === 2 && eventDetails?.products.length !== 0 ? (
             <>
               <ButtonGroup style={{ marginTop: 10, marginBottom: 10 }}>
                 <Tabs active={true} />
@@ -180,6 +231,10 @@ export function Event() {
                 setType={setType}
               />
             </>
+          ) : (
+            <Text style={{ alignSelf: "center", textAlign: "center" }}>
+              Nenhum Ingresso ou Produto Disponível
+            </Text>
           )}
 
           <HorizontalView
@@ -206,7 +261,7 @@ export function Event() {
             <Button
               title={step === 1 || type !== "" ? "Próximo" : "Finalizar"}
               background={`${Theme.color.confirmation}`}
-              color={`${Theme.color.gray_10}`}
+              color={`${Theme.color.background}`}
               width={150}
               height={40}
               fontSize={18}
@@ -221,41 +276,41 @@ export function Event() {
             />
           </HorizontalView>
 
-          <Banner />
-
+          <TouchableOpacity onPress={() => navigation.navigate("MyMatches")}>
+            <Banner
+              source={
+                bannerNumber === 1
+                  ? require("../../../assets/Global/Match1.png")
+                  : bannerNumber === 2
+                  ? require("../../../assets/Global/Match2.png")
+                  : bannerNumber === 3
+                  ? require("../../../assets/Global/Match3.png")
+                  : bannerNumber === 4
+                  ? require("../../../assets/Global/Match4.png")
+                  : require("../../../assets/Global/Match5.png")
+              }
+            />
+          </TouchableOpacity>
+          <LineBreak />
           {eventDetails?.description.length === 0 ? (
             <></>
           ) : (
             <Description description={eventDetails?.description[0]} />
           )}
-          <Video video={eventDetails?.video} />
-
-          <ButtonGroup>
-            <Button
-              background={`${Theme.color.confirmation}`}
-              color={`${Theme.color.background}`}
-              title=" Escolher Meus Ingressos"
-              width={200}
-              height={30}
-              fontSize={12}
-              onPress={handleScroll}
-            >
-              <Icon
-                source={require("../../../assets/Global/Icons/ticketIcon.png")}
-              />
-            </Button>
-            <Button
-              background={`${Theme.color.primary_80}`}
-              title=""
-              width={50}
-              height={30}
-              onPress={onShare}
-            >
-              <Icon
-                source={require("../../../assets/Global/Icons/sendIcon.png")}
-              />
-            </Button>
-          </ButtonGroup>
+          {eventDetails?.video && <Video video={eventDetails?.video} />}
+          <Button
+            background={`${Theme.color.confirmation}`}
+            color={`${Theme.color.background}`}
+            title=" Escolher Meus Ingressos"
+            width={250}
+            height={50}
+            fontSize={16}
+            onPress={handleScroll}
+          >
+            <Icon
+              source={require("../../../assets/Global/Icons/ticketIcon.png")}
+            />
+          </Button>
           <LineBreak />
           {eventDetails.description.length === 0 ? (
             <></>

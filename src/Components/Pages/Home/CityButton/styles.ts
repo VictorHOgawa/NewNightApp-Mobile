@@ -21,10 +21,10 @@ import Theme from "../../../../styles/themes";
 export const Container = styled.View`
   flex-direction: row;
   align-items: center;
+  align-self: flex-end;
   justify-content: space-between;
-  align-self: center;
   padding: 4px 10px;
-  width: 60%;
+  width: 70%;
   height: ${RFValue(45)}px;
   border-radius: ${RFValue(8)}px;
   background-color: transparent;

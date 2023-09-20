@@ -16,11 +16,9 @@ export const Image = styled.Image`
   border-radius: 10px;
 `;
 
-export const Banner = styled.View`
-  width: 80%;
-  height: ${RFValue(100)}px;
-  border-radius: 10px;
-  background-color: red;
+export const Banner = styled.Image`
+  width: ${Dimensions.get("window").width * 0.85}px;
+  height: ${(Dimensions.get("window").width * 0.85) / 2}px;
   align-self: center;
   margin-top: 5%;
 `;

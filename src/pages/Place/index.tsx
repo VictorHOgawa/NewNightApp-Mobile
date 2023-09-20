@@ -1,7 +1,14 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import "moment/locale/pt-br";
 import { useEffect, useState } from "react";
-import { Alert, Linking, Share, View } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  Linking,
+  Share,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Ad } from "../../Components/Global/Ad";
 import { Button } from "../../Components/Global/Button";
 import { Header } from "../../Components/Global/Header";
@@ -16,8 +23,8 @@ import { Individual } from "../../Components/Pages/Place/Individual";
 import { Video } from "../../Components/Pages/Place/Video";
 import Theme from "../../styles/themes";
 import { getAPI } from "../../utils/api";
-import { Banner } from "../Event/styles";
 import {
+  Banner,
   ButtonGroup,
   Container,
   Icon,
@@ -36,12 +43,16 @@ export function Place() {
   const [loading, setLoading] = useState(true);
   const [place, setPlace] = useState<any>();
   const [openMenu, setOpenMenu] = useState(false);
+  const [bannerNumber, setBannerNumber] = useState(0);
+
   async function getPlaceDetails() {
+    handleMatchBanner();
     const connect = await getAPI(`/places/${id}`);
-    if (connect.status === 200) {
-      setPlace(connect.body.place);
-      return setLoading(false);
+    if (connect.status !== 200) {
+      return Alert.alert(connect.body);
     }
+    setPlace(connect.body.place);
+    return setLoading(false);
   }
 
   const onShare = async () => {
@@ -81,6 +92,16 @@ export function Place() {
     return handlePress(place?.menu);
   };
 
+  const handleMatchBanner = () => {
+    function generateRandomNumber(min: number, max: number) {
+      const randomNumber = Math.random() * (max - min + 1) + min;
+      return Math.floor(randomNumber);
+    }
+
+    const randomNumber = generateRandomNumber(1, 5);
+    return setBannerNumber(randomNumber);
+  };
+
   return (
     <Container
       contentContainerStyle={{ flexGrow: 1, paddingBottom: RFValue(80) }}
@@ -91,7 +112,6 @@ export function Place() {
         <>
           <LoadingOut />
           <Header />
-          <Ad />
           <View>
             <Map
               horizontal
@@ -102,7 +122,20 @@ export function Place() {
               )}
             />
           </View>
-          <GlobalTitle title={place?.name} />
+          <HorizontalView style={{ justifyContent: "space-between" }}>
+            <GlobalTitle title={place?.name} />
+            <Button
+              background={`${Theme.color.primary_80}`}
+              title=""
+              width={30}
+              height={30}
+              onPress={onShare}
+            >
+              <Icon
+                source={require("../../../assets/Global/Icons/sendIcon.png")}
+              />
+            </Button>
+          </HorizontalView>
           <Buttons
             Geo={place?.location}
             Insta={place?.instagram}
@@ -117,35 +150,53 @@ export function Place() {
               width: "100%",
             }}
           >
-            <Button
-              title="Voltar"
-              background={`${Theme.color.secondary_60}`}
-              color={`${Theme.color.gray_10}`}
-              width={125}
-              height={40}
-              fontSize={18}
-            />
-            <Button
-              title={"Finalizar"}
-              background={`${Theme.color.confirmation}`}
-              color={`${Theme.color.gray_10}`}
-              width={125}
-              height={40}
-              fontSize={18}
-            />
+            <TouchableOpacity onPress={() => navigation.navigate("Gift")}>
+              <Banner
+                style={{
+                  width: Dimensions.get("window").width * 0.4,
+                  height: RFValue(70),
+                }}
+                source={require("../../../assets/Global/Gift.png")}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("VIP")}>
+              <Banner
+                style={{
+                  width: Dimensions.get("window").width * 0.4,
+                  height: RFValue(70),
+                }}
+                source={require("../../../assets/Global/VIP.png")}
+              />
+            </TouchableOpacity>
           </HorizontalView>
-          <Banner />
-
+          <TouchableOpacity onPress={() => navigation.navigate("MyMatches")}>
+            <Banner
+              source={
+                bannerNumber === 1
+                  ? require("../../../assets/Global/Match1.png")
+                  : bannerNumber === 2
+                  ? require("../../../assets/Global/Match2.png")
+                  : bannerNumber === 3
+                  ? require("../../../assets/Global/Match3.png")
+                  : bannerNumber === 4
+                  ? require("../../../assets/Global/Match4.png")
+                  : require("../../../assets/Global/Match5.png")
+              }
+            />
+          </TouchableOpacity>
+          <LineBreak />
           <GlobalTitle title="Sobre o Bar" />
           <Button
             title="Cardápio"
             background={`${Theme.color.next}`}
             color={`${Theme.color.gray_10}`}
-            width={300}
-            height={80}
+            width={250}
+            height={50}
             fontSize={25}
             onPress={handleMenu}
           />
+          <LineBreak />
+
           <Modal
             isVisible={openMenu}
             onBackButtonPress={() => setOpenMenu(false)}
@@ -174,18 +225,8 @@ export function Place() {
               <Description description={place?.description[0]} />
             </>
           )}
-          <Video video="https://www.youtube.com/watch?v=SAMpvaC4xR0" />
-          <Button
-            background={`${Theme.color.primary_80}`}
-            title=""
-            width={50}
-            height={30}
-            onPress={onShare}
-          >
-            <Icon
-              source={require("../../../assets/Global/Icons/sendIcon.png")}
-            />
-          </Button>
+          {place?.video && <Video video={place?.video} />}
+
           <LineBreak />
           {place?.description.length === 0 ? (
             <></>

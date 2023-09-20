@@ -187,7 +187,7 @@ export function StepTwo({ product, type, setType }: StepTwoProps) {
                   <VerticalView>
                     <TicketType>
                       <Item source={{ uri: item.photo_location }} />
-                      <VerticalView>
+                      <VerticalView style={{ width: "45%" }}>
                         <TicketTitle style={{ fontWeight: "bold" }}>
                           {item.name}
                         </TicketTitle>

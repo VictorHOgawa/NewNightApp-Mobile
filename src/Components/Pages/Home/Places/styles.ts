@@ -4,6 +4,7 @@ import Theme from "../../../../styles/themes";
 
 export const Container = styled.TouchableOpacity`
   width: ${RFValue(210)}px;
+  height: auto;
   margin-left: ${RFValue(10)}px;
   background-color: ${Theme.color.secondaryFadePlus};
   justify-content: space-between;
@@ -20,14 +21,13 @@ export const Image = styled.Image`
 export const DetailsContainer = styled.View`
   padding: ${RFValue(5)}px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 `;
 
 export const TextContainer = styled.View`
   padding: ${RFValue(5)}px;
   flex-direction: column;
-  height: ${RFValue(60)}px;
   flex: 1;
 `;
 

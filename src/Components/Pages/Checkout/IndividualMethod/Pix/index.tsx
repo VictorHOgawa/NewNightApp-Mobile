@@ -73,41 +73,42 @@ export function PixMethod({
   };
   return (
     <Container>
-      <GlobalTitle title="Código da Galera" fontSize={15} />
-      <HorizontalView
-        style={{
-          width: "90%",
-          height: RFValue(50),
-          padding: 0,
-          marginLeft: "5%",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Form
-          placeholder="Insira o Melhor Código aqui"
-          placeholderTextColor={`${Theme.color.gray_70}`}
-          style={{
-            width: "45%",
-            height: RFValue(30),
-            alignSelf: "center",
-          }}
-          value={coupon}
-          onChangeText={setCoupon}
-        />
-        <Button
-          title="Aplicar Código"
-          height={RFValue(30)}
-          background={Theme.color.confirmation}
-          color={Theme.color.background}
-          onPress={AddCoupon}
-          loading={loadingCoupon}
-        />
-      </HorizontalView>
+      {}
       {QrCode ? (
         <></>
       ) : (
         <>
+          <GlobalTitle title="Código da Galera" fontSize={15} />
+          <HorizontalView
+            style={{
+              width: "90%",
+              height: RFValue(50),
+              padding: 0,
+              marginLeft: "5%",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Form
+              placeholder="Insira o Melhor Código aqui"
+              placeholderTextColor={`${Theme.color.gray_70}`}
+              style={{
+                width: "45%",
+                height: RFValue(30),
+                alignSelf: "center",
+              }}
+              value={coupon}
+              onChangeText={setCoupon}
+            />
+            <Button
+              title="Aplicar Código"
+              height={RFValue(30)}
+              background={Theme.color.confirmation}
+              color={Theme.color.background}
+              onPress={AddCoupon}
+              loading={loadingCoupon}
+            />
+          </HorizontalView>
           <Button
             title=""
             background={`${Theme.color.pix}`}
@@ -138,39 +139,43 @@ export function PixMethod({
           ) : (
             <>
               {pix ? (
-                <QrCodeImage
-                  source={{ uri: `data:image/png;base64,${pix.encodedImage}` }}
-                />
+                <>
+                  <QrCodeImage
+                    source={{
+                      uri: `data:image/png;base64,${pix.encodedImage}`,
+                    }}
+                  />
+                  <Button
+                    title="Copiar Código"
+                    background={Theme.color.pix}
+                    width={300}
+                    height={40}
+                    onPress={handleCopy}
+                  />
+                  <Button
+                    title="Finalizar"
+                    background={`${Theme.color.confirmation}`}
+                    color={`${Theme.color.background}`}
+                    width={300}
+                    height={40}
+                    onPress={handleFinish}
+                    loading={loading}
+                  />
+                </>
               ) : (
-                <></>
+                <>
+                  <ActivityIndicator
+                    color={Theme.color.secondary_100}
+                    size="small"
+                    style={{ marginTop: "5%" }}
+                  />
+                </>
               )}
-              <Button
-                title="Copiar Código"
-                background={Theme.color.pix}
-                width={300}
-                height={40}
-                onPress={handleCopy}
-              />
-              <Button
-                title="Finalizar"
-                background={`${Theme.color.confirmation}`}
-                color={`${Theme.color.background}`}
-                width={300}
-                height={40}
-                onPress={handleFinish}
-                loading={loading}
-              />
             </>
           )}
         </>
       ) : (
-        <>
-          <ActivityIndicator
-            color={Theme.color.secondary_100}
-            size="small"
-            style={{ marginTop: "5%" }}
-          />
-        </>
+        <></>
       )}
       <Video />
     </Container>

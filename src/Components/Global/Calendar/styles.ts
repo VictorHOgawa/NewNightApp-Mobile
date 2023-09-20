@@ -34,7 +34,7 @@ export const Footer = styled.View<DateProps>`
       ? Theme.color.next
       : type === "place" && !isOpen
       ? Theme.color.red_60
-      : Theme.color.secondary_100};
+      : Theme.color.primary_100};
   width: ${RFValue(70)}px;
   height: ${RFValue(20)}px;
   align-items: center;

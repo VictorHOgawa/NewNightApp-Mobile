@@ -19,6 +19,7 @@ import { AppRoutes } from "./NavBar.routes";
 import { Promoter } from "../pages/JobDetails/Promoter";
 import { Suggestions } from "../pages/Suggestions";
 import { VIP } from "../pages/VIP";
+import { Gift } from "../pages/Gift";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -53,6 +54,7 @@ export function StackRoutes() {
       <Screen name="Portaria" component={Portaria} />
       <Screen name="Suggestions" component={Suggestions} />
       <Screen name="VIP" component={VIP} />
+      <Screen name="Gift" component={Gift} />
     </Navigator>
   );
 }

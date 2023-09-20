@@ -8,15 +8,17 @@ export const Container = styled.View`
   width: 100%;
   height: ${RFValue(70)}px;
   align-items: center;
-  justify-content: center;
   align-self: center;
   margin-top: ${getStatusBarHeight() + 20}px;
+  margin-right: 5%;
+  justify-content: space-between;
 `;
 
 export const Logo = styled(Image)`
   width: 40%;
   height: ${RFValue(50)}px;
-  margin-left: 10%;
+  margin-left: 5%;
+  margin-right: -15%;
 `;
 
 export const AltLogo = styled(Logo)`

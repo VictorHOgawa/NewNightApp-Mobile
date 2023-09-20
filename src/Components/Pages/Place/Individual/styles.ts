@@ -7,7 +7,7 @@ export const Container = styled.View`
   align-self: center;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   margin-top: 5%;
   padding-bottom: 2%;
   border-bottom-width: 1px;
@@ -20,12 +20,13 @@ export const Left = styled.View``;
 export const Info = styled.View`
   flex-direction: row;
   align-items: center;
+  width: 80%;
 `;
 
 export const Icon = styled.Image`
   width: ${RFValue(12)}px;
   height: ${RFValue(12)}px;
-  margin-right: 10px;
+  margin-right: 5px;
 `;
 
 export const Text = styled.Text`

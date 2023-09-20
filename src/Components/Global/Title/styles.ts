@@ -25,4 +25,5 @@ export const Title = styled.Text<TitleProps>`
   font-size: ${({ fontSize }) =>
     fontSize ? RFValue(fontSize) : RFValue(20)}px;
   color: ${({ color }) => (color ? color : Theme.color.gray_10)};
+  font-weight: bold;
 `;

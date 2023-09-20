@@ -158,10 +158,6 @@ export function More({
                 onBackdropPress={() => setOpen1(false)}
               >
                 <ModalBody style={{ padding: 10, borderRadius: 10 }}>
-                  <BackButton
-                    onPress={() => setOpen1(false)}
-                    style={{ marginTop: 10 }}
-                  />
                   <GlobalTitle title="Insira o Código" />
                   <Input
                     placeholder="EX: Carol20"
@@ -196,7 +192,6 @@ export function More({
                 onBackdropPress={() => setOpen2(false)}
               >
                 <ModalBody style={{ padding: 10, borderRadius: 10 }}>
-                  <BackButton onPress={() => setOpen2(false)} />
                   <GlobalTitle title="Insira o Código" />
                   <Input
                     placeholder="EX: Carol20"
@@ -236,7 +231,6 @@ export function More({
             onBackdropPress={() => setOpen3(false)}
           >
             <ModalBody style={{ padding: 10, borderRadius: 10 }}>
-              <BackButton onPress={() => setOpen3(false)} />
               <GlobalTitle title="Insira o Código" />
               <Input
                 placeholder="EX: Carol20"

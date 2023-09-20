@@ -1,9 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../Components/Global/Button";
 import Theme from "../../styles/themes";
 import { Container } from "./styles";
 import { Image, Linking } from "react-native";
 
 export function Suggestions() {
+  const navigation = useNavigation<any>();
   const handlePress = (link: string) => {
     Linking.openURL(link);
   };
@@ -22,6 +24,16 @@ export function Suggestions() {
         fontSize={18}
         onPress={() => handlePress("https://instagram.com/nightapp_")}
         style={{ zIndex: 20, position: "absolute", bottom: "12%" }}
+      />
+      <Button
+        title="Voltar"
+        background={Theme.color.confirmation}
+        color={Theme.color.background}
+        width={80}
+        height={40}
+        fontSize={18}
+        onPress={() => navigation.goBack()}
+        style={{ zIndex: 20, position: "absolute", bottom: "6%" }}
       />
     </Container>
   );

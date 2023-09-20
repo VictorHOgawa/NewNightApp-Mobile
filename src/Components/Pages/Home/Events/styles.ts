@@ -20,14 +20,13 @@ export const Image = styled.Image`
 export const DetailsContainer = styled.View`
   padding: ${RFValue(5)}px;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 `;
 
 export const TextContainer = styled.View`
   padding: ${RFValue(5)}px;
   flex-direction: column;
-  height: ${RFValue(60)}px;
   flex: 1;
 `;
 

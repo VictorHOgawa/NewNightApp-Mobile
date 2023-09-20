@@ -24,6 +24,12 @@ interface CardProps {
   setCoupon: any;
   AddCoupon: any;
   loadingCoupon: boolean;
+  installment: any;
+  setInstallment: any;
+  installments: any;
+  setInstallments: any;
+  installmentCount: any;
+  setInstallmentCount: any;
 }
 
 export function CardMethod({
@@ -31,13 +37,19 @@ export function CardMethod({
   setCoupon,
   AddCoupon,
   loadingCoupon,
+  installment,
+  setInstallment,
+  installments,
+  setInstallments,
+  installmentCount,
+  setInstallmentCount,
 }: CardProps) {
   const { cart } = useCart();
   const navigation = useNavigation<any>();
   const [selected, setSelected] = useState("");
   const [newCard, setNewCard] = useState(false);
   const [stepTwo, setStepTwo] = useState(false);
-  const [installments, setInstallments] = useState(false);
+  const [installmentsBoolean, setInstallmentsBoolean] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingCards, setLoadingCards] = useState(false);
   const { control, handleSubmit } = useForm();
@@ -55,31 +67,29 @@ export function CardMethod({
     addressNumber: "",
   });
 
-  const [installmentCount, setInstallmentCount] = useState(1);
-
   function handleBack() {
-    if (installments && !newCard && !stepTwo) {
-      return setInstallments(false);
+    if (installmentsBoolean && !newCard && !stepTwo) {
+      return setInstallmentsBoolean(false);
     }
     if (newCard && !stepTwo) {
       return setNewCard(false);
     }
-    if (stepTwo && !installments) {
+    if (stepTwo && !installmentsBoolean) {
       return setStepTwo(false);
     }
-    if (stepTwo && installments) {
+    if (stepTwo && installmentsBoolean) {
       setNewCard(true);
-      setInstallments(false);
+      setInstallmentsBoolean(false);
     }
   }
   function handleNext(formData: any) {
     if (selected === "") {
       return alert("Selecione um Cartão");
     }
-    if (selected !== "New" && !installments) {
-      return setInstallments(true);
+    if (selected !== "New" && !installmentsBoolean) {
+      return setInstallmentsBoolean(true);
     }
-    if (selected === "New" && !newCard && !installments) {
+    if (selected === "New" && !newCard && !installmentsBoolean) {
       return setNewCard(true);
     }
     if (
@@ -93,19 +103,19 @@ export function CardMethod({
     if (
       selected === "New" &&
       stepTwo &&
-      !installments &&
+      !installmentsBoolean &&
       newCard === true &&
       CreditCardHolderValidation(formData) === "ok"
     ) {
       {
-        setInstallments(true);
+        setInstallmentsBoolean(true);
         setNewCard(false);
       }
     }
-    if (!newCard && installments && selected !== "New") {
+    if (!newCard && installmentsBoolean && selected !== "New") {
       sendExistingCard();
     }
-    if (!newCard && installments && selected === "New") {
+    if (!newCard && installmentsBoolean && selected === "New") {
       sendNewCard(formData);
     }
   }
@@ -154,6 +164,7 @@ export function CardMethod({
       coupon: "",
       installmentCount,
     });
+    setLoading(false);
     if (connect.status !== 200) {
       alert(connect.body);
       return setLoading(false);
@@ -170,7 +181,13 @@ export function CardMethod({
     setLoadingCards(true);
     const connect = await authGetAPI("/user/credit-card");
     if (connect.status !== 200) {
-      return;
+      return setLoadingCards(false);
+    }
+
+    if (connect.body.creditCard.length === 0) {
+      setSelected("New");
+      setNewCard(true);
+      return setLoadingCards(false);
     }
     setCards(connect.body.creditCard);
     return setLoadingCards(false);
@@ -222,12 +239,16 @@ export function CardMethod({
             stepTwo={stepTwo}
           />
         </>
-      ) : installments ? (
+      ) : installmentsBoolean ? (
         <Installments
           formData={formData}
           installmentCount={installmentCount}
           setInstallmentCount={setInstallmentCount}
           selected={selected}
+          installment={installment}
+          setInstallment={setInstallment}
+          installments={installments}
+          setInstallments={setInstallments}
         />
       ) : (
         <>
@@ -237,7 +258,8 @@ export function CardMethod({
             <>
               {loadingCards ? (
                 <ActivityIndicator
-                  size="small"
+                  size="large"
+                  style={{ margin: 30 }}
                   color={Theme.color.primary_80}
                 />
               ) : (
@@ -245,71 +267,75 @@ export function CardMethod({
                   <Map
                     data={cards}
                     renderItem={({ item }: any) => (
-                      <Button
-                        title=""
-                        background={`${Theme.color.secondary_80}`}
-                        color={`${Theme.color.gray_10}`}
-                        width={300}
-                        style={{
-                          alignSelf: "center",
-                          justifyContent: "flex-start",
-                          padding: 10,
-                          alignItems: "center",
-                        }}
-                        onPress={() => setSelected(item.id)}
-                      >
-                        <>
-                          <Radio active={selected === item.id ? true : false} />
-                          {item.creditCardBrand === "AMEX" ? (
-                            <Icon
-                              style={{ width: RFValue(35), marginLeft: "2%" }}
-                              source={require("../../../../../../assets/Global/Icons/AECard.png")}
+                      <>
+                        <Button
+                          title=""
+                          background={`${Theme.color.secondary_80}`}
+                          color={`${Theme.color.gray_10}`}
+                          width={300}
+                          style={{
+                            alignSelf: "center",
+                            justifyContent: "flex-start",
+                            padding: 10,
+                            alignItems: "center",
+                          }}
+                          onPress={() => setSelected(item.id)}
+                        >
+                          <>
+                            <Radio
+                              active={selected === item.id ? true : false}
                             />
-                          ) : item.creditCardBrand === "MASTERCARD" ? (
-                            <Icon
-                              style={{ width: RFValue(35), marginLeft: "2%" }}
-                              source={require("../../../../../../assets/Global/Icons/MasterCard.png")}
-                            />
-                          ) : item.creditCardBrand === "VISA" ? (
-                            <Icon
-                              style={{ width: RFValue(35), marginLeft: "2%" }}
-                              source={require("../../../../../../assets/Global/Icons/VisaCard.png")}
-                            />
-                          ) : (
-                            <></>
-                          )}
-                          <Text>
-                            {""} {item.creditCardBrand} ****{" "}
-                            {item.creditCardNumber}
-                          </Text>
-                        </>
-                      </Button>
+                            {item.creditCardBrand === "AMEX" ? (
+                              <Icon
+                                style={{ width: RFValue(35), marginLeft: "2%" }}
+                                source={require("../../../../../../assets/Global/Icons/AECard.png")}
+                              />
+                            ) : item.creditCardBrand === "MASTERCARD" ? (
+                              <Icon
+                                style={{ width: RFValue(35), marginLeft: "2%" }}
+                                source={require("../../../../../../assets/Global/Icons/MasterCard.png")}
+                              />
+                            ) : item.creditCardBrand === "VISA" ? (
+                              <Icon
+                                style={{ width: RFValue(35), marginLeft: "2%" }}
+                                source={require("../../../../../../assets/Global/Icons/VisaCard.png")}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                            <Text>
+                              {""} {item.creditCardBrand} ****{" "}
+                              {item.creditCardNumber}
+                            </Text>
+                          </>
+                        </Button>
+                        <Button
+                          title=""
+                          background={`${Theme.color.secondary_80}`}
+                          color={`${Theme.color.gray_10}`}
+                          width={300}
+                          style={{
+                            alignSelf: "center",
+                            justifyContent: "flex-start",
+                            padding: 10,
+                            alignItems: "center",
+                          }}
+                          onPress={() => setSelected("New")}
+                        >
+                          <Radio active={selected === "New" ? true : false} />
+                          <Text>{""} </Text>
+                          <Icon
+                            source={require("../../../../../../assets/Checkout/Add.png")}
+                          />
+                          <Text>{""} Inserir dados de um Cartão</Text>
+                        </Button>
+                      </>
                     )}
                   />
                 </>
               )}
             </>
           )}
-          <Button
-            title=""
-            background={`${Theme.color.secondary_80}`}
-            color={`${Theme.color.gray_10}`}
-            width={300}
-            style={{
-              alignSelf: "center",
-              justifyContent: "flex-start",
-              padding: 10,
-              alignItems: "center",
-            }}
-            onPress={() => setSelected("New")}
-          >
-            <Radio active={selected === "New" ? true : false} />
-            <Text>{""} </Text>
-            <Icon
-              source={require("../../../../../../assets/Checkout/Add.png")}
-            />
-            <Text>{""} Inserir dados de um Cartão</Text>
-          </Button>
         </>
       )}
 
@@ -325,12 +351,12 @@ export function CardMethod({
           background={`${Theme.color.secondary_60}`}
           color={`${Theme.color.gray_10}`}
           width={150}
-          disabled={newCard || installments ? false : true}
+          disabled={newCard || installmentsBoolean ? false : true}
           onPress={() => handleBack()}
         />
         <Button
           title={
-            installments
+            installmentsBoolean
               ? "Finalizar"
               : selected === "New"
               ? "Continuar"

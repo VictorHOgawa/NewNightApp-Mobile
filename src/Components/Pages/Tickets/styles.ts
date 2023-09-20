@@ -38,12 +38,13 @@ export const Text = styled.Text`
 `;
 
 export const Area = styled.View`
+  max-width: 20%;
+  margin-right: 5px;
   border-style: solid;
   border-color: ${Theme.color.primary_60};
   border-width: 1px;
   border-radius: 5px;
-  padding: 2px 5px;
-  height: ${RFValue(22)}px;
+  padding: 5px;
   align-items: center;
   justify-content: center;
   text-align: center;

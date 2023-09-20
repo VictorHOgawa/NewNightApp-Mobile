@@ -93,9 +93,7 @@ export function Portaria() {
       return setLoading1(false);
     }
     Alert.alert(
-      receivedInfo.item.type === "ticket"
-        ? "Ingresso Liberado"
-        : "Produto Liberado"
+      receivedInfo.type === "ticket" ? "Ingresso Liberado" : "Produto Liberado"
     );
     setScanned(false);
     setVerifyTicket(false);
@@ -106,6 +104,8 @@ export function Portaria() {
     setVerifyTicket(false);
     setScanned(false);
   };
+
+  console.log("receivedInfo:", receivedInfo);
 
   useEffect(() => {
     getDetails();
@@ -183,33 +183,79 @@ export function Portaria() {
                       <ModalBody>
                         {receivedInfo ? (
                           <>
-                            <EventPhoto
-                              source={{
-                                uri: receivedInfo.item.event.photo_location,
-                              }}
-                            />
-                            <Names
-                              style={{
-                                fontSize: RFValue(18),
-                                color: Theme.color.primary_80,
-                              }}
-                            >
-                              {receivedInfo.item.event.name}
-                            </Names>
-                            <Names style={{ marginTop: "2%" }}>
-                              {receivedInfo.item.user.name}
-                            </Names>
-                            {receivedInfo.item.type === "ticket" ? (
-                              <HorizontalView style={{ marginTop: "5%" }}>
-                                <TicketIcon
-                                  source={require("../../../../assets/Global/Icons/ticketIcon.png")}
+                            {receivedInfo.type === "ticket" ? (
+                              <>
+                                <EventPhoto
+                                  source={{
+                                    uri: receivedInfo.item.event.photo_location,
+                                  }}
                                 />
-                                <Names>
-                                  {""} {receivedInfo.item.ticket.name}
+                                <Names
+                                  style={{
+                                    fontSize: RFValue(18),
+                                    color: Theme.color.primary_80,
+                                  }}
+                                >
+                                  {receivedInfo.item.event.name}
                                 </Names>
-                              </HorizontalView>
+                                <Names style={{ marginTop: "2%" }}>
+                                  {receivedInfo.item.user.name}
+                                </Names>
+                                <HorizontalView style={{ marginTop: "5%" }}>
+                                  <TicketIcon
+                                    source={require("../../../../assets/Global/Icons/ticketIcon.png")}
+                                  />
+                                  <Names>
+                                    {""} {receivedInfo.item.ticket.name}
+                                  </Names>
+                                </HorizontalView>
+                              </>
                             ) : (
-                              <></>
+                              <>
+                                <HorizontalView
+                                  style={{
+                                    justifyContent: "space-evenly",
+                                    width: "100%",
+                                  }}
+                                >
+                                  <EventPhoto
+                                    source={{
+                                      uri: receivedInfo.item.event
+                                        .photo_location,
+                                    }}
+                                  />
+                                  <EventPhoto
+                                    source={{
+                                      uri: receivedInfo.item.product
+                                        .photo_location,
+                                    }}
+                                  />
+                                </HorizontalView>
+                                <Names
+                                  style={{
+                                    fontSize: RFValue(18),
+                                    color: Theme.color.primary_80,
+                                  }}
+                                >
+                                  {receivedInfo.item.event.name}
+                                </Names>
+                                <HorizontalView>
+                                  <Names
+                                    style={{
+                                      fontSize: RFValue(18),
+                                      color: Theme.color.primary_80,
+                                    }}
+                                  >
+                                    Produto: {""}
+                                  </Names>
+                                  <Names>
+                                    {receivedInfo.item.product.name}
+                                  </Names>
+                                </HorizontalView>
+                                <Names style={{ marginTop: "2%" }}>
+                                  {receivedInfo.item.user.name}
+                                </Names>
+                              </>
                             )}
                             <VerticalView
                               style={{

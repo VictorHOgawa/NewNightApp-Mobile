@@ -12,6 +12,12 @@ interface IndividualMethodProps {
   setQrCode: any;
   pix: any;
   setPix: any;
+  installment: any;
+  setInstallment: any;
+  installments: any;
+  setInstallments: any;
+  installmentCount: any;
+  setInstallmentCount: any;
 }
 
 export function IndividualMethod({
@@ -24,6 +30,12 @@ export function IndividualMethod({
   setQrCode,
   pix,
   setPix,
+  installment,
+  setInstallment,
+  installments,
+  setInstallments,
+  installmentCount,
+  setInstallmentCount,
 }: IndividualMethodProps) {
   return (
     <Container>
@@ -44,6 +56,12 @@ export function IndividualMethod({
           setCoupon={setCoupon}
           AddCoupon={AddCoupon}
           loadingCoupon={loadingCoupon}
+          installment={installment}
+          setInstallment={setInstallment}
+          installments={installments}
+          setInstallments={setInstallments}
+          installmentCount={installmentCount}
+          setInstallmentCount={setInstallmentCount}
         />
       )}
     </Container>
