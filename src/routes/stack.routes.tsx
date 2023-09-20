@@ -36,13 +36,13 @@ export function StackRoutes() {
     >
       <Screen name="AppRoutes" component={AppRoutes} />
       <Screen name="MatchRegister" component={MatchRegister} />
+      <Screen name="Checkout" component={Checkout} />
       <Screen name="Tickets" component={Tickets} />
       <Screen name="Match" component={Match} />
       <Screen name="Login" component={Login} />
       <Screen name="Purchased" component={Purchased} />
       <Screen name="Profile" component={Profile} />
       <Screen name="Place" component={Place} />
-      <Screen name="Checkout" component={Checkout} />
       <Screen name="Event" component={Event} />
       <Screen name="Register" component={Register} />
       <Screen name="Shop" component={Shop} />

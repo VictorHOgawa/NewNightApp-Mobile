@@ -33,7 +33,7 @@ export function VIP() {
         height={40}
         fontSize={18}
         onPress={() => navigation.goBack()}
-        style={{ zIndex: 20, position: "absolute", bottom: "6%" }}
+        style={{ zIndex: 20, position: "absolute", bottom: 0 }}
       />
     </Container>
   );
