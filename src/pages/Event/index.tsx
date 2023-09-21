@@ -62,6 +62,7 @@ export function Event() {
   }, []);
 
   const handleNext = () => {
+    handleScroll();
     if (type !== "") {
       return setType("");
     }
