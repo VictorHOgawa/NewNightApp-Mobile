@@ -66,11 +66,6 @@ export const Items = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-
-  @media (min-width: 768px) {
-    width: 100%;
-    align-self: center;
-  }
 `;
 
 export const ItemButton = styled.TouchableOpacity`

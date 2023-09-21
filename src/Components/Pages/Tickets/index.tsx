@@ -104,6 +104,21 @@ export function TicketCards({ tickets, reload }: TicketProps) {
     }
   };
 
+  const handleCopy = () => {
+    Clipboard.setStringAsync(qrCodeImage.payload);
+    return Alert.alert("Código Copiado!");
+  };
+
+  const handleCopy1 = () => {
+    Clipboard.setStringAsync(tickets[currentIndex].transfer_code);
+    return Alert.alert("Código Copiado!");
+  };
+
+  const handleCopy2 = () => {
+    Clipboard.setStringAsync(tickets[currentIndex].transfer_code);
+    return Alert.alert("Código Copiado!");
+  };
+
   useEffect(() => {
     setQrCode({
       id: id,
@@ -235,9 +250,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                           color={Theme.color.gray_10}
                           width={225}
                           height={40}
-                          onPress={() =>
-                            Clipboard.setStringAsync(qrCodeImage.payload)
-                          }
+                          onPress={handleCopy}
                         />
                         <Button
                           title="Voltar"
@@ -265,11 +278,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                         color={Theme.color.gray_10}
                         width={225}
                         height={40}
-                        onPress={() =>
-                          Clipboard.setStringAsync(
-                            tickets[currentIndex].transfer_code
-                          )
-                        }
+                        onPress={handleCopy1}
                       />
                       <Button
                         title="Voltar"
@@ -306,11 +315,7 @@ export function TicketCards({ tickets, reload }: TicketProps) {
                         color={Theme.color.gray_10}
                         width={225}
                         height={40}
-                        onPress={() =>
-                          Clipboard.setStringAsync(
-                            tickets[currentIndex].transfer_code
-                          )
-                        }
+                        onPress={handleCopy2}
                         fontSize={12}
                       />
                       <Button
